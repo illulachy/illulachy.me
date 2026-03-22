@@ -3,6 +3,7 @@ import { Tldraw, Editor } from 'tldraw'
 import 'tldraw/tldraw.css'
 import { CanvasLoader } from './CanvasLoader'
 import { useCameraState } from '@/hooks/useCameraState'
+import { useArrowKeyNavigation } from '@/hooks/useArrowKeyNavigation'
 
 export function Canvas() {
   const [isReady, setIsReady] = useState(false)
@@ -10,6 +11,9 @@ export function Canvas() {
   
   // Wire up camera persistence
   useCameraState(editorRef.current)
+  
+  // Wire up arrow key navigation
+  useArrowKeyNavigation(editorRef.current)
   
   const handleMount = (editor: Editor) => {
     editorRef.current = editor
