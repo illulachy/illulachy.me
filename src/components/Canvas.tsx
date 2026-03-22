@@ -2,10 +2,14 @@ import { useState, useRef } from 'react'
 import { Tldraw, Editor } from 'tldraw'
 import 'tldraw/tldraw.css'
 import { CanvasLoader } from './CanvasLoader'
+import { useCameraState } from '@/hooks/useCameraState'
 
 export function Canvas() {
   const [isReady, setIsReady] = useState(false)
   const editorRef = useRef<Editor | null>(null)
+  
+  // Wire up camera persistence
+  useCameraState(editorRef.current)
   
   const handleMount = (editor: Editor) => {
     editorRef.current = editor
