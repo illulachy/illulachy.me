@@ -1,0 +1,82 @@
+# illulachy.me
+
+## What This Is
+
+A personal website featuring an infinite canvas timeline that visualizes my journey — school, work, projects, blogs, and learning experiences. Visitors can pan and zoom through a chronological timeline with a central portfolio node as the hub. Content is managed via markdown files and built into an interactive visual experience.
+
+## Core Value
+
+The canvas must feel smooth and intuitive to explore — pan/zoom navigation works flawlessly, and the timeline layout clearly communicates my journey over time.
+
+## Requirements
+
+### Validated
+
+(None yet — ship to validate)
+
+### Active
+
+- [ ] Infinite canvas with pan and zoom navigation (mouse drag, scroll wheel, touch gestures, arrow keys)
+- [ ] Central portfolio node (16:9) displaying an "about me" section
+- [ ] Timeline extending left from the portfolio node, showing chronological entries (most recent closest to center)
+- [ ] Multiple content types: YouTube videos (thumbnails), blog posts, notes, projects
+- [ ] Content nodes as clickable cards — click to open external links
+- [ ] YouTube nodes link to YouTube
+- [ ] Blog/note nodes link to letters.illulachy.me
+- [ ] Project nodes link to external project URLs
+- [ ] "Game mode" — hotkey switches to spaceship cursor, arrow key navigation through timeline
+- [ ] Content sourced from markdown files in the repository
+- [ ] Responsive on desktop and mobile (touch navigation)
+- [ ] Monorepo structure: portfolio site (illulachy.me) + blog site (letters.illulachy.me)
+
+### Out of Scope
+
+- Search/filter functionality — defer to v2 (focus on exploration first)
+- CMS or admin panel — content managed via markdown in source code
+- Embedded video playback — link out to YouTube instead (simpler)
+- Real-time collaboration features — single-author site
+- Authentication — public site, no login needed
+
+## Context
+
+**Inspiration:** Similar to https://github.com/steipete/steipete.me — a monorepo with markdown-based blog site.
+
+**Purpose:** Document and reflect on learning journey in a visual, interactive format. Public portfolio but primarily for personal documentation.
+
+**Tech Stack:**
+- React for UI components
+- tldraw for infinite canvas implementation (proven library for pan/zoom canvas experiences)
+- Markdown for content authoring
+- Monorepo structure (portfolio + blog)
+
+**Content Types:**
+- **YouTube videos:** Display thumbnail, link to YouTube when clicked
+- **Blog posts/notes:** Display card, link to letters.illulachy.me when clicked
+- **Projects:** Display thumbnail/card, link to external project URL
+- **Education/milestones:** Display card with details
+- **Work experience:** Display card with details
+
+**Layout:**
+- Central node (16:9 aspect ratio) = portfolio/about me
+- Timeline flows to the left (oldest → newest, with newest closest to center)
+- Chronological arrangement — time-based positioning
+
+## Constraints
+
+- **Tech stack:** React + tldraw (user specified)
+- **Content management:** Markdown files in source code (no database)
+- **Navigation:** Must support mouse, touch, and keyboard (including "game mode")
+- **Performance:** Canvas must handle potentially hundreds of timeline nodes smoothly
+- **Hosting:** Static site deployment (Vercel, Netlify, or similar)
+
+## Key Decisions
+
+| Decision | Rationale | Outcome |
+|----------|-----------|---------|
+| Use tldraw for canvas | Mature library with built-in pan/zoom, handles performance | — Pending |
+| External links for content | Simplifies v1 — no modal/overlay complexity | — Pending |
+| Monorepo structure | Portfolio and blog share repo, different deployment targets | — Pending |
+| Game mode with spaceship | Adds personality and playful interaction to exploration | — Pending |
+
+---
+*Last updated: 2026-03-22 after initialization*
