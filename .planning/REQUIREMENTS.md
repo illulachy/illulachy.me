@@ -7,12 +7,12 @@
 
 ### Canvas Foundation
 
-- [ ] **CANVAS-01**: User can pan the canvas by dragging with mouse
-- [ ] **CANVAS-02**: User can zoom the canvas using scroll wheel
-- [ ] **CANVAS-03**: User can pan and zoom using touch gestures on mobile (drag, pinch-to-zoom)
-- [ ] **CANVAS-04**: User can navigate using arrow keys
-- [ ] **CANVAS-05**: Canvas maintains 60 FPS performance during pan/zoom
-- [ ] **CANVAS-06**: Canvas displays loading state while initializing
+- [x] **CANVAS-01**: User can pan the canvas by dragging with mouse
+- [x] **CANVAS-02**: User can zoom the canvas using scroll wheel
+- [x] **CANVAS-03**: User can pan and zoom using touch gestures on mobile (drag, pinch-to-zoom)
+- [x] **CANVAS-04**: User can navigate using arrow keys
+- [x] **CANVAS-05**: Canvas maintains 60 FPS performance during pan/zoom
+- [x] **CANVAS-06**: Canvas displays loading state while initializing
 
 ### Portfolio Hub
 
@@ -63,11 +63,11 @@
 
 ### Technical Foundation
 
-- [ ] **TECH-01**: Built with Vite + React 19 + TypeScript
-- [ ] **TECH-02**: Infinite canvas powered by tldraw 4.5
+- [x] **TECH-01**: Built with Vite + React 19 + TypeScript
+- [x] **TECH-02**: Infinite canvas powered by tldraw 4.5
 - [ ] **TECH-03**: Content parsing uses gray-matter + remark
-- [ ] **TECH-04**: Site deploys as static SPA
-- [ ] **TECH-05**: TypeScript types defined for all content structures
+- [x] **TECH-04**: Site deploys as static SPA
+- [x] **TECH-05**: TypeScript types defined for all content structures
 
 ## v2 Requirements
 
@@ -113,12 +113,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| CANVAS-01 | Phase 1 | Pending |
-| CANVAS-02 | Phase 1 | Pending |
-| CANVAS-03 | Phase 1 | Pending |
-| CANVAS-04 | Phase 1 | Pending |
-| CANVAS-05 | Phase 1 | Pending |
-| CANVAS-06 | Phase 1 | Pending |
+| CANVAS-01 | Phase 1 | Complete ✓ |
+| CANVAS-02 | Phase 1 | Complete ✓ |
+| CANVAS-03 | Phase 1 | Complete ✓ |
+| CANVAS-04 | Phase 1 | Complete ✓ |
+| CANVAS-05 | Phase 1 | Complete ✓ |
+| CANVAS-06 | Phase 1 | Complete ✓ |
 | HUB-01 | Phase 3 | Pending |
 | HUB-02 | Phase 3 | Pending |
 | HUB-03 | Phase 3 | Pending |
@@ -148,11 +148,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | UI-03 | Phase 5 | Pending |
 | UI-04 | Phase 5 | Pending |
 | UI-05 | Phase 5 | Pending |
-| TECH-01 | Phase 1 | Pending |
-| TECH-02 | Phase 1 | Pending |
-| TECH-03 | Phase 1 | Pending |
-| TECH-04 | Phase 1 | Pending |
-| TECH-05 | Phase 1 | Pending |
+| TECH-01 | Phase 1 | Complete ✓ |
+| TECH-02 | Phase 1 | Complete ✓ |
+| TECH-03 | Phase 2 | Pending |
+| TECH-04 | Phase 1 | Complete ✓ |
+| TECH-05 | Phase 1 | Complete ✓ |
 
 **Coverage:**
 - v1 requirements: 34 total
