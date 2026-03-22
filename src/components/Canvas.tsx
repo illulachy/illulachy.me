@@ -5,6 +5,7 @@ import { CanvasLoader } from './CanvasLoader'
 import { CanvasControls } from './CanvasControls'
 import { useCameraState } from '@/hooks/useCameraState'
 import { useArrowKeyNavigation } from '@/hooks/useArrowKeyNavigation'
+import { useControlsVisibility } from '@/hooks/useControlsVisibility'
 
 export function Canvas() {
   const [isReady, setIsReady] = useState(false)
@@ -15,6 +16,9 @@ export function Canvas() {
   
   // Wire up arrow key navigation
   useArrowKeyNavigation(editorRef.current)
+  
+  // Wire up contextual visibility for controls
+  const { visible } = useControlsVisibility()
   
   const handleMount = (editor: Editor) => {
     editorRef.current = editor
@@ -38,8 +42,8 @@ export function Canvas() {
       >
         <Tldraw hideUi onMount={handleMount} />
       </div>
-      {/* Controls always visible for now (Wave 2 Task 2 will add contextual visibility) */}
-      <CanvasControls editor={editorRef.current} visible={isReady} />
+      {/* Controls with contextual visibility */}
+      <CanvasControls editor={editorRef.current} visible={isReady && visible} />
     </>
   )
 }
