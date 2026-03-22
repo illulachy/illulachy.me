@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useCallback } from 'react'
 import { Tldraw, Editor } from 'tldraw'
 import 'tldraw/tldraw.css'
 import { CanvasLoader } from './CanvasLoader'
@@ -7,29 +7,32 @@ import { CanvasFogOverlay } from './CanvasFogOverlay'
 import { useCameraState } from '@/hooks/useCameraState'
 import { useArrowKeyNavigation } from '@/hooks/useArrowKeyNavigation'
 import { useControlsVisibility } from '@/hooks/useControlsVisibility'
+import { calculateInitialZoom, getViewportDimensions } from '@/lib/cameraUtils'
 
 export function Canvas() {
   const [isReady, setIsReady] = useState(false)
   const editorRef = useRef<Editor | null>(null)
   
-  // Wire up camera persistence
+  // Wire up hooks
+  const { visible } = useControlsVisibility()
   useCameraState(editorRef.current)
-  
-  // Wire up arrow key navigation
   useArrowKeyNavigation(editorRef.current)
   
-  // Wire up contextual visibility for controls
-  const { visible } = useControlsVisibility()
-  
-  const handleMount = (editor: Editor) => {
+  const handleMount = useCallback((editor: Editor) => {
     editorRef.current = editor
-    // Small delay ensures first paint complete
     requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        setIsReady(true)
-      })
+      requestAnimationFrame(() => setIsReady(true))
     })
-  }
+  }, [])
+  
+  // Double-click to reset
+  const handleDoubleClick = useCallback(() => {
+    const editor = editorRef.current
+    if (!editor) return
+    const viewport = getViewportDimensions(editor)
+    const zoom = calculateInitialZoom(viewport)
+    editor.setCamera({ x: 0, y: 0, z: zoom }, { animation: { duration: 300 } })
+  }, [])
   
   return (
     <>
@@ -40,13 +43,14 @@ export function Canvas() {
           opacity: isReady ? 1 : 0,
           transition: 'opacity 250ms var(--ease-out)',
         }}
+        onDoubleClick={handleDoubleClick}
       >
         <Tldraw hideUi onMount={handleMount} />
       </div>
       {/* Fog overlay (above canvas, below controls) */}
       <CanvasFogOverlay />
       {/* Controls with contextual visibility */}
-      <CanvasControls editor={editorRef.current} visible={isReady && visible} />
+      {isReady && <CanvasControls editor={editorRef.current} visible={visible} />}
     </>
   )
 }

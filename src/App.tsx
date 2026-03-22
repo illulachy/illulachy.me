@@ -1,8 +1,6 @@
-import { Canvas } from './components/Canvas'
+import { Canvas } from '@/components/Canvas'
 
-function App() {
+export default function App() {
   return <Canvas />
 }
-
-export default App
 
