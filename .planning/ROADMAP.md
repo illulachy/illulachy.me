@@ -91,7 +91,7 @@ Plans:
   3. Animations (loading spinner, transitions) powered by Motion.dev
   4. Site is fully responsive on mobile (touch works) and desktop (mouse works)
   5. Loading spinner displays during initial canvas load and hides when ready
-**Plans:** 2 plans
+**Plans:** 2/2 plans complete
 
 Plans:
 - [x] 05-01-PLAN.md — Foundation: Install Tailwind v4, Motion.dev, shadcn/ui; Create @theme config with design tokens; Create cn() utility and Dialog component (UI-01, UI-02, UI-03)
@@ -116,7 +116,7 @@ Plans:
 | 2. Content Pipeline | 2/2 | Complete ✓  | 2026-03-23 |
 | 3. Custom Shapes & Hub | 2/2 | Complete ✓ | 2026-03-23 |
 | 4. Timeline Layout | 2/2 | Complete ✓ | 2026-03-23 |
-| 5. UI Chrome | 2/2 | Complete ✓ | 2026-03-23 |
+| 5. UI Chrome | 2/2 | Complete    | 2026-03-23 |
 | 6. Game Mode | 0/0 | Not started | - |
 
 ## Coverage

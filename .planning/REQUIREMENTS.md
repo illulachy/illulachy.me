@@ -55,9 +55,9 @@
 
 ### UI & Polish
 
-- [ ] **UI-01**: Site uses Tailwind CSS v4 for styling
-- [ ] **UI-02**: UI components built with shadcn/ui
-- [ ] **UI-03**: Animations powered by Motion.dev
+- [x] **UI-01**: Site uses Tailwind CSS v4 for styling
+- [x] **UI-02**: UI components built with shadcn/ui
+- [x] **UI-03**: Animations powered by Motion.dev
 - [x] **UI-04**: Site is responsive on mobile and desktop
 - [x] **UI-05**: Loading spinner displays during initial canvas load
 
@@ -143,9 +143,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CONTENT-03 | Phase 2 | Complete |
 | CONTENT-04 | Phase 2 | Complete |
 | CONTENT-05 | Phase 2 | Complete |
-| UI-01 | Phase 5 | Pending |
-| UI-02 | Phase 5 | Pending |
-| UI-03 | Phase 5 | Pending |
+| UI-01 | Phase 5 | Complete |
+| UI-02 | Phase 5 | Complete |
+| UI-03 | Phase 5 | Complete |
 | UI-04 | Phase 5 | Complete |
 | UI-05 | Phase 5 | Complete |
 | TECH-01 | Phase 1 | Complete ✓ |
