@@ -1,4 +1,7 @@
 import type { ContentNode } from '../types/content'
+import { createDateToXMapper } from './dateUtils'
+import { getSessionSeed } from './sessionSeed'
+import { simulateLayout } from './forceSimulation'
 
 /**
  * Positioned node with x,y coordinates
@@ -15,39 +18,30 @@ export interface PositionedNode {
 export const HUB_POSITION = { x: 0, y: 0 } as const
 
 /**
- * Position timeline nodes using Phase 3 temporary algorithm
+ * Position timeline nodes chronologically with collision detection
  * 
- * Algorithm:
- * - Horizontal: All nodes go left from hub, -400px increments
- * - Vertical: Type-based separation
- *   - youtube/blog: above timeline (y = +100, +200, +300...)
- *   - milestone/project: below timeline (y = -100, -200, -300...)
- * - Hub: x=0, y=0 (center)
+ * Algorithm (Phase 4):
+ * 1. Map dates to negative X coordinates (older = further left)
+ * 2. Get session-based random seed (24-hour persistence)
+ * 3. Run D3-force simulation to convergence
+ *    - Temporal gravity: nodes cluster by date
+ *    - Collision detection: 150px+ minimum gaps
+ *    - Vertical scatter: organic constellation aesthetic
  * 
- * Phase 4 will replace this with chronological layout + collision detection
+ * Replaces Phase 3 temporary type-based positioning.
+ * 
+ * @param nodes - Timeline content nodes
+ * @returns Positioned nodes with collision-free x, y coordinates
  */
 export function positionTimelineNodes(nodes: ContentNode[]): PositionedNode[] {
-  let aboveCounter = 0
-  let belowCounter = 0
+  if (nodes.length === 0) return []
   
-  return nodes.map((node, index) => {
-    // All nodes go left from hub
-    const x = -400 * (index + 1)
-    
-    // Type-based vertical positioning
-    let y: number
-    if (node.type === 'youtube' || node.type === 'blog') {
-      aboveCounter++
-      y = 100 * aboveCounter  // Positive Y (above timeline)
-    } else if (node.type === 'milestone' || node.type === 'project') {
-      belowCounter++
-      y = -100 * belowCounter  // Negative Y (below timeline)
-    } else {
-      // Unknown type, place above by default
-      aboveCounter++
-      y = 100 * aboveCounter
-    }
-    
-    return { node, x, y }
-  })
+  // 1. Create date-to-X mapper
+  const dateToX = createDateToXMapper(nodes)
+  
+  // 2. Get session seed for deterministic yet varied layout
+  const seed = getSessionSeed()
+  
+  // 3. Run force simulation to get final positions
+  return simulateLayout(nodes, dateToX, seed)
 }
