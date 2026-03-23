@@ -16,9 +16,9 @@
 
 ### Portfolio Hub
 
-- [ ] **HUB-01**: Central portfolio node (16:9 aspect ratio) displays in center of canvas on load
-- [ ] **HUB-02**: Portfolio node shows "about me" content
-- [ ] **HUB-03**: Portfolio node is visually distinct from timeline nodes
+- [x] **HUB-01**: Central portfolio node (16:9 aspect ratio) displays in center of canvas on load
+- [x] **HUB-02**: Portfolio node shows "about me" content
+- [x] **HUB-03**: Portfolio node is visually distinct from timeline nodes
 
 ### Timeline Content
 
@@ -36,7 +36,7 @@
 - [ ] **INT-02**: User can click blog/note node to open letters.illulachy.me
 - [ ] **INT-03**: User can click project node to open external project URL
 - [ ] **INT-04**: User can click milestone node to view details
-- [ ] **INT-05**: Nodes have hover states showing they're clickable
+- [x] **INT-05**: Nodes have hover states showing they're clickable
 
 ### Game Mode
 
@@ -119,9 +119,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CANVAS-04 | Phase 1 | Complete ✓ |
 | CANVAS-05 | Phase 1 | Complete ✓ |
 | CANVAS-06 | Phase 1 | Complete ✓ |
-| HUB-01 | Phase 3 | Pending |
-| HUB-02 | Phase 3 | Pending |
-| HUB-03 | Phase 3 | Pending |
+| HUB-01 | Phase 3 | Complete |
+| HUB-02 | Phase 3 | Complete |
+| HUB-03 | Phase 3 | Complete |
 | TIME-01 | Phase 4 | Pending |
 | TIME-02 | Phase 4 | Pending |
 | TIME-03 | Phase 4 | Pending |
@@ -133,7 +133,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | INT-02 | Phase 3 | Pending |
 | INT-03 | Phase 3 | Pending |
 | INT-04 | Phase 3 | Pending |
-| INT-05 | Phase 3 | Pending |
+| INT-05 | Phase 3 | Complete |
 | GAME-01 | Phase 6 | Pending |
 | GAME-02 | Phase 6 | Pending |
 | GAME-03 | Phase 6 | Pending |

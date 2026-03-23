@@ -3,43 +3,55 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-last_updated: "2026-03-22T17:06:00.000Z"
+last_updated: "2026-03-23T04:56:26.555Z"
 progress:
   total_phases: 6
-  completed_phases: 1
-  total_plans: 1
-  completed_plans: 1
+  completed_phases: 2
+  total_plans: 5
+  completed_plans: 3
 ---
 
 # Project State: illulachy.me
 
 **Last updated:** 2026-03-22  
-**Status:** Ready for Phase 02
+**Status:** Executing Phase 03
 
 ## Project Reference
 
 **Core Value:** The canvas must feel smooth and intuitive to explore — pan/zoom navigation works flawlessly, and the timeline layout clearly communicates my journey over time.
 
-**Current Focus:** Phase 02 — Content Pipeline
+**Current Focus:** Phase 03 — custom-shapes-hub
 
 ## Current Position
 
-Phase: 02 (Content Pipeline)
-Current Plan: 2 of 2 — COMPLETE ✓
-Next Plan: Phase 02 Complete - Ready for Phase 03
+Phase: 03 (custom-shapes-hub) — EXECUTING
+Plan: 2 of 2
 
 ## Performance Metrics
 
-**Phases completed:** 1 / 6  
-**Plans completed:** 3 / 3  
-**Must-haves delivered:** 16 / 16 (Phase 1-2)  
-**Avg phase completion:** 18 minutes (Phase 1), 3.5 minutes (Phase 2 Plan 1), 5 minutes (Phase 2 Plan 2)
+**Phases completed:** 2 / 6  
+**Plans completed:** 4 / 5  
+**Must-haves delivered:** 20 / 24 (Phase 1-3 Plan 1)  
+**Avg plan completion:** 18 min (Phase 1), 3.5 min (Phase 2 Plan 1), 5 min (Phase 2 Plan 2), 8 min (Phase 3 Plan 1)
 
-**Velocity:** 20 tasks in 26.5 minutes (~1.3 min/task)
+**Velocity:** 23 tasks in 34.5 minutes (~1.5 min/task)
 
 ## Accumulated Context
 
 ### Key Decisions
+
+**2026-03-23 - Phase 3 Plan 1 Execution Complete:**
+
+- ✓ AboutData type system: name, title, bio (required), avatar, email, social (optional)
+- ✓ Generator extended: processAboutFile() reads about.md, validates with zod, outputs about.json
+- ✓ TLShape (not TLBaseShape) used for shape type definitions (tldraw v4.5 API)
+- ✓ Separate shape util files with module augmentation for better organization
+- ✓ 5 custom shape utils: HubShape (640x360), YouTube/Blog/Project/Milestone nodes (280x200)
+- ✓ Glassmorphism styling with mauve hover states (scale 1.02x, border glow)
+- ✓ Type-based temporary positioning: youtube/blog above, milestone/project below
+- ✓ Social field uses T.jsonValue (tldraw validators don't support nested objects)
+- ✓ 3 tasks completed in 8 minutes, 3 commits, 5 unit tests passing
+- ✓ Requirements fulfilled: HUB-01, HUB-02, HUB-03, INT-05
 
 **2026-03-23 - Phase 2 Plan 2 Execution Complete:**
 
@@ -103,8 +115,9 @@ Next Plan: Phase 02 Complete - Ready for Phase 03
 - [x] Execute Phase 2 Plan 1: Core generator script
 - [x] Execute Phase 2 Plan 2: Vite integration and sample content
 - [x] Create 12+ sample markdown entries during Phase 2 Plan 2
-- [ ] Plan Phase 3: Timeline Shapes
-- [ ] Execute Phase 3: Timeline Shapes
+- [x] Plan Phase 3: Custom Shapes & Hub (Research + Planning complete)
+- [x] Execute Phase 3 Plan 1: Shape utils foundation
+- [ ] Execute Phase 3 Plan 2: Canvas integration and modal
 
 ### Blockers
 
@@ -113,18 +126,17 @@ None currently.
 ## Session Continuity
 
 **Last session:** 2026-03-23  
-**Completed:** Phase 2 Plan 2 execution (Vite Integration & Sample Content)  
-**Next action:** Plan Phase 3 (Timeline Shapes)
+**Completed:** Phase 3 Plan 1 execution (Shape Utils Foundation)  
+**Next action:** Execute Phase 3 Plan 2 (Canvas Integration & Modal)
 
 **Context for next session:**
 
-- Phase 2 complete: Content pipeline fully integrated with Vite dev workflow
-- Vite plugin watches content/**/*.md and regenerates timeline.json on changes
-- 12 sample entries (11 published + 1 draft) spanning 2020-2024
-- All 4 content types represented: milestone, project, blog, youtube
-- timeline.json validated: chronological order, ISO 8601 dates, type-specific fields
-- Developer workflow ready: edit markdown → see timeline update in browser
-- Ready for Phase 3: Timeline Shapes (tldraw shape definitions and rendering)
+- Phase 3 Plan 1 complete: AboutData pipeline, 5 custom shape utils, positioning utility
+- All shape utils compile and export via customShapeUtils array
+- Shapes ready for integration: HubShape (640x360), YouTube/Blog/Project/Milestone (280x200)
+- Temporary positioning algorithm implemented (type-based vertical separation)
+- Next: Create data fetching hooks, MilestoneModal, integrate shapes with Canvas component
+- Verification needed: Visual rendering, hover states, click handlers functional in browser
 
 ---
 *State updated: 2026-03-23 after Phase 2 Plan 2 execution*
