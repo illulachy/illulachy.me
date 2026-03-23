@@ -179,8 +179,8 @@ export function Canvas() {
           viewportTransform={viewportTransform}
         />
       )} */}
-      {/* Controls with contextual visibility */}
-      {isFullyLoaded && <CanvasControls editor={editorRef.current} visible={visible} />}
+      {/* Controls with contextual visibility - TEMPORARILY DISABLED */}
+      {/* {isFullyLoaded && <CanvasControls editor={editorRef.current} visible={visible} />} */}
       {/* Milestone modal */}
       {modalNode && (
         <MilestoneModal 
