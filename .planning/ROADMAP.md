@@ -7,9 +7,9 @@
 
 ## Phases
 
-- [ ] **Phase 1: Canvas Foundation** - Infinite canvas with pan/zoom navigation working smoothly
+- [x] **Phase 1: Canvas Foundation** - Infinite canvas with pan/zoom navigation working smoothly (completed 2026-03-22)
 - [x] **Phase 2: Content Pipeline** - Markdown authoring workflow processing to bundled JSON (completed 2026-03-23)
-- [ ] **Phase 3: Custom Shapes & Hub** - Portfolio hub and clickable timeline nodes rendering on canvas
+- [x] **Phase 3: Custom Shapes & Hub** - Portfolio hub and clickable timeline nodes rendering on canvas (completed 2026-03-23)
 - [ ] **Phase 4: Timeline Layout** - Chronological positioning with collision detection
 - [ ] **Phase 5: UI Chrome** - Loading states, responsive layout, and visual polish
 - [ ] **Phase 6: Game Mode** - Spaceship navigation with arrow key controls
@@ -62,8 +62,8 @@ Plans:
 **Plans:** 2 plans
 
 Plans:
-- [ ] 03-01-PLAN.md — Types, about.md pipeline, 5 custom shape utils (Hub, YouTube, Blog, Project, Milestone), positioning utility
-- [ ] 03-02-PLAN.md — Data fetching hooks, MilestoneModal, Canvas integration with shapes and click handlers
+- [x] 03-01-PLAN.md — Types, about.md pipeline, 5 custom shape utils (Hub, YouTube, Blog, Project, Milestone), positioning utility
+- [x] 03-02-PLAN.md — Data fetching hooks, MilestoneModal, Canvas integration with shapes and click handlers
 
 ### Phase 4: Timeline Layout
 **Goal:** Timeline nodes are positioned chronologically with no overlaps  
@@ -106,8 +106,8 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Canvas Foundation | 1/1 | Complete ✓ | 2026-03-22 |
-| 2. Content Pipeline | 2/2 | Complete   | 2026-03-23 |
-| 3. Custom Shapes & Hub | 0/0 | Not started | - |
+| 2. Content Pipeline | 2/2 | Complete ✓  | 2026-03-23 |
+| 3. Custom Shapes & Hub | 2/2 | Complete ✓ | 2026-03-23 |
 | 4. Timeline Layout | 0/0 | Not started | - |
 | 5. UI Chrome | 0/0 | Not started | - |
 | 6. Game Mode | 0/0 | Not started | - |

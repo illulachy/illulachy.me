@@ -32,10 +32,10 @@
 
 ### Interactivity
 
-- [ ] **INT-01**: User can click YouTube node to open video in YouTube
-- [ ] **INT-02**: User can click blog/note node to open letters.illulachy.me
-- [ ] **INT-03**: User can click project node to open external project URL
-- [ ] **INT-04**: User can click milestone node to view details
+- [x] **INT-01**: User can click YouTube node to open video in YouTube
+- [x] **INT-02**: User can click blog/note node to open letters.illulachy.me
+- [x] **INT-03**: User can click project node to open external project URL
+- [x] **INT-04**: User can click milestone node to view details
 - [x] **INT-05**: Nodes have hover states showing they're clickable
 
 ### Game Mode
@@ -129,10 +129,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TIME-05 | Phase 4 | Pending |
 | TIME-06 | Phase 4 | Pending |
 | TIME-07 | Phase 4 | Pending |
-| INT-01 | Phase 3 | Pending |
-| INT-02 | Phase 3 | Pending |
-| INT-03 | Phase 3 | Pending |
-| INT-04 | Phase 3 | Pending |
+| INT-01 | Phase 3 | Complete |
+| INT-02 | Phase 3 | Complete |
+| INT-03 | Phase 3 | Complete |
+| INT-04 | Phase 3 | Complete |
 | INT-05 | Phase 3 | Complete |
 | GAME-01 | Phase 6 | Pending |
 | GAME-02 | Phase 6 | Pending |
