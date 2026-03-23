@@ -10,18 +10,27 @@ export function useCameraState(editor: Editor | null) {
   useEffect(() => {
     if (!editor) return
     
-    const saved = loadCameraState()
-    if (saved) {
-      editor.setCamera({ x: saved.x, y: saved.y, z: saved.z })
-    } else {
-      // First-time: calculate initial zoom
-      const bounds = editor.getViewportScreenBounds()
-      const zoom = calculateInitialZoom({ 
-        width: bounds.width, 
-        height: bounds.height 
-      })
-      editor.setCamera({ x: 0, y: 0, z: zoom })
-    }
+    // TEMPORARILY: Always center on hub (disable persistence for debugging)
+    // TODO: Re-enable after Phase 4 verification
+    const bounds = editor.getViewportScreenBounds()
+    const zoom = calculateInitialZoom({ 
+      width: bounds.width, 
+      height: bounds.height 
+    })
+    editor.setCamera({ x: 0, y: 0, z: zoom })
+    
+    // const saved = loadCameraState()
+    // if (saved) {
+    //   editor.setCamera({ x: saved.x, y: saved.y, z: saved.z })
+    // } else {
+    //   // First-time: calculate initial zoom
+    //   const bounds = editor.getViewportScreenBounds()
+    //   const zoom = calculateInitialZoom({ 
+    //     width: bounds.width, 
+    //     height: bounds.height 
+    //   })
+    //   editor.setCamera({ x: 0, y: 0, z: zoom })
+    // }
   }, [editor])
   
   // Save camera on change (debounced)
