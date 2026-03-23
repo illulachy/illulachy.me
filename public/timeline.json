@@ -1,11 +1,4 @@
 {
-  "nodes": [
-    {
-      "id": "test",
-      "type": "test",
-      "title": "Test Entry",
-      "date": "2024-01-01T00:00:00.000Z"
-    }
-  ],
-  "lastUpdated": "2026-03-23T03:18:23.434Z"
+  "nodes": [],
+  "lastUpdated": "2026-03-23T03:19:34.930Z"
 }

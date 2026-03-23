@@ -51,7 +51,7 @@ export function parseContentFile(filepath: string, content: string): ContentNode
   const result = frontmatterSchema.safeParse(parsed.data)
   
   if (!result.success) {
-    const errors = result.error.errors.map(e => `${e.path.join('.')}: ${e.message}`).join(', ')
+    const errors = result.error.issues?.map(e => `${e.path.join('.')}: ${e.message}`).join(', ') || result.error.message
     throw new Error(`Validation failed: ${errors}`)
   }
   
