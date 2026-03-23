@@ -92,23 +92,30 @@ export function Canvas() {
       }
 
       // Center the 280x200 shape on calculated position
+      // Build props based on shape type (milestone nodes don't have url)
+      const shapeProps: any = {
+        w: 280,
+        h: 200,
+        nodeId: node.id,
+        title: node.title,
+        date: node.date,
+        thumbnail: node.thumbnail,
+        description: node.description,
+        institution: node.institution,
+        tech: node.tech,
+      }
+      
+      // Only add url for non-milestone nodes
+      if (node.type !== 'milestone' && node.url) {
+        shapeProps.url = node.url
+      }
+      
       editor.createShape({
         type: shapeType as any,
         x: x - 140, // Center 280px wide shape
         y: y - 100, // Center 200px tall shape
         isLocked: true,
-        props: {
-          w: 280,
-          h: 200,
-          nodeId: node.id,
-          title: node.title,
-          url: node.url ?? '',
-          date: node.date,
-          thumbnail: node.thumbnail,
-          description: node.description,
-          institution: node.institution,
-          tech: node.tech,
-        },
+        props: shapeProps,
       })
     })
 

@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>illulachy.me - Component Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ========================================
+       Design Tokens
+       ======================================== */
+    :root {
+      /* Canvas & Backgrounds */
+      --canvas-bg: #131313;
+      --canvas-grid: #18181B;
+      --canvas-fog: rgba(19, 19, 19, 0.6);
+      
+      /* Surface Hierarchy */
+      --surface-dim: #0A0A0A;
+      --surface-default: #131313;
+      --surface-container-lowest: #1A1A1A;
+      --surface-container-low: #1C1C1C;
+      --surface-container: #212121;
+      --surface-container-high: #272727;
+      --surface-container-highest: #2E2E2E;
+      
+      /* Interactive Colors */
+      /* Primary Interactions (Mauve) */
+      --interactive-default: #E0AFFF;    /* CTA buttons, links, active states */
+      --interactive-hover: #EAC7FF;      /* Hover state (lighter) */
+      --interactive-active: #D197FF;     /* Click/pressed state (darker) */
+      --interactive-disabled: #B380CC;   /* Disabled state (desaturated) */
+      --interactive-bg-subtle: rgba(37, 99, 235, 0.1);
+      --interactive-bg-medium: rgba(37, 99, 235, 0.2);
+      
+      /* Typography Colors */
+      --text-primary: #FFFFFF;
+      --text-secondary: #A1A1AA;
+      --text-tertiary: #71717A;
+      --text-quaternary: #52525B;
+      
+      /* Accent */
+      --accent-mauve: #E0AFFF;
+      --accent-mauve-dim: rgba(224, 175, 255, 0.2);
+      
+      /* Borders */
+      --border-ghost: rgba(255, 255, 255, 0.06);
+      --border-subtle: rgba(255, 255, 255, 0.1);
+      --border-default: rgba(255, 255, 255, 0.15);
+      --border-strong: rgba(255, 255, 255, 0.2);
+      
+      /* Glassmorphism */
+      --glass-bg: rgba(28, 28, 28, 0.7);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --glass-blur: 20px;
+      --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      
+      /* Shadows */
+      --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+      --shadow-xl: 0 12px 40px rgba(0, 0, 0, 0.16);
+      --shadow-2xl: 0 24px 64px rgba(0, 0, 0, 0.24);
+      
+      /* Typography */
+      --font-display: 'Noto Serif', Georgia, serif;
+      --font-heading: 'Noto Serif', Georgia, serif;
+      --font-body: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+      --font-label: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+      
+      /* Font Sizes */
+      --text-xs: 0.75rem;
+      --text-sm: 0.875rem;
+      --text-base: 1rem;
+      --text-lg: 1.125rem;
+      --text-xl: 1.25rem;
+      --text-2xl: 1.5rem;
+      --text-3xl: 1.875rem;
+      --text-4xl: 2.25rem;
+      
+      /* Font Weights */
+      --font-weight-regular: 400;
+      --font-weight-medium: 500;
+      --font-weight-semibold: 600;
+      --font-weight-bold: 700;
+      
+      /* Line Heights */
+      --leading-tight: 1.25;
+      --leading-snug: 1.375;
+      --leading-normal: 1.5;
+      --leading-relaxed: 1.625;
+      
+      /* Letter Spacing */
+      --tracking-tighter: -0.05em;
+      --tracking-tight: -0.025em;
+      --tracking-normal: 0;
+      --tracking-wide: 0.025em;
+      
+      /* Spacing */
+      --spacing-1: 0.25rem;
+      --spacing-2: 0.5rem;
+      --spacing-3: 0.75rem;
+      --spacing-4: 1rem;
+      --spacing-6: 1.5rem;
+      --spacing-8: 2rem;
+      --spacing-12: 3rem;
+      --spacing-16: 4rem;
+      --spacing-24: 6rem;
+      
+      /* Border Radius */
+      --radius-sm: 0.125rem;
+      --radius-default: 0.25rem;
+      --radius-md: 0.375rem;
+      --radius-lg: 0.5rem;
+      --radius-xl: 0.75rem;
+      --radius-2xl: 1rem;
+      --radius-full: 9999px;
+      
+      /* Animation */
+      --duration-fast: 100ms;
+      --duration-normal: 150ms;
+      --duration-moderate: 200ms;
+      --ease-out: cubic-bezier(0, 0, 0.2, 1);
+      --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+      
+      /* Component Specific */
+      --space-card-padding: var(--spacing-6);
+      --control-size-lg: 48px;
+      --control-gap: var(--spacing-2);
+      --toolbar-offset: var(--spacing-4);
+      --outline-focus: var(--interactive-default);
+      --outline-focus-offset: 4px;
+    }
+    
+    /* ========================================
+       Base Styles
+       ======================================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: var(--font-body);
+      background: var(--canvas-bg);
+      color: var(--text-primary);
+      line-height: var(--leading-normal);
+      padding: var(--spacing-12) var(--spacing-6);
+    }
+    
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    .page-header {
+      text-align: center;
+      margin-bottom: var(--spacing-16);
+    }
+    
+    .page-title {
+      font-family: var(--font-display);
+      font-size: var(--text-4xl);
+      font-weight: var(--font-weight-bold);
+      letter-spacing: var(--tracking-tighter);
+      margin-bottom: var(--spacing-3);
+    }
+    
+    .page-subtitle {
+      font-size: var(--text-lg);
+      color: var(--text-secondary);
+    }
+    
+    .section {
+      margin-bottom: var(--spacing-24);
+    }
+    
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: var(--text-2xl);
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--spacing-2);
+      letter-spacing: var(--tracking-tight);
+    }
+    
+    .section-description {
+      color: var(--text-secondary);
+      margin-bottom: var(--spacing-8);
+      font-size: var(--text-base);
+    }
+    
+    .component-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--spacing-8);
+      margin-bottom: var(--spacing-8);
+    }
+    
+    .component-showcase {
+      background: var(--surface-container-lowest);
+      border: 1px solid var(--border-ghost);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+    }
+    
+    .label {
+      display: inline-block;
+      font-size: var(--text-xs);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wide);
+      color: var(--text-tertiary);
+      margin-top: var(--spacing-4);
+      text-align: center;
+    }
+    
+    /* ========================================
+       Component 1: Timeline Node Card
+       ======================================== */
+    .timeline-node {
+      width: 280px;
+      height: 200px;
+      background: var(--surface-container-low);
+      border: 1px solid transparent;
+      border-radius: var(--radius-lg);
+      padding: var(--space-card-padding);
+      box-shadow: var(--shadow-md);
+      transition: background var(--duration-moderate) var(--ease-out),
+                  border-color var(--duration-moderate) var(--ease-out),
+                  transform var(--duration-moderate) var(--ease-out);
+      cursor: pointer;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .timeline-node:hover {
+      background: var(--surface-container-high);
+      border-color: var(--border-strong);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .timeline-node:focus {
+      outline: 2px solid var(--outline-focus);
+      outline-offset: var(--outline-focus-offset);
+    }
+    
+    .timeline-node.youtube {
+      width: 320px;
+      height: 180px;
+    }
+    
+    .node-thumbnail {
+      width: 100%;
+      height: 120px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: var(--spacing-3);
+      background: var(--surface-container);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-tertiary);
+      font-size: var(--text-sm);
+    }
+    
+    .node-meta {
+      font-family: var(--font-body);
+      font-size: var(--text-sm);
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wide);
+    }
+    
+    .node-title {
+      font-family: var(--font-heading);
+      font-size: var(--text-lg);
+      font-weight: var(--font-weight-semibold);
+      line-height: var(--leading-snug);
+      letter-spacing: var(--tracking-tight);
+      color: var(--text-primary);
+      margin: var(--spacing-2) 0;
+    }
+    
+    .node-description {
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      line-height: var(--leading-normal);
+      color: var(--text-secondary);
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    
+    /* ========================================
+       Component 2: Portfolio Hub
+       ======================================== */
+    .portfolio-hub {
+      width: 640px;
+      height: 360px;
+      background: var(--surface-container);
+      border: 2px solid var(--border-default);
+      border-radius: var(--radius-2xl);
+      padding: var(--spacing-12);
+      box-shadow: var(--shadow-xl);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    .hub-header {
+      margin-bottom: var(--spacing-8);
+    }
+    
+    .hub-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: var(--font-weight-bold);
+      line-height: var(--leading-tight);
+      letter-spacing: var(--tracking-tighter);
+      color: var(--text-primary);
+    }
+    
+    .hub-subtitle {
+      font-family: var(--font-body);
+      font-size: var(--text-xl);
+      color: var(--text-secondary);
+      margin-top: var(--spacing-2);
+    }
+    
+    .hub-bio {
+      font-family: var(--font-body);
+      font-size: var(--text-lg);
+      line-height: var(--leading-relaxed);
+      color: var(--text-secondary);
+      margin-bottom: var(--spacing-8);
+    }
+    
+    /* ========================================
+       Component 3: Canvas Controls
+       ======================================== */
+    .canvas-controls {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-xl);
+      padding: var(--spacing-3);
+      box-shadow: var(--glass-shadow);
+      display: flex;
+      flex-direction: column;
+      gap: var(--control-gap);
+    }
+    
+    .control-btn {
+      width: var(--control-size-lg);
+      height: var(--control-size-lg);
+      background: transparent;
+      border: 1px solid var(--border-ghost);
+      border-radius: var(--radius-default);
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background var(--duration-normal) var(--ease-out), 
+                  color var(--duration-normal) var(--ease-out),
+                  border-color var(--duration-normal) var(--ease-out);
+      font-size: var(--text-xl);
+    }
+    
+    .control-btn:hover {
+      background: var(--surface-container-high);
+      color: var(--text-primary);
+      border-color: var(--border-subtle);
+    }
+    
+    .control-btn:focus {
+      outline: 2px solid var(--outline-focus);
+      outline-offset: 2px;
+    }
+    
+    .control-btn.active {
+      background: var(--interactive-default);
+      color: #FFFFFF;
+      border-color: var(--interactive-default);
+    }
+    
+    .control-divider {
+      height: 1px;
+      background: var(--border-ghost);
+      margin: var(--spacing-1) 0;
+    }
+    
+    /* ========================================
+       Component 4: Buttons
+       ======================================== */
+    .btn {
+      font-family: var(--font-label);
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      cursor: pointer;
+      border: none;
+      border-radius: var(--radius-default);
+      padding: var(--spacing-3) var(--spacing-6);
+      transition: background var(--duration-normal) var(--ease-out),
+                  transform var(--duration-normal) var(--ease-out),
+                  border-color var(--duration-normal) var(--ease-out),
+                  color var(--duration-normal) var(--ease-out);
+      display: inline-block;
+      text-decoration: none;
+    }
+    
+    .btn-primary {
+      background: #FFFFFF;
+      color: var(--canvas-bg);
+    }
+    
+    .btn-primary:hover {
+      background: rgba(255, 255, 255, 0.9);
+      transform: translateY(-1px);
+    }
+    
+    .btn-primary:active {
+      background: rgba(255, 255, 255, 0.8);
+      transform: translateY(0px);
+    }
+    
+    .btn-secondary {
+      background: var(--accent-mauve);
+      color: var(--canvas-bg);
+      border: none;
+    }
+    
+    .btn-secondary:hover {
+      background: rgba(224, 175, 255, 0.9);
+      transform: translateY(-1px);
+    }
+    
+    .btn-secondary:active {
+      background: rgba(224, 175, 255, 0.8);
+      transform: translateY(0px);
+    }
+    
+    .btn-tertiary {
+      background: transparent;
+      color: var(--text-secondary);
+      padding: var(--spacing-2) var(--spacing-4);
+      text-decoration: none;
+      border: 1px solid var(--border-ghost);
+    }
+    
+    .btn-tertiary:hover {
+      color: var(--text-primary);
+      border-color: var(--border-subtle);
+      background: var(--surface-container-low);
+    }
+    
+    /* ========================================
+       Component 5: Input Field
+       ======================================== */
+    .input-field {
+      width: 100%;
+      background: var(--surface-container-lowest);
+      color: var(--text-primary);
+      border: none;
+      border-bottom: 1px solid var(--border-ghost);
+      border-radius: 0;
+      padding: var(--spacing-3) var(--spacing-4);
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      transition: border-color var(--duration-fast) var(--ease-in-out);
+    }
+    
+    .input-field:focus {
+      border-bottom-color: var(--interactive-default);
+      outline: none;
+    }
+    
+    .input-field::placeholder {
+      color: var(--text-tertiary);
+      opacity: 0.6;
+    }
+    
+    /* ========================================
+       Component 6: Loading Skeleton
+       ======================================== */
+    @keyframes shimmer {
+      0% {
+        background-position: -200% 0;
+      }
+      100% {
+        background-position: 200% 0;
+      }
+    }
+    
+    .skeleton-node {
+      width: 280px;
+      height: 200px;
+      background: linear-gradient(
+        90deg,
+        var(--surface-container-low) 0%,
+        var(--surface-container) 50%,
+        var(--surface-container-low) 100%
+      );
+      background-size: 200% 100%;
+      animation: shimmer 1.5s ease-in-out infinite;
+      border-radius: var(--radius-lg);
+    }
+    
+    @media (prefers-reduced-motion: reduce) {
+      .skeleton-node {
+        animation: none;
+        background: var(--surface-container-low);
+      }
+    }
+    
+    /* ========================================
+       Component 7: Game Mode Cursor
+       ======================================== */
+    .game-mode-demo {
+      width: 280px;
+      height: 200px;
+      background: var(--surface-container-low);
+      border: 1px solid var(--border-ghost);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: crosshair;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .spaceship-cursor {
+      width: 32px;
+      height: 32px;
+      color: var(--interactive-default);
+    }
+    
+    /* ========================================
+       Component 8: Focus Quote
+       ======================================== */
+    .focus-quote {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: var(--font-weight-semibold);
+      line-height: var(--leading-tight);
+      letter-spacing: var(--tracking-tighter);
+      color: var(--text-primary);
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: var(--spacing-12) var(--spacing-8);
+      position: relative;
+    }
+    
+    .focus-quote::before {
+      content: '"';
+      position: absolute;
+      top: 0;
+      left: var(--spacing-4);
+      font-size: 6rem;
+      color: var(--accent-mauve);
+      opacity: 0.3;
+      line-height: 1;
+    }
+    
+    /* ========================================
+       Responsive Design
+       ======================================== */
+    @media (max-width: 768px) {
+      .portfolio-hub {
+        width: 100%;
+        max-width: 500px;
+        height: auto;
+      }
+      
+      .component-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* ========================================
+       Utility Classes
+       ======================================== */
+    .flex-center {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-4);
+    }
+    
+    .flex-col {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-3);
+    }
+    
+    .text-center {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Page Header -->
+    <header class="page-header">
+      <h1 class="page-title">illulachy.me Component Library</h1>
+      <p class="page-subtitle">High-End Editorial + Exaggerated Minimalism</p>
+      <p class="page-subtitle" style="margin-top: 0.5rem; font-size: 0.875rem;">React 19 · TypeScript · tldraw 4.5 · shadcn/ui · Motion.dev</p>
+    </header>
+    
+    <!-- Component 1: Timeline Node Card -->
+    <section class="section">
+      <h2 class="section-title">1. Timeline Node Card</h2>
+      <p class="section-description">Primary content container for timeline entries (blog posts, projects, videos)</p>
+      
+      <div class="component-grid">
+        <!-- Default Variant -->
+        <div>
+          <div class="component-showcase">
+            <div class="timeline-node" tabindex="0">
+              <span class="node-meta">JANUARY 2026</span>
+              <h3 class="node-title">Building with tldraw</h3>
+              <p class="node-description">Exploring the infinite canvas pattern and how it transforms content navigation.</p>
+            </div>
+          </div>
+          <span class="label">Default (280×200px)</span>
+        </div>
+        
+        <!-- YouTube Variant -->
+        <div>
+          <div class="component-showcase">
+            <div class="timeline-node youtube" tabindex="0">
+              <div class="node-thumbnail">[Video Thumbnail]</div>
+              <span class="node-meta">DECEMBER 2025</span>
+              <h3 class="node-title">Design Systems Talk</h3>
+            </div>
+          </div>
+          <span class="label">YouTube (320×180px)</span>
+        </div>
+        
+        <!-- With Thumbnail -->
+        <div>
+          <div class="component-showcase">
+            <div class="timeline-node" tabindex="0">
+              <div class="node-thumbnail">[Image]</div>
+              <span class="node-meta">NOVEMBER 2025</span>
+              <h3 class="node-title">Project Launch</h3>
+            </div>
+          </div>
+          <span class="label">With Thumbnail</span>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Component 2: Portfolio Hub -->
+    <section class="section">
+      <h2 class="section-title">2. Portfolio Hub (Central Node)</h2>
+      <p class="section-description">Central "about me" node that serves as the timeline origin point</p>
+      
+      <div class="component-showcase">
+        <div class="portfolio-hub">
+          <div class="hub-header">
+            <h1 class="hub-title">Thuy Hoang</h1>
+            <p class="hub-subtitle">Designer & Developer</p>
+          </div>
+          <div class="hub-body">
+            <p class="hub-bio">
+              Building interactive experiences at the intersection of design and code.
+            </p>
+          </div>
+          <div class="hub-actions">
+            <button class="btn btn-primary">Get in Touch</button>
+          </div>
+        </div>
+      </div>
+      <span class="label">Portfolio Hub (640×360px)</span>
+    </section>
+    
+    <!-- Component 3: Canvas Controls -->
+    <section class="section">
+      <h2 class="section-title">3. Canvas Controls Toolbar</h2>
+      <p class="section-description">Floating controls for pan/zoom/reset/game mode with glassmorphism effect</p>
+      
+      <div class="component-showcase">
+        <div class="canvas-controls">
+          <button class="control-btn" aria-label="Zoom in">+</button>
+          <button class="control-btn" aria-label="Zoom out">−</button>
+          <div class="control-divider"></div>
+          <button class="control-btn" aria-label="Reset view">⌂</button>
+          <button class="control-btn btn-primary active" aria-label="Toggle game mode">🚀</button>
+        </div>
+      </div>
+      <span class="label">Glassmorphism Toolbar</span>
+    </section>
+    
+    <!-- Component 4: Buttons -->
+    <section class="section">
+      <h2 class="section-title">4. Button Components</h2>
+      <p class="section-description">Primary, secondary, and tertiary action buttons</p>
+      
+      <div class="component-showcase flex-center">
+        <button class="btn btn-primary">Primary Button</button>
+        <button class="btn btn-secondary">Secondary Button</button>
+        <a href="#" class="btn btn-tertiary">Tertiary Button</a>
+      </div>
+      <span class="label">Button Variants</span>
+    </section>
+    
+    <!-- Component 5: Input Field -->
+    <section class="section">
+      <h2 class="section-title">5. Input Field</h2>
+      <p class="section-description">Text input with bottom-only ghost border</p>
+      
+      <div class="component-showcase">
+        <div style="width: 100%; max-width: 400px;">
+          <input 
+            type="text" 
+            class="input-field" 
+            placeholder="Search timeline..."
+            aria-label="Search"
+          />
+        </div>
+      </div>
+      <span class="label">Editorial Input Style</span>
+    </section>
+    
+    <!-- Component 6: Loading Skeleton -->
+    <section class="section">
+      <h2 class="section-title">6. Loading State (Skeleton)</h2>
+      <p class="section-description">Shimmer animation while content loads</p>
+      
+      <div class="component-showcase">
+        <div class="skeleton-node"></div>
+      </div>
+      <span class="label">Skeleton Loader</span>
+    </section>
+    
+    <!-- Component 7: Game Mode Cursor -->
+    <section class="section">
+      <h2 class="section-title">7. Game Mode Cursor</h2>
+      <p class="section-description">Spaceship cursor for game mode navigation</p>
+      
+      <div class="component-showcase">
+        <div class="game-mode-demo">
+          <div class="flex-col text-center">
+            <svg class="spaceship-cursor" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 0 auto;">
+              <path d="M16 4L20 12H24L16 28L8 12H12L16 4Z" 
+                    fill="currentColor" 
+                    stroke="currentColor" 
+                    stroke-width="2" 
+                    stroke-linejoin="round"/>
+              <circle cx="16" cy="14" r="2" fill="#FFFFFF"/>
+            </svg>
+            <span style="color: var(--text-secondary); font-size: var(--text-sm);">Hover for custom cursor</span>
+          </div>
+        </div>
+      </div>
+      <span class="label">Custom SVG Cursor</span>
+    </section>
+    
+    <!-- Component 8: Focus Quote -->
+    <section class="section">
+      <h2 class="section-title">8. Focus Quote (Signature Component)</h2>
+      <p class="section-description">Large, centered editorial quote for emphasis</p>
+      
+      <div class="component-showcase">
+        <blockquote class="focus-quote">
+          The canvas must feel smooth and intuitive to explore
+        </blockquote>
+      </div>
+      <span class="label">Editorial Quote</span>
+    </section>
+    
+    <!-- Design Principles Footer -->
+    <footer style="margin-top: var(--spacing-24); padding-top: var(--spacing-12); border-top: 1px solid var(--border-ghost); text-align: center;">
+      <h3 style="font-family: var(--font-heading); font-size: var(--text-xl); margin-bottom: var(--spacing-4);">Design Principles</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--spacing-6); max-width: 1000px; margin: 0 auto;">
+        <div>
+          <div style="font-weight: var(--font-weight-semibold); margin-bottom: var(--spacing-2);">Tonal Layering</div>
+          <div style="color: var(--text-secondary); font-size: var(--text-sm);">Background shifts over borders</div>
+        </div>
+        <div>
+          <div style="font-weight: var(--font-weight-semibold); margin-bottom: var(--spacing-2);">Generous Whitespace</div>
+          <div style="color: var(--text-secondary); font-size: var(--text-sm);">Let content breathe</div>
+        </div>
+        <div>
+          <div style="font-weight: var(--font-weight-semibold); margin-bottom: var(--spacing-2);">Typography-First</div>
+          <div style="color: var(--text-secondary); font-size: var(--text-sm);">Text defines hierarchy</div>
+        </div>
+        <div>
+          <div style="font-weight: var(--font-weight-semibold); margin-bottom: var(--spacing-2);">Ambient Shadows</div>
+          <div style="color: var(--text-secondary); font-size: var(--text-sm);">Invisible but felt</div>
+        </div>
+        <div>
+          <div style="font-weight: var(--font-weight-semibold); margin-bottom: var(--spacing-2);">Transform-Based Motion</div>
+          <div style="color: var(--text-secondary); font-size: var(--text-sm);">GPU-accelerated only</div>
+        </div>
+      </div>
+      <div style="margin-top: var(--spacing-12); color: var(--text-tertiary); font-size: var(--text-sm);">
+        <p>Last Updated: March 22, 2026</p>
+        <p>Component Count: 8 core components</p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
