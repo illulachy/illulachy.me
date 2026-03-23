@@ -24,21 +24,33 @@ progress:
 
 ## Current Position
 
-Phase: 01 (Canvas Foundation) — COMPLETE ✓
-Plan: 1 of 1 — COMPLETE
+Phase: 02 (Content Pipeline)
+Current Plan: 1 of 2 — COMPLETE ✓
+Next Plan: 02-02-PLAN.md
 
 ## Performance Metrics
 
 **Phases completed:** 1 / 6  
-**Plans completed:** 1 / 1  
-**Must-haves delivered:** 10 / 10 (Phase 1)  
-**Avg phase completion:** 18 minutes (Phase 1)  
+**Plans completed:** 2 / 3  
+**Must-haves delivered:** 15 / 15 (Phase 1-2.1)  
+**Avg phase completion:** 18 minutes (Phase 1), 3.5 minutes (Phase 2 Plan 1)
 
-**Velocity:** 14 tasks in 18 minutes (~1.3 min/task)
+**Velocity:** 17 tasks in 21.5 minutes (~1.3 min/task)
 
 ## Accumulated Context
 
 ### Key Decisions
+
+**2026-03-23 - Phase 2 Plan 1 Execution Complete:**
+
+- ✓ Core content pipeline: markdown → JSON with gray-matter/zod/fast-glob
+- ✓ ContentType changed from union to string for extensibility
+- ✓ Date normalization: append " UTC" for consistent partial date handling
+- ✓ Validation schema: type, title, date required; URL validation for urls
+- ✓ Draft filtering (draft: true) and duplicate ID detection
+- ✓ Generator exports testable functions (parseContentFile, normalizeDate)
+- ✓ 3 tasks completed in 3.5 minutes, 3 commits, 9 unit tests passing
+- ✓ Requirements fulfilled: CONTENT-01, CONTENT-02, CONTENT-03, CONTENT-04, TECH-03
 
 **2026-03-22 - Phase 1 Execution Complete:**
 
@@ -76,8 +88,10 @@ Plan: 1 of 1 — COMPLETE
 - [x] Plan Phase 1: Canvas Foundation
 - [x] Execute Phase 1: Canvas Foundation
 - [x] Validate tldraw v4.5 is latest stable version during Wave 0
-- [ ] Plan Phase 2: Content Pipeline
-- [ ] Create sample markdown content during Phase 2
+- [x] Plan Phase 2: Content Pipeline
+- [x] Execute Phase 2 Plan 1: Core generator script
+- [ ] Execute Phase 2 Plan 2: Vite integration and sample content
+- [ ] Create 12+ sample markdown entries during Phase 2 Plan 2
 
 ### Blockers
 
@@ -85,17 +99,19 @@ None currently.
 
 ## Session Continuity
 
-**Last session:** 2026-03-22  
-**Completed:** Phase 1 execution (Canvas Foundation)  
-**Next action:** `/gsd-plan-phase 02` to plan Content Pipeline
+**Last session:** 2026-03-23  
+**Completed:** Phase 2 Plan 1 execution (Core Content Pipeline)  
+**Next action:** Execute Phase 2 Plan 2 (Vite integration and sample content)
 
 **Context for next session:**
 
-- Phase 1 complete: Infinite canvas working at 60 FPS with all navigation modes
-- TypeScript types ready: ContentNode, TimelineData defined in types/content.ts
-- Canvas accepts content props for Phase 3 integration
-- Ready to build markdown authoring workflow + build-time content parser
-- Need 10-20 sample entries spanning YouTube, blog, project, milestone types
+- Phase 2 Plan 1 complete: Generator script working with validation and tests
+- Generator parses markdown → JSON with gray-matter/zod/fast-glob
+- ContentType now extensible (string instead of union)
+- Date normalization handles partial dates (e.g., "January 2024")
+- 9 unit tests passing, all verification criteria met
+- Ready for Vite plugin integration and sample content creation
+- Need to create 12+ sample entries spanning YouTube, blog, project, milestone types
 
 ---
-*State updated: 2026-03-22 after Phase 1 execution*
+*State updated: 2026-03-23 after Phase 2 Plan 1 execution*

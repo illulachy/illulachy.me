@@ -47,10 +47,10 @@
 
 ### Content Pipeline
 
-- [ ] **CONTENT-01**: Content is authored in markdown files with YAML frontmatter
-- [ ] **CONTENT-02**: Markdown files include date, title, URL, and content type in frontmatter
-- [ ] **CONTENT-03**: Content is processed at build time (not runtime)
-- [ ] **CONTENT-04**: Timeline data is bundled as JSON
+- [x] **CONTENT-01**: Content is authored in markdown files with YAML frontmatter
+- [x] **CONTENT-02**: Markdown files include date, title, URL, and content type in frontmatter
+- [x] **CONTENT-03**: Content is processed at build time (not runtime)
+- [x] **CONTENT-04**: Timeline data is bundled as JSON
 - [ ] **CONTENT-05**: At least 10-20 sample entries exist for testing
 
 ### UI & Polish
@@ -65,7 +65,7 @@
 
 - [x] **TECH-01**: Built with Vite + React 19 + TypeScript
 - [x] **TECH-02**: Infinite canvas powered by tldraw 4.5
-- [ ] **TECH-03**: Content parsing uses gray-matter + remark
+- [x] **TECH-03**: Content parsing uses gray-matter + remark
 - [x] **TECH-04**: Site deploys as static SPA
 - [x] **TECH-05**: TypeScript types defined for all content structures
 
@@ -138,10 +138,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | GAME-02 | Phase 6 | Pending |
 | GAME-03 | Phase 6 | Pending |
 | GAME-04 | Phase 6 | Pending |
-| CONTENT-01 | Phase 2 | Pending |
-| CONTENT-02 | Phase 2 | Pending |
-| CONTENT-03 | Phase 2 | Pending |
-| CONTENT-04 | Phase 2 | Pending |
+| CONTENT-01 | Phase 2 | Complete |
+| CONTENT-02 | Phase 2 | Complete |
+| CONTENT-03 | Phase 2 | Complete |
+| CONTENT-04 | Phase 2 | Complete |
 | CONTENT-05 | Phase 2 | Pending |
 | UI-01 | Phase 5 | Pending |
 | UI-02 | Phase 5 | Pending |
@@ -150,7 +150,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | UI-05 | Phase 5 | Pending |
 | TECH-01 | Phase 1 | Complete ✓ |
 | TECH-02 | Phase 1 | Complete ✓ |
-| TECH-03 | Phase 2 | Pending |
+| TECH-03 | Phase 2 | Complete |
 | TECH-04 | Phase 1 | Complete ✓ |
 | TECH-05 | Phase 1 | Complete ✓ |
 
