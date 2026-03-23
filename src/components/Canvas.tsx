@@ -2,14 +2,14 @@ import { useState, useRef, useCallback, useEffect, useMemo } from 'react'
 import { Tldraw, Editor } from 'tldraw'
 import 'tldraw/tldraw.css'
 import { CanvasLoader } from './CanvasLoader'
-import { CanvasControls } from './CanvasControls'
-import { CanvasFogOverlay } from './CanvasFogOverlay'
+// import { CanvasControls } from './CanvasControls'
+// import { CanvasFogOverlay } from './CanvasFogOverlay'
 import { MilestoneModal } from './MilestoneModal'
 import { TimelineOverlay } from './TimelineOverlay'
 import { customShapeUtils } from './shapes'
 import { useCameraState } from '@/hooks/useCameraState'
 import { useArrowKeyNavigation } from '@/hooks/useArrowKeyNavigation'
-import { useControlsVisibility } from '@/hooks/useControlsVisibility'
+// import { useControlsVisibility } from '@/hooks/useControlsVisibility'
 import { useTimelineData } from '@/hooks/useTimelineData'
 import { useAboutData } from '@/hooks/useAboutData'
 import { useViewportTransform } from '@/hooks/useViewportTransform'
@@ -37,7 +37,7 @@ export function Canvas() {
   const viewportTransform = useViewportTransform(editorRef.current)
   
   // Wire up hooks
-  const { visible } = useControlsVisibility()
+  // const { visible } = useControlsVisibility()
   useCameraState(editorRef.current)
   useArrowKeyNavigation(editorRef.current)
   
