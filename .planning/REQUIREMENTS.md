@@ -22,9 +22,9 @@
 
 ### Timeline Content
 
-- [ ] **TIME-01**: Timeline extends left from portfolio node
-- [ ] **TIME-02**: Timeline nodes are positioned chronologically (oldest = farthest left)
-- [ ] **TIME-03**: Most recent entries appear closest to portfolio hub
+- [x] **TIME-01**: Timeline extends left from portfolio node
+- [x] **TIME-02**: Timeline nodes are positioned chronologically (oldest = farthest left)
+- [x] **TIME-03**: Most recent entries appear closest to portfolio hub
 - [ ] **TIME-04**: YouTube content displays as thumbnail node
 - [ ] **TIME-05**: Blog/note content displays as card node
 - [ ] **TIME-06**: Project content displays as card node
@@ -122,9 +122,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | HUB-01 | Phase 3 | Complete |
 | HUB-02 | Phase 3 | Complete |
 | HUB-03 | Phase 3 | Complete |
-| TIME-01 | Phase 4 | Pending |
-| TIME-02 | Phase 4 | Pending |
-| TIME-03 | Phase 4 | Pending |
+| TIME-01 | Phase 4 | Complete |
+| TIME-02 | Phase 4 | Complete |
+| TIME-03 | Phase 4 | Complete |
 | TIME-04 | Phase 4 | Pending |
 | TIME-05 | Phase 4 | Pending |
 | TIME-06 | Phase 4 | Pending |

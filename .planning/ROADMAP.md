@@ -111,7 +111,7 @@ Plans:
 | 1. Canvas Foundation | 1/1 | Complete ✓ | 2026-03-22 |
 | 2. Content Pipeline | 2/2 | Complete ✓  | 2026-03-23 |
 | 3. Custom Shapes & Hub | 2/2 | Complete ✓ | 2026-03-23 |
-| 4. Timeline Layout | 0/0 | Not started | - |
+| 4. Timeline Layout | 1/2 | In Progress | - |
 | 5. UI Chrome | 0/0 | Not started | - |
 | 6. Game Mode | 0/0 | Not started | - |
 

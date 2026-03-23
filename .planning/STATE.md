@@ -2,43 +2,54 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: planning
-last_updated: "2026-03-23T05:30:58.587Z"
+status: executing
+last_updated: "2026-03-23T07:11:33.733Z"
 progress:
   total_phases: 6
   completed_phases: 3
-  total_plans: 5
-  completed_plans: 5
+  total_plans: 7
+  completed_plans: 6
 ---
 
 # Project State: illulachy.me
 
 **Last updated:** 2026-03-22  
-**Status:** Ready to plan
+**Status:** Executing Phase 04
 
 ## Project Reference
 
 **Core Value:** The canvas must feel smooth and intuitive to explore — pan/zoom navigation works flawlessly, and the timeline layout clearly communicates my journey over time.
 
-**Current Focus:** Phase 03 — custom-shapes-hub
+**Current Focus:** Phase 04 — timeline-layout
 
 ## Current Position
 
-Phase: 03 (custom-shapes-hub) — COMPLETE
+Phase: 04 (timeline-layout) — EXECUTING
 Plan: 2 of 2
 
 ## Performance Metrics
 
 **Phases completed:** 3 / 6  
-**Plans completed:** 5 / 5  
-**Must-haves delivered:** 28 / 28 (Phase 1-3 complete)  
-**Avg plan completion:** 18 min (Phase 1), 3.5 min (Phase 2 Plan 1), 5 min (Phase 2 Plan 2), 8 min (Phase 3 Plan 1), 10 min (Phase 3 Plan 2)
+**Plans completed:** 6 / 7  
+**Must-haves delivered:** 31 / 31 (TIME-01, TIME-02, TIME-03 from Phase 4 Plan 1)  
+**Avg plan completion:** 18 min (Phase 1), 3.5 min (Phase 2 Plan 1), 5 min (Phase 2 Plan 2), 8 min (Phase 3 Plan 1), 10 min (Phase 3 Plan 2), 9 min (Phase 4 Plan 1)
 
-**Velocity:** 26 tasks in 44.5 minutes (~1.7 min/task)
+**Velocity:** 31 tasks in 53.3 minutes (~1.7 min/task)
 
 ## Accumulated Context
 
 ### Key Decisions
+
+**2026-03-23 - Phase 4 Plan 1 Execution Complete:**
+
+- ✓ D3-force simulation: forceX=0.5 temporal gravity, forceY=0.1 axis centering, forceCollide=245px
+- ✓ Collision radius: sqrt(280² + 200²)/2 + 150/2 = 245px ensures 150px+ gaps even at corners
+- ✓ Date-to-X mapping: 2px per day with MIN_OFFSET=100px, newest node at ~-100px, oldest at ~-3700px
+- ✓ Session-based seeding: 24-hour TTL in localStorage, same layout within session, variety between
+- ✓ Synchronous simulation: 300 iterations, alpha < 0.001, <10ms for 11 nodes
+- ✓ 28 tests added: dateUtils (8), sessionSeed (4), layout integration (14)
+- ✓ All requirements fulfilled: TIME-01 (negative X), TIME-02 (chronological), TIME-03 (newest closest)
+- ✓ 5 tasks in 8m 47s, 5 commits, constellation scatter aesthetic achieved
 
 **2026-03-23 - Phase 3 Plan 2 Execution Complete:**
 
@@ -133,6 +144,8 @@ Plan: 2 of 2
 - [x] Execute Phase 3 Plan 2: Canvas integration and modal
 - [x] Phase 3 COMPLETE: All 8 requirements delivered
 - [ ] Plan Phase 4: Timeline Layout (chronological positioning + collision detection)
+- [x] Execute Phase 4 Plan 1: Core timeline layout algorithm (TIME-01, TIME-02, TIME-03)
+- [ ] Execute Phase 4 Plan 2: Visual timeline axis (TIME-04, TIME-05, TIME-06, TIME-07)
 
 ### Blockers
 
@@ -140,9 +153,21 @@ None currently.
 
 ## Session Continuity
 
-**Last session:** 2026-03-23T05:20:56.980Z
-**Completed:** Phase 3 Plan 2 execution (Canvas Integration & Modal)  
-**Next action:** Plan Phase 4 (Timeline Layout)
+**Last session:** 2026-03-23T07:11:33.733Z
+**Completed:** Phase 4 Plan 1 execution (Core Timeline Layout Algorithm)  
+**Next action:** Execute Phase 4 Plan 2 (Visual Timeline Axis)
+
+**Context for next session:**
+
+- Phase 4 Plan 1 COMPLETE: Chronological layout with D3-force simulation
+- TIME-01, TIME-02, TIME-03 requirements fulfilled
+- 11 timeline nodes now positioned by date (oldest farthest left, newest closest to hub)
+- Constellation scatter aesthetic with temporal gravity clustering
+- No overlaps (150px+ minimum gaps via 245px collision radius)
+- Session-based seeding (24-hour TTL) for stable-yet-varied layouts
+- All 45 tests passing, build successful
+- Next plan will add visual timeline axis (horizontal line, node connectors, fade near hub)
+- Manual browser verification recommended: Run `npm run dev`, test chronological layout
 
 **Context for next session:**
 
