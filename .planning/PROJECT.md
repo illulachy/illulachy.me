@@ -12,21 +12,25 @@ The canvas must feel smooth and intuitive to explore — pan/zoom navigation wor
 
 ### Validated
 
-(None yet — ship to validate)
+**Phase 1 (Canvas Foundation):**
+- [x] Infinite canvas with pan and zoom navigation (mouse drag, scroll wheel, touch gestures, arrow keys)
+- [x] Responsive on desktop and mobile (touch navigation)
+
+**Phase 2 (Content Pipeline):**
+- [x] Content sourced from markdown files in the repository
+- [x] Multiple content types: YouTube videos (thumbnails), blog posts, notes, projects
+
+**Phase 3 (Custom Shapes & Hub):**
+- [x] Central portfolio node (16:9) displaying an "about me" section
+- [x] Content nodes as clickable cards — click to open external links
+- [x] YouTube nodes link to YouTube
+- [x] Blog/note nodes link to letters.illulachy.me
+- [x] Project nodes link to external project URLs
 
 ### Active
 
-- [ ] Infinite canvas with pan and zoom navigation (mouse drag, scroll wheel, touch gestures, arrow keys)
-- [ ] Central portfolio node (16:9) displaying an "about me" section
 - [ ] Timeline extending left from the portfolio node, showing chronological entries (most recent closest to center)
-- [ ] Multiple content types: YouTube videos (thumbnails), blog posts, notes, projects
-- [ ] Content nodes as clickable cards — click to open external links
-- [ ] YouTube nodes link to YouTube
-- [ ] Blog/note nodes link to letters.illulachy.me
-- [ ] Project nodes link to external project URLs
 - [ ] "Game mode" — hotkey switches to spaceship cursor, arrow key navigation through timeline
-- [ ] Content sourced from markdown files in the repository
-- [ ] Responsive on desktop and mobile (touch navigation)
 - [ ] Monorepo structure: portfolio site (illulachy.me) + blog site (letters.illulachy.me)
 
 ### Out of Scope
@@ -79,4 +83,4 @@ The canvas must feel smooth and intuitive to explore — pan/zoom navigation wor
 | Game mode with spaceship | Adds personality and playful interaction to exploration | — Pending |
 
 ---
-*Last updated: 2026-03-22 after initialization*
+*Last updated: 2026-03-23 after Phase 3 completion*
