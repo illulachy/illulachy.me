@@ -1,5 +1,6 @@
 // Phase 2+ content types (defined now for forward compatibility)
-export type ContentType = 'youtube' | 'blog' | 'project' | 'milestone'
+// Free-form string for extensibility (not locked to specific types)
+export type ContentType = string
 
 export interface ContentNode {
   id: string
@@ -9,6 +10,9 @@ export interface ContentNode {
   url?: string
   thumbnail?: string
   description?: string
+  // Type-specific optional fields
+  institution?: string  // for milestone entries
+  tech?: string         // for project entries
 }
 
 export interface TimelineData {
