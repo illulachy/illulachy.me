@@ -44,14 +44,13 @@ export function Canvas() {
   const handleMount = useCallback((editor: Editor) => {
     editorRef.current = editor
     
-    // Configure navigation: drag to pan (no space key), scroll to zoom
+    // Configure navigation
     editor.updateInstanceState({ 
       isGridMode: true // Enable logical grid
     })
     
-    // Note: tldraw's wheel behavior is controlled by user prefs
-    // Default is scroll to zoom, Cmd+scroll to pan
-    // This matches the user's request
+    // Set hand tool as default (drag to pan without Space key)
+    editor.setCurrentTool('hand')
     
     requestAnimationFrame(() => {
       requestAnimationFrame(() => setIsReady(true))
