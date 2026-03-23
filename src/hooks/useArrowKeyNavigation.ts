@@ -1,9 +1,14 @@
 import { useEffect, useCallback } from 'react'
 import type { Editor } from 'tldraw'
 
-export function useArrowKeyNavigation(editor: Editor | null) {
+/**
+ * Hook to handle arrow key navigation (pan camera)
+ * @param editor - tldraw Editor instance
+ * @param enabled - Whether arrow key navigation is enabled (default: true)
+ */
+export function useArrowKeyNavigation(editor: Editor | null, enabled: boolean = true) {
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    if (!editor) return
+    if (!editor || !enabled) return
     
     const PAN_AMOUNT = 100
     const camera = editor.getCamera()
@@ -32,10 +37,12 @@ export function useArrowKeyNavigation(editor: Editor | null) {
       { x: newX, y: newY, z: camera.z },
       { animation: { duration: 150 } }
     )
-  }, [editor])
+  }, [editor, enabled])
   
   useEffect(() => {
+    if (!enabled) return
+    
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [handleKeyDown])
+  }, [handleKeyDown, enabled])
 }
