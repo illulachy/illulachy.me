@@ -20,6 +20,8 @@ declare module 'tldraw' {
       date: string
       institution?: string
       description?: string
+      thumbnail?: string
+      tech?: string
     }
   }
 }
@@ -44,6 +46,8 @@ export class MilestoneNodeUtil extends BaseBoxShapeUtil<MilestoneNodeShape> {
     date: T.string,
     institution: T.string.optional(),
     description: T.string.optional(),
+    thumbnail: T.string.optional(),
+    tech: T.string.optional(),
   }
   
   getDefaultProps(): MilestoneNodeShape['props'] {
@@ -55,6 +59,8 @@ export class MilestoneNodeUtil extends BaseBoxShapeUtil<MilestoneNodeShape> {
       date: '',
       institution: undefined,
       description: undefined,
+      thumbnail: undefined,
+      tech: undefined,
     }
   }
   

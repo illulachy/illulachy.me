@@ -21,6 +21,8 @@ declare module 'tldraw' {
       thumbnail?: string
       date: string
       tech?: string
+      description?: string
+      institution?: string
     }
   }
 }
@@ -45,6 +47,8 @@ export class ProjectNodeUtil extends BaseBoxShapeUtil<ProjectNodeShape> {
     thumbnail: T.string.optional(),
     date: T.string,
     tech: T.string.optional(),
+    description: T.string.optional(),
+    institution: T.string.optional(),
   }
   
   getDefaultProps(): ProjectNodeShape['props'] {
@@ -57,6 +61,8 @@ export class ProjectNodeUtil extends BaseBoxShapeUtil<ProjectNodeShape> {
       thumbnail: undefined,
       date: '',
       tech: undefined,
+      description: undefined,
+      institution: undefined,
     }
   }
   

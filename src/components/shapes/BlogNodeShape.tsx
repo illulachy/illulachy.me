@@ -20,6 +20,9 @@ declare module 'tldraw' {
       url: string
       date: string
       description?: string
+      thumbnail?: string
+      tech?: string
+      institution?: string
     }
   }
 }
@@ -43,6 +46,9 @@ export class BlogNodeUtil extends BaseBoxShapeUtil<BlogNodeShape> {
     url: T.string,
     date: T.string,
     description: T.string.optional(),
+    thumbnail: T.string.optional(),
+    tech: T.string.optional(),
+    institution: T.string.optional(),
   }
   
   getDefaultProps(): BlogNodeShape['props'] {
@@ -54,6 +60,9 @@ export class BlogNodeUtil extends BaseBoxShapeUtil<BlogNodeShape> {
       url: '',
       date: '',
       description: undefined,
+      thumbnail: undefined,
+      tech: undefined,
+      institution: undefined,
     }
   }
   

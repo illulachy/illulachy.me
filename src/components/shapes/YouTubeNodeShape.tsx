@@ -20,6 +20,9 @@ declare module 'tldraw' {
       url: string
       thumbnail?: string
       date: string
+      tech?: string
+      institution?: string
+      description?: string
     }
   }
 }
@@ -43,6 +46,9 @@ export class YouTubeNodeUtil extends BaseBoxShapeUtil<YouTubeNodeShape> {
     url: T.string,
     thumbnail: T.string.optional(),
     date: T.string,
+    tech: T.string.optional(),
+    institution: T.string.optional(),
+    description: T.string.optional(),
   }
   
   getDefaultProps(): YouTubeNodeShape['props'] {
@@ -54,6 +60,9 @@ export class YouTubeNodeUtil extends BaseBoxShapeUtil<YouTubeNodeShape> {
       url: '',
       thumbnail: undefined,
       date: '',
+      tech: undefined,
+      institution: undefined,
+      description: undefined,
     }
   }
   
