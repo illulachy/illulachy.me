@@ -59,7 +59,11 @@ Plans:
   5. User can click project node and it opens external project URL (new tab)
   6. User can click milestone node and details display (inline or modal)
   7. All nodes show hover states (cursor pointer, visual feedback) indicating they're clickable
-**Plans:** TBD
+**Plans:** 2 plans
+
+Plans:
+- [ ] 03-01-PLAN.md — Types, about.md pipeline, 5 custom shape utils (Hub, YouTube, Blog, Project, Milestone), positioning utility
+- [ ] 03-02-PLAN.md — Data fetching hooks, MilestoneModal, Canvas integration with shapes and click handlers
 
 ### Phase 4: Timeline Layout
 **Goal:** Timeline nodes are positioned chronologically with no overlaps  
