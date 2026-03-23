@@ -27,9 +27,10 @@ The canvas must feel smooth and intuitive to explore — pan/zoom navigation wor
 - [x] Blog/note nodes link to letters.illulachy.me
 - [x] Project nodes link to external project URLs
 
-### Active
+**Phase 4 (Timeline Layout):**
+- [x] Timeline extending left from the portfolio node, showing chronological entries (most recent closest to center)
 
-- [ ] Timeline extending left from the portfolio node, showing chronological entries (most recent closest to center)
+### Active
 - [ ] "Game mode" — hotkey switches to spaceship cursor, arrow key navigation through timeline
 - [ ] Monorepo structure: portfolio site (illulachy.me) + blog site (letters.illulachy.me)
 
@@ -83,4 +84,4 @@ The canvas must feel smooth and intuitive to explore — pan/zoom navigation wor
 | Game mode with spaceship | Adds personality and playful interaction to exploration | — Pending |
 
 ---
-*Last updated: 2026-03-23 after Phase 3 completion*
+*Last updated: 2026-03-23 after Phase 4 completion*
