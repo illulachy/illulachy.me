@@ -49,14 +49,16 @@ export function simulateLayout(
   }))
   
   // 2. Create force simulation with hub exclusion
-  const HUB_RADIUS = 500 // Exclusion zone around hub (x=0, y=0)
+  const HUB_WIDTH = 640 // Hub shape width from Phase 3
+  const HUB_BUFFER = 300 // Additional spacing beyond hub edge
+  const HUB_EXCLUSION = -(HUB_WIDTH / 2 + HUB_BUFFER) // -620px from center
   
   const simulation = forceSimulation(simNodes)
     .force('collide', forceCollide<SimNode>().radius(COLLISION_RADIUS))
     .force('x', forceX<SimNode>(d => {
       const targetX = dateToX(d.date)
       // Ensure nodes stay left of hub exclusion zone
-      return Math.min(targetX, -HUB_RADIUS)
+      return Math.min(targetX, HUB_EXCLUSION)
     }).strength(0.5)) // Temporal gravity
     .force('y', forceY<SimNode>(0).strength(0.1)) // Weak axis pull (allows scatter)
     .stop() // Don't auto-tick (run synchronously)
