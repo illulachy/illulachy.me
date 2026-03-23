@@ -66,7 +66,7 @@ Plans:
 - [x] 03-02-PLAN.md — Data fetching hooks, MilestoneModal, Canvas integration with shapes and click handlers
 
 ### Phase 4: Timeline Layout
-**Goal:** Timeline nodes are positioned chronologically with no overlaps  
+**Goal:** Timeline nodes are positioned chronologically with no overlaps using D3-force physics simulation  
 **Depends on:** Phase 3 (needs shape dimensions for collision detection)  
 **Requirements:** TIME-01, TIME-02, TIME-03, TIME-04, TIME-05, TIME-06, TIME-07  
 **Success Criteria** (what must be TRUE):
@@ -75,8 +75,11 @@ Plans:
   3. Most recent entries appear closest to portfolio hub
   4. Nodes with same/close dates don't overlap (collision detection working)
   5. All 4 content types (YouTube, blog, project, milestone) render correctly with appropriate visual styling
-**Plans:** TBD  
-**Research Flag:** Complex — Timeline layout algorithms with collision detection need experimentation during planning
+**Plans:** 2 plans
+
+Plans:
+- [ ] 04-01-PLAN.md — Core algorithm: D3-force simulation, date-to-X mapping, session seeding, collision detection (TIME-01, TIME-02, TIME-03)
+- [ ] 04-02-PLAN.md — Visual axis: SVG overlay with timeline axis and node connectors synchronized to camera (TIME-04, TIME-05, TIME-06, TIME-07)
 
 ### Phase 5: UI Chrome
 **Goal:** Site is visually polished with loading states and responsive layout  
