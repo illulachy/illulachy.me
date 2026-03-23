@@ -91,7 +91,11 @@ Plans:
   3. Animations (loading spinner, transitions) powered by Motion.dev
   4. Site is fully responsive on mobile (touch works) and desktop (mouse works)
   5. Loading spinner displays during initial canvas load and hides when ready
-**Plans:** TBD
+**Plans:** 2 plans
+
+Plans:
+- [ ] 05-01-PLAN.md — Foundation: Install Tailwind v4, Motion.dev, shadcn/ui; Create @theme config with design tokens; Create cn() utility and Dialog component (UI-01, UI-02, UI-03)
+- [ ] 05-02-PLAN.md — Component Migration: Migrate CanvasControls/CanvasLoader/MilestoneModal to Tailwind; Add Motion.dev exit animations; Make modal responsive (UI-04, UI-05)
 
 ### Phase 6: Game Mode
 **Goal:** User can toggle spaceship navigation mode with arrow keys  
@@ -112,7 +116,7 @@ Plans:
 | 2. Content Pipeline | 2/2 | Complete ✓  | 2026-03-23 |
 | 3. Custom Shapes & Hub | 2/2 | Complete ✓ | 2026-03-23 |
 | 4. Timeline Layout | 2/2 | Complete ✓ | 2026-03-23 |
-| 5. UI Chrome | 0/0 | Not started | - |
+| 5. UI Chrome | 0/2 | Not started | - |
 | 6. Game Mode | 0/0 | Not started | - |
 
 ## Coverage
