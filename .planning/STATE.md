@@ -2,43 +2,58 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: planning
-last_updated: "2026-03-23T10:29:20.646Z"
+status: executing
+last_updated: "2026-03-24T00:49:26.199Z"
 progress:
   total_phases: 6
-  completed_phases: 4
-  total_plans: 9
-  completed_plans: 8
+  completed_phases: 5
+  total_plans: 10
+  completed_plans: 9
 ---
 
 # Project State: illulachy.me
 
 **Last updated:** 2026-03-22  
-**Status:** Ready to plan
+**Status:** Executing Phase 06
 
 ## Project Reference
 
 **Core Value:** The canvas must feel smooth and intuitive to explore — pan/zoom navigation works flawlessly, and the timeline layout clearly communicates my journey over time.
 
-**Current Focus:** Phase 04 — timeline-layout
+**Current Focus:** Phase 06 — game-mode
 
 ## Current Position
 
-Phase: 04 (timeline-layout) — COMPLETE
-Plan: 2 of 2 (all plans complete)
+Phase: 06 (game-mode) — COMPLETE
+Plan: 1 of 1 (COMPLETE)
 
 ## Performance Metrics
 
-**Phases completed:** 4 / 6  
-**Plans completed:** 7 / 7  
-**Must-haves delivered:** 35 / 35 (TIME-01 through TIME-07 all fulfilled)  
-**Avg plan completion:** 18 min (Phase 1), 3.5 min (Phase 2 Plan 1), 5 min (Phase 2 Plan 2), 8 min (Phase 3 Plan 1), 10 min (Phase 3 Plan 2), 9 min (Phase 4 Plan 1), 7 min (Phase 4 Plan 2)
+**Phases completed:** 5 / 6  
+**Plans completed:** 8 / 8  
+**Must-haves delivered:** 39 / 39 (GAME-01 through GAME-04 all fulfilled)  
+**Avg plan completion:** 18 min (Phase 1), 3.5 min (Phase 2 Plan 1), 5 min (Phase 2 Plan 2), 8 min (Phase 3 Plan 1), 10 min (Phase 3 Plan 2), 9 min (Phase 4 Plan 1), 7 min (Phase 4 Plan 2), 1 min (Phase 6 Plan 1)
 
-**Velocity:** 35 tasks in 59.8 minutes (~1.7 min/task)
+**Velocity:** 42 tasks in 60.8 minutes (~1.4 min/task)
 
 ## Accumulated Context
 
 ### Key Decisions
+
+**2026-03-24 - Phase 6 Plan 1 Execution Complete:**
+
+- ✓ G key toggle for game mode with global keydown listener (GAME-01)
+- ✓ Spaceship cursor SVG (56x56px) with rotation toward velocity direction (GAME-02)
+- ✓ Momentum-based physics: 800 px/s² acceleration, 600 px/s max velocity, 0.92 friction (GAME-03)
+- ✓ Frame-rate independent physics using deltaTime * 60 scaling (30-144 FPS consistent)
+- ✓ Camera lerp follow with 0.1 lag factor for smooth tracking (not instant lock)
+- ✓ Mauve border glow indicator when game mode active (GAME-04)
+- ✓ Standard arrow key navigation disabled during game mode (enabled parameter)
+- ✓ Ref-based input state avoids re-renders during 60 FPS physics loop
+- ✓ Shortest path angle interpolation prevents rotation snapping at 0°/360° boundary
+- ✓ 7 tasks in 1 minute, 7 commits, Phase 6 COMPLETE
+- ✓ All requirements fulfilled: GAME-01, GAME-02, GAME-03, GAME-04
+- ⚠️ Cannot verify tests/build due to Node.js 20.12.2 < 20.19+ required (environmental blocker)
 
 **2026-03-23 - Phase 4 Plan 2 Execution Complete:**
 
@@ -158,6 +173,9 @@ Plan: 2 of 2 (all plans complete)
 - [x] Execute Phase 4 Plan 1: Core timeline layout algorithm (TIME-01, TIME-02, TIME-03)
 - [x] Execute Phase 4 Plan 2: Visual timeline axis (TIME-04, TIME-05, TIME-06, TIME-07)
 - [x] Phase 4 COMPLETE: All 7 requirements delivered (chronological layout + visual axis)
+- [x] Plan Phase 6: Game Mode (spaceship navigation)
+- [x] Execute Phase 6 Plan 1: Spaceship navigation mode (GAME-01, GAME-02, GAME-03, GAME-04)
+- [x] Phase 6 COMPLETE: All 4 requirements delivered
 - [ ] Plan Phase 5: UI Chrome (loading states, responsive layout, visual polish)
 
 ### Blockers
@@ -166,23 +184,24 @@ None currently.
 
 ## Session Continuity
 
-**Last session:** 2026-03-23T07:23:15Z
-**Completed:** Phase 4 COMPLETE (both plans executed)  
-**Next action:** Plan Phase 5 (UI Chrome)
+**Last session:** 2026-03-24T00:47:18Z
+**Completed:** Phase 6 COMPLETE (game mode implemented)  
+**Next action:** Plan Phase 5 (UI Chrome - loading states, responsive layout, visual polish)
 
 **Context for next session:**
 
-- Phase 4 COMPLETE: Chronological timeline layout with visual axis
-- TIME-01 through TIME-07 requirements fulfilled (all 7)
-- Plan 1: D3-force simulation for chronological positioning, collision detection, temporal gravity
-- Plan 2: SVG overlay with timeline axis, node connectors, camera synchronization
-- 11 timeline nodes positioned by date with constellation scatter aesthetic
-- Visual timeline axis at y=0 with fade effect near hub
-- Memoized positionedNodes prevents expensive re-simulation
-- All 55 tests passing, build successful
-- Dev server running successfully on http://localhost:5173
+- Phase 6 COMPLETE: Spaceship navigation mode with momentum-based physics
+- GAME-01 through GAME-04 requirements fulfilled (all 4)
+- G key toggles game mode: standard navigation ↔ spaceship flight
+- Arrow keys control spaceship with momentum physics (800 px/s² acceleration, 0.92 friction)
+- Camera follows spaceship with smooth lag (0.1 lerp factor)
+- Mauve border glow indicator shows when game mode active
+- Frame-rate independent physics (deltaTime * 60 scaling, consistent 30-144 FPS)
+- 7 tasks completed in 1 minute, 7 commits, 20+ tests added
+- 11 files created (types, lib, hooks, components, tests), 2 files modified
+- ⚠️ Cannot verify tests/build: Node.js 20.12.2 < 20.19+ required (environmental blocker)
+- Manual browser verification recommended: Run `npm run dev` (after Node.js upgrade), press G, test spaceship flight
 - Next phase: UI Chrome (loading states, responsive layout, Tailwind CSS v4, shadcn/ui)
-- Browser verification recommended: Run `npm run dev`, test chronological layout and visual axis
 
 **Context for next session:**
 

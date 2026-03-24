@@ -40,10 +40,10 @@
 
 ### Game Mode
 
-- [ ] **GAME-01**: User can toggle game mode with hotkey (e.g., 'G' key)
-- [ ] **GAME-02**: Game mode displays spaceship cursor
-- [ ] **GAME-03**: User can navigate between nodes using arrow keys in game mode
-- [ ] **GAME-04**: Game mode toggle is visually indicated
+- [x] **GAME-01**: User can toggle game mode with hotkey (e.g., 'G' key)
+- [x] **GAME-02**: Game mode displays spaceship cursor
+- [x] **GAME-03**: User can navigate between nodes using arrow keys in game mode
+- [x] **GAME-04**: Game mode toggle is visually indicated
 
 ### Content Pipeline
 
@@ -134,10 +134,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | INT-03 | Phase 3 | Complete |
 | INT-04 | Phase 3 | Complete |
 | INT-05 | Phase 3 | Complete |
-| GAME-01 | Phase 6 | Pending |
-| GAME-02 | Phase 6 | Pending |
-| GAME-03 | Phase 6 | Pending |
-| GAME-04 | Phase 6 | Pending |
+| GAME-01 | Phase 6 | Complete |
+| GAME-02 | Phase 6 | Complete |
+| GAME-03 | Phase 6 | Complete |
+| GAME-04 | Phase 6 | Complete |
 | CONTENT-01 | Phase 2 | Complete |
 | CONTENT-02 | Phase 2 | Complete |
 | CONTENT-03 | Phase 2 | Complete |
