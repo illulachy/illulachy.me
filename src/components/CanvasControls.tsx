@@ -2,6 +2,7 @@ import { useCallback } from 'react'
 import type { Editor } from 'tldraw'
 import { ZOOM_MIN, ZOOM_MAX } from '@/types'
 import { calculateInitialZoom, getViewportDimensions } from '@/lib/cameraUtils'
+import { cn } from '@/lib/utils'
 
 interface CanvasControlsProps {
   editor: Editor | null
@@ -38,16 +39,11 @@ export function CanvasControls({ editor, visible }: CanvasControlsProps) {
   
   return (
     <div 
-      className="fixed bottom-4 right-4 flex gap-2 p-3 rounded-xl"
-      style={{
-        background: 'var(--glass-bg)',
-        backdropFilter: 'blur(var(--glass-blur))',
-        border: '1px solid var(--glass-border)',
-        boxShadow: 'var(--glass-shadow)',
-        opacity: visible ? 1 : 0,
-        pointerEvents: visible ? 'auto' : 'none',
-        transition: 'opacity 200ms var(--ease-out)',
-      }}
+      className={cn(
+        'fixed bottom-4 right-4 flex gap-2 p-3 rounded-xl glass',
+        'transition-opacity duration-200',
+        visible ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+      )}
     >
       <ControlButton onClick={zoomOut} title="Zoom out">−</ControlButton>
       <ControlButton onClick={zoomIn} title="Zoom in">+</ControlButton>
@@ -70,22 +66,13 @@ function ControlButton({
     <button
       onClick={onClick}
       title={title}
-      className="w-10 h-10 flex items-center justify-center rounded-lg text-lg font-medium"
-      style={{
-        background: 'transparent',
-        color: 'var(--text-secondary)',
-        transition: 'color 150ms, background 150ms',
-        border: 'none',
-        cursor: 'pointer',
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.color = 'var(--interactive-hover)'
-        e.currentTarget.style.background = 'var(--interactive-bg-subtle)'
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.color = 'var(--text-secondary)'
-        e.currentTarget.style.background = 'transparent'
-      }}
+      className={cn(
+        'w-10 h-10 flex items-center justify-center rounded-lg',
+        'text-lg font-medium text-secondary',
+        'hover:text-interactive-hover hover:bg-interactive-subtle',
+        'transition-all duration-150',
+        'border-none cursor-pointer bg-transparent'
+      )}
     >
       {children}
     </button>

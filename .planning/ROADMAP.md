@@ -11,7 +11,7 @@
 - [x] **Phase 2: Content Pipeline** - Markdown authoring workflow processing to bundled JSON (completed 2026-03-23)
 - [x] **Phase 3: Custom Shapes & Hub** - Portfolio hub and clickable timeline nodes rendering on canvas (completed 2026-03-23)
 - [x] **Phase 4: Timeline Layout** - Chronological positioning with collision detection (completed 2026-03-23)
-- [ ] **Phase 5: UI Chrome** - Loading states, responsive layout, and visual polish
+- [x] **Phase 5: UI Chrome** - Loading states, responsive layout, and visual polish (completed 2026-03-23)
 - [ ] **Phase 6: Game Mode** - Spaceship navigation with arrow key controls
 
 ## Phase Details
@@ -91,22 +91,25 @@ Plans:
   3. Animations (loading spinner, transitions) powered by Motion.dev
   4. Site is fully responsive on mobile (touch works) and desktop (mouse works)
   5. Loading spinner displays during initial canvas load and hides when ready
-**Plans:** 2 plans
+**Plans:** 2/2 plans complete
 
 Plans:
-- [ ] 05-01-PLAN.md — Foundation: Install Tailwind v4, Motion.dev, shadcn/ui; Create @theme config with design tokens; Create cn() utility and Dialog component (UI-01, UI-02, UI-03)
-- [ ] 05-02-PLAN.md — Component Migration: Migrate CanvasControls/CanvasLoader/MilestoneModal to Tailwind; Add Motion.dev exit animations; Make modal responsive (UI-04, UI-05)
+- [x] 05-01-PLAN.md — Foundation: Install Tailwind v4, Motion.dev, shadcn/ui; Create @theme config with design tokens; Create cn() utility and Dialog component (UI-01, UI-02, UI-03)
+- [x] 05-02-PLAN.md — Component Migration: Migrate CanvasControls/CanvasLoader/MilestoneModal to Tailwind; Add Motion.dev exit animations; Make modal responsive (UI-04, UI-05)
 
 ### Phase 6: Game Mode
-**Goal:** User can toggle spaceship navigation mode with arrow keys  
-**Depends on:** Phase 4 (needs node positions for arrow key traversal)  
+**Goal:** User can toggle spaceship navigation mode with momentum-based physics and arrow key controls  
+**Depends on:** Phase 4 (needs node positions for spatial navigation context)  
 **Requirements:** GAME-01, GAME-02, GAME-03, GAME-04  
 **Success Criteria** (what must be TRUE):
   1. User can press hotkey (G key) to toggle game mode on/off
   2. Game mode displays spaceship cursor (custom CSS cursor)
   3. User can navigate between timeline nodes using arrow keys in game mode
   4. Visual indicator shows when game mode is active (toggle state visible)
-**Plans:** TBD
+**Plans:** 1 plan (06-01-PLAN.md) — 9 tasks (7 auto, 1 checkpoint, 1 tuning)
+
+Plans:
+- [ ] 06-01-PLAN.md — Complete game mode: Physics core (TDD), hooks (useGameMode, useKeyboardInput, useSpaceshipPhysics), SpaceshipCursor component, Canvas integration, human verification
 
 ## Progress
 
@@ -116,8 +119,8 @@ Plans:
 | 2. Content Pipeline | 2/2 | Complete ✓  | 2026-03-23 |
 | 3. Custom Shapes & Hub | 2/2 | Complete ✓ | 2026-03-23 |
 | 4. Timeline Layout | 2/2 | Complete ✓ | 2026-03-23 |
-| 5. UI Chrome | 0/2 | Not started | - |
-| 6. Game Mode | 0/0 | Not started | - |
+| 5. UI Chrome | 2/2 | Complete    | 2026-03-23 |
+| 6. Game Mode | 0/1 | Ready to execute | - |
 
 ## Coverage
 

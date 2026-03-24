@@ -30,6 +30,13 @@ The canvas must feel smooth and intuitive to explore — pan/zoom navigation wor
 **Phase 4 (Timeline Layout):**
 - [x] Timeline extending left from the portfolio node, showing chronological entries (most recent closest to center)
 
+**Phase 5 (UI Chrome):**
+- [x] Tailwind CSS v4 with @theme design tokens for consistent styling
+- [x] shadcn/ui Dialog component for accessible modals
+- [x] Motion.dev animations for smooth loading transitions
+- [x] Responsive layout (mobile and desktop)
+- [x] Loading spinner with exit animation
+
 ### Active
 - [ ] "Game mode" — hotkey switches to spaceship cursor, arrow key navigation through timeline
 - [ ] Monorepo structure: portfolio site (illulachy.me) + blog site (letters.illulachy.me)
@@ -49,9 +56,13 @@ The canvas must feel smooth and intuitive to explore — pan/zoom navigation wor
 **Purpose:** Document and reflect on learning journey in a visual, interactive format. Public portfolio but primarily for personal documentation.
 
 **Tech Stack:**
-- React for UI components
+- React 19 for UI components
 - tldraw for infinite canvas implementation (proven library for pan/zoom canvas experiences)
+- Tailwind CSS v4 with @theme design tokens for styling
+- shadcn/ui for accessible UI components
+- Motion.dev for animations and transitions
 - Markdown for content authoring
+- Vite for build tooling
 - Monorepo structure (portfolio + blog)
 
 **Content Types:**
@@ -84,4 +95,4 @@ The canvas must feel smooth and intuitive to explore — pan/zoom navigation wor
 | Game mode with spaceship | Adds personality and playful interaction to exploration | — Pending |
 
 ---
-*Last updated: 2026-03-23 after Phase 4 completion*
+*Last updated: 2026-03-23 after Phase 5 completion*

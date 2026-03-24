@@ -1,7 +1,7 @@
 import { useState, useRef, useCallback, useEffect, useMemo } from 'react'
 import { Tldraw, Editor } from 'tldraw'
 import 'tldraw/tldraw.css'
-import { AnimatePresence } from 'motion/react'
+import { AnimatePresence, motion } from 'motion/react'
 import { CanvasLoader } from './CanvasLoader'
 // import { CanvasControls } from './CanvasControls'
 // import { CanvasFogOverlay } from './CanvasFogOverlay'
@@ -167,7 +167,25 @@ export function Canvas() {
   
   return (
     <>
-      {!isFullyLoaded && <CanvasLoader />}
+      <AnimatePresence>
+        {!isFullyLoaded && (
+          <motion.div
+            key="loader"
+            initial={{ opacity: 1, scale: 1 }}
+            exit={{ 
+              opacity: 0, 
+              scale: 0.95,
+              transition: { 
+                duration: 0.4, 
+                ease: [0.16, 1, 0.3, 1] 
+              } 
+            }}
+            className="fixed inset-0 z-[100]"
+          >
+            <CanvasLoader />
+          </motion.div>
+        )}
+      </AnimatePresence>
       <div 
         className="fixed inset-0"
         style={{
@@ -208,12 +226,11 @@ export function Canvas() {
       {/* Controls with contextual visibility - TEMPORARILY DISABLED */}
       {/* {isFullyLoaded && <CanvasControls editor={editorRef.current} visible={visible} />} */}
       {/* Milestone modal */}
-      {modalNode && (
-        <MilestoneModal 
-          node={modalNode} 
-          onClose={() => setModalNode(null)} 
-        />
-      )}
+      <MilestoneModal 
+        node={modalNode}
+        open={modalNode !== null}
+        onOpenChange={(open) => { if (!open) setModalNode(null) }}
+      />
     </>
   )
 }
