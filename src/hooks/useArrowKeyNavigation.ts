@@ -1,9 +1,14 @@
 import { useEffect, useCallback } from 'react'
 import type Konva from 'konva'
 
-export function useArrowKeyNavigation(stage: Konva.Stage | null) {
+/**
+ * Hook to handle arrow key navigation (pan camera)
+ * @param editor - tldraw Editor instance
+ * @param enabled - Whether arrow key navigation is enabled (default: true)
+ */
+export function useArrowKeyNavigation(stage: Konva.Stage | null, enabled: boolean = true) {
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    if (!stage) return
+    if (!stage || !enabled) return
     
     const PAN_AMOUNT = 100
     const scale = stage.scaleX()
@@ -29,17 +34,18 @@ export function useArrowKeyNavigation(stage: Konva.Stage | null) {
     }
     
     e.preventDefault()
-    
-    // Animate position change
+
     stage.to({
       x: newX,
       y: newY,
       duration: 0.15,
     })
-  }, [stage])
+  }, [stage, enabled])
   
   useEffect(() => {
+    if (!enabled) return
+    
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [handleKeyDown])
+  }, [handleKeyDown, enabled])
 }

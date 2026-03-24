@@ -9,8 +9,11 @@ import { CanvasLoader } from './CanvasLoader'
 import { MilestoneModal } from './MilestoneModal'
 import { TimelineOverlay } from './TimelineOverlay'
 import { HubNode, YouTubeNode, BlogNode, ProjectNode, MilestoneNode } from './shapes'
+import { SpaceshipCursor } from './SpaceshipCursor'
 import { useCameraState } from '@/hooks/useCameraState'
 import { useArrowKeyNavigation } from '@/hooks/useArrowKeyNavigation'
+import { useGameMode } from '@/hooks/useGameMode'
+import { useSpaceshipPhysics } from '@/hooks/useSpaceshipPhysics'
 // import { useControlsVisibility } from '@/hooks/useControlsVisibility'
 import { useTimelineData } from '@/hooks/useTimelineData'
 import { useAboutData } from '@/hooks/useAboutData'
@@ -46,10 +49,14 @@ export function Canvas() {
   // Get viewport transform for SVG overlay
   const viewportTransform = useViewportTransform(stageRef.current)
   
+  // Game mode state and physics
+  const { isGameMode } = useGameMode()
+  const cursorState = useSpaceshipPhysics(stageRef.current, isGameMode)
+  
   // Wire up hooks
   // const { visible } = useControlsVisibility()
   useCameraState(stageRef.current)
-  useArrowKeyNavigation(stageRef.current)
+  useArrowKeyNavigation(stageRef.current, !isGameMode) // Disable when game mode active
   
   // Handle zoom with wheel
   const handleWheel = useCallback((e: KonvaEventObject<WheelEvent>) => {
@@ -160,6 +167,7 @@ export function Canvas() {
         style={{
           opacity: isFullyLoaded ? 1 : 0,
           transition: 'opacity 250ms var(--ease-out)',
+          boxShadow: isGameMode ? '0 0 0 3px var(--interactive-hover)' : 'none',
         }}
         onDoubleClick={handleDoubleClick}
       >
@@ -200,6 +208,18 @@ export function Canvas() {
           </Layer>
         </Stage>
       </div>
+      
+      {/* Spaceship cursor overlay */}
+      <AnimatePresence>
+        {isGameMode && (
+          <SpaceshipCursor
+            x={cursorState.x}
+            y={cursorState.y}
+            rotation={cursorState.rotation}
+          />
+        )}
+      </AnimatePresence>
+      
       {/* Fog overlay (above canvas, below controls) */}
       {/* <CanvasFogOverlay /> */}
       {/* Timeline overlay */}
