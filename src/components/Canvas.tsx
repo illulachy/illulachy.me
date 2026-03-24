@@ -64,7 +64,7 @@ export function Canvas() {
     const stage = stageRef.current
     if (!stage) return
     
-    const scaleBy = 1.1
+    const scaleBy = 1.01
     const oldScale = stage.scaleX()
     const pointer = stage.getPointerPosition()
     if (!pointer) return

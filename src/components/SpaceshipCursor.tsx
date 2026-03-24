@@ -16,8 +16,7 @@ interface SpaceshipCursorProps {
  * Rotates to face movement direction
  */
 export function SpaceshipCursor({ x, y, rotation }: SpaceshipCursorProps) {
-  const SIZE = 56 // px
-  
+  const SIZE = 40 // px
   return (
     <motion.div
       className="fixed pointer-events-none z-[400]"
@@ -26,10 +25,15 @@ export function SpaceshipCursor({ x, y, rotation }: SpaceshipCursorProps) {
         top: `${y}px`,
         width: SIZE,
         height: SIZE,
-        transform: `translate(-50%, -50%) rotate(${rotation}rad)`,
+      }}
+      animate={{
+        x: '-50%',
+        y: '-50%',
+        rotate: `${rotation}rad`,
+        opacity: 1,
+        scale: 1,
       }}
       initial={{ opacity: 0, scale: 0.5 }}
-      animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.5 }}
       transition={{ duration: 0.2 }}
     >

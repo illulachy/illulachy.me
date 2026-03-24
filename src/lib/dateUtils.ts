@@ -40,7 +40,7 @@ export function createDateToXMapper(nodes: ContentNode[]): (date: string) => num
   const range = getDateRange(nodes)
   const newestTimestamp = range.newest.getTime()
   const PX_PER_DAY = 2 // Variable density (adjustable)
-  const MIN_OFFSET = -400 // Minimum distance from hub (ensures all nodes are negative X)
+  const MIN_OFFSET = 800 // Minimum distance from hub (ensures all nodes are negative X)
   
   return (dateStr: string) => {
     const timestamp = new Date(dateStr).getTime()

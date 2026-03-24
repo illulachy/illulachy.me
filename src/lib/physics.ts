@@ -60,12 +60,13 @@ export function updatePhysics(
   const x = state.position.x + vx * dt
   const y = state.position.y + vy * dt
   
-  // Calculate rotation to face velocity direction
+  // Calculate rotation to face input direction (arrow keys)
   let rotation = state.rotation
-  if (speed > 10) { // Only rotate when moving
-    const targetRotation = Math.atan2(vy, vx)
-    // Smooth rotation interpolation
-    rotation = lerpAngle(state.rotation, targetRotation, ROTATION_SPEED * dt)
+  // Only rotate when there's an actual direction (non-zero acceleration)
+  if (ax !== 0 || ay !== 0) {
+    const targetRotation = Math.atan2(ay, ax)
+    // Use lerpAngle to find shortest path, but with t=1 for instant rotation
+    rotation = lerpAngle(state.rotation, targetRotation, 1)
   }
   
   return {
