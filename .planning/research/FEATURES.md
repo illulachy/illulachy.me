@@ -1,231 +1,231 @@
-# Feature Landscape
+# Feature Research
 
-**Domain:** Infinite Canvas Portfolio/Timeline Sites
-**Researched:** 2025-01-19
+**Domain:** Blog site (writing.illulachy.me) + Turborepo monorepo shared content
+**Researched:** 2026-03-28
 **Confidence:** HIGH
 
-## Overview
+## Context
 
-Infinite canvas portfolio sites are a niche but growing category — visual, explorable portfolios where content is positioned on an infinite 2D plane rather than in scrollable pages. Examples include interactive resumes, visual timelines, and creative portfolios. The core value proposition is **exploration over consumption**: users discover content through spatial navigation (pan/zoom) rather than linear scrolling.
+This research covers only the NEW features for milestone v1.1. The canvas portfolio (Phases 1-6) is already built. The focus is:
+
+1. **Blog site** at writing.illulachy.me — a full reading-focused blog with categories, tags, RSS, and search
+2. **Turborepo monorepo** — restructuring the repo so portfolio + blog + shared content coexist
+3. **Shared content package** — a workspace package (`@osaka/content`) consumed by both apps
+
+Existing tech already in place: React 19, Vite, Tailwind v4, shadcn/ui, Motion.dev, Markdown pipeline.
 
 ---
 
-## Table Stakes
+## Feature Landscape
 
-Features users expect in infinite canvas portfolio sites. Missing these makes the product feel incomplete or broken.
+### Table Stakes (Users Expect These)
+
+Features users assume exist on any blog. Missing these makes the site feel unfinished or broken.
 
 | Feature | Why Expected | Complexity | Notes |
 |---------|--------------|------------|-------|
-| **Pan/zoom navigation** | Core interaction model — without it, it's just a static page | Low (with tldraw) | Mouse drag, scroll wheel, touch gestures, arrow keys — tldraw handles all |
-| **Smooth 60 FPS performance** | Canvas apps feel janky if frame rate drops during interaction | Medium | tldraw provides LOD rendering + culling; still need to optimize node count |
-| **Touch support (mobile/tablet)** | ~50% of traffic is mobile; pinch-to-zoom is standard gesture | Low (with tldraw) | tldraw supports touch gestures out of the box; test on real devices |
-| **Keyboard navigation** | Accessibility + power users expect arrow keys for panning | Low (with tldraw) | tldraw provides keyboard shortcuts; custom for game mode traversal |
-| **Visual hierarchy** | Central hub or entry point — users need starting context | Medium | Portfolio hub node (16:9, about me) as visual anchor |
-| **Clickable content** | Nodes must link to external content (blog, projects, videos) | Low | tldraw click handlers → `window.open()` or navigate |
-| **Loading states** | Canvas takes time to initialize; show progress indicator | Low | Spinner or skeleton while tldraw loads + content fetches |
-| **Responsive layout** | Works on desktop (large canvas) and mobile (constrained viewport) | Medium | tldraw is responsive; custom shapes need flexible sizing |
-| **Visual feedback on interaction** | Hover states, click feedback, cursor changes | Low | CSS hover on custom shapes, cursor: pointer |
-| **Chronological ordering (for timelines)** | Timeline sites must show time progression clearly | High | Custom layout algorithm — most complex feature |
+| Post list / index page | Entry point to the blog — users need to see all posts | LOW | Sorted reverse-chronological; show title, date, short excerpt |
+| Individual post pages | Readable article view for each blog post | LOW | Markdown rendered to HTML; title, date, reading time, body |
+| Markdown rendering | Content is authored in `.md` files — this is the pipeline | LOW | Already exists in portfolio. For blog: needs full prose rendering (headings, code blocks, lists, links) |
+| Code syntax highlighting | Developer blog content will contain code blocks | LOW | Use Shiki at build time — zero runtime cost; Shiki is the current standard (Prism is legacy) |
+| Estimated reading time | Readers want to know time investment before starting | LOW | Calculate from word count at build time (~200 WPM); frontmatter or computed |
+| Post date / timestamps | Recency signal; readers gauge how current the content is | LOW | Pull from markdown frontmatter; format as "March 28, 2026" |
+| Categories | Broad topic groupings (e.g. "Engineering", "Reflections") | LOW | Array in frontmatter; filtered listing pages per category |
+| Tags | Fine-grained labels across categories (e.g. "React", "Canvas") | LOW | Array in frontmatter; filtered listing pages per tag |
+| RSS feed | Readers subscribe via RSS readers; expected on any serious blog | MEDIUM | `/rss.xml` at build time; include title, date, excerpt, canonical URL |
+| Sitemap | SEO — search engines index content faster with sitemap.xml | LOW | Static `/sitemap.xml` listing all post URLs |
+| Responsive layout | Blog content must be readable on mobile (60%+ of traffic) | LOW | Prose max-width (~65ch), fluid typography, padding |
+| Open Graph / meta tags | Social sharing previews (Twitter/X, iMessage link previews) | LOW | Per-post `og:title`, `og:description`, `og:image` from frontmatter |
+| Canonical URLs | SEO — prevents duplicate content penalties | LOW | `<link rel="canonical">` per post; absolute URL |
+| 404 page | Broken links happen — a useful 404 maintains trust | LOW | Static 404.html with link back to blog index |
+| Navigation / header | Users need to navigate between blog, home, and portfolio | LOW | Link to illulachy.me (portfolio) + blog index |
 
-**Notes:**
-- **Without pan/zoom:** Site fails to deliver core value (exploration)
-- **Without touch:** Mobile users cannot interact (50% of traffic lost)
-- **Without chronological ordering (timelines):** Content feels random, not narrative
-- **Without clickable nodes:** Dead-end exploration (no payoff)
-
-**Sources:** Common patterns in infinite canvas apps (tldraw examples, Miro, FigJam), accessibility guidelines (keyboard navigation), Web Vitals performance standards (HIGH confidence)
+**Why these are non-negotiable:**
+- Without post list + individual pages: the blog literally cannot be read
+- Without RSS: power readers (who drive repeat traffic) cannot subscribe
+- Without OG tags: shared links look blank — a real visibility hit
+- Without syntax highlighting: code-heavy posts are unreadable
+- Without responsive layout: majority of readers on mobile get a broken experience
 
 ---
 
-## Differentiators
+### Differentiators (Competitive Advantage)
 
-Features that set this portfolio apart. Not expected, but highly valued when present.
+Features that set this blog apart from a default markdown blog. Align with the visual/interactive identity of illulachy.me.
 
 | Feature | Value Proposition | Complexity | Notes |
 |---------|-------------------|------------|-------|
-| **Game mode (spaceship navigation)** | Playful, memorable — turns exploration into discovery game | Medium | Hotkey toggle, spaceship cursor CSS, arrow key node traversal |
-| **Markdown-driven content** | Developer-friendly workflow (Git-based, version controlled) | Low | gray-matter + remark at build time; no CMS complexity |
-| **Multiple content types** | Rich storytelling (YouTube, blog, projects, milestones) | Medium | 4 custom shape types; each needs unique rendering + click behavior |
-| **Central portfolio hub** | Strong visual anchor (16:9 "about me" node) | Low | Single custom shape with fixed position |
-| **Timeline narrative** | Chronological story (school → work → projects) | High | Same as table stakes chronological ordering |
-| **Fast loading (static SPA)** | No server-side rendering, edge-deployed, instant loads | Low | Vite builds static assets, Vercel edge network |
-| **Monorepo blog integration** | Unified codebase for portfolio + blog (letters.illulachy.me) | Medium | Turborepo + pnpm workspaces; shared content types |
-| **Open-source inspirational** | Public GitHub repo inspires others to build similar sites | Low | MIT license, documented code, tutorial-quality README |
+| Full-text search (client-side) | Readers find specific posts without server dependency | MEDIUM | Use Pagefind — build-time index, WASM query, ~15 lines of integration; Lunr.js unmaintained since 2020; Pagefind is the current standard for static sites |
+| Canvas portfolio backlink | Each post links back to its card on the infinite canvas | LOW | UI link like "See on timeline" — deep link to canvas position |
+| Content shared with portfolio | Blog posts auto-appear on the canvas via `@osaka/content` package | MEDIUM | Shared content package is the Turborepo workspace package; both apps consume same markdown source of truth |
+| Dark mode | Personal brand is Catppuccin Mocha (dark-first); blog should match | LOW | Tailwind v4 dark variant; CSS variables from existing `@theme` tokens |
+| Copy-code button | Developer readers expect one-click copy for code blocks | LOW | Add via rehype plugin or small JS snippet; standard DX expectation |
+| Table of contents | Long technical posts benefit from a sidebar/inline TOC | MEDIUM | Generate from headings at build time (rehype-toc or custom); sidebar on desktop, inline on mobile |
+| Category + tag listing pages | Curated views: "All posts tagged React" as shareable URLs | LOW | Static pages per category and per tag; generated at build time |
 
 **Why these differentiate:**
-1. **Game mode:** Most portfolios are passive; this adds interactivity and personality
-2. **Markdown-driven:** Most portfolios use CMS (Contentful, Sanity); this is simpler and Git-native
-3. **Timeline narrative:** Most portfolios are project grids; this shows journey over time
-4. **Monorepo blog:** Most blogs are separate; this unifies personal brand under one repo
-
-**Competitors/inspiration:**
-- **steipete.me:** Markdown-driven blog (Astro), monorepo, but traditional scrolling (not canvas)
-- **Figma/Miro:** Infinite canvas tools, but not storytelling-focused
-- **Linear homepage:** Canvas-like animations, but not user-navigable
-
-**Sources:** steipete.me GitHub (markdown pattern), tldraw examples (canvas patterns), portfolio design trends (MEDIUM confidence)
+- Pagefind search: Most small blogs have no search at all — adds real utility with near-zero infra cost
+- Shared content: Portfolio + blog share a single source of truth — genuine architectural advantage, not just tooling
+- Canvas backlink: Unique to this site — connects blog reading back to the visual journey
+- Copy-code: Small touch but immediately noticed by developer readers
 
 ---
 
-## Anti-Features
+### Anti-Features (Commonly Requested, Often Problematic)
 
-Features to explicitly NOT build in v1. These add complexity without sufficient value.
-
-| Anti-Feature | Why Avoid | What to Do Instead |
-|--------------|-----------|-------------------|
-| **Search/filter functionality** | Premature — explore-first UX; search suggests known-item lookup | **v2:** Add search after understanding user navigation patterns |
-| **CMS or admin panel** | Overkill for single-author site; adds hosting complexity (backend) | **Use:** Markdown files in Git; commit to publish |
-| **Embedded video playback** | Increases bundle size (video.js, React Player), slow on mobile | **Link to:** YouTube (click opens external link) |
-| **Real-time collaboration** | Single-author portfolio; collaboration has no use case | **Defer:** If building multiplayer features, use `@tldraw/sync` |
-| **Animation library (GSAP, Framer Motion)** | tldraw has built-in smooth transforms; adding library is redundant | **Use:** CSS transitions for UI chrome (header, overlays) |
-| **User authentication** | Public portfolio; no private content, no personalization | **Skip:** No login, no user accounts |
-| **Comments or social features** | Blog has comments, but canvas portfolio is read-only | **Defer:** Add comments to blog site (letters.illulachy.me) |
-| **Custom canvas drawing tools** | Portfolio is curated content, not a whiteboard; no need for pen/shapes | **Use:** tldraw's shape tools are hidden; only show custom timeline nodes |
-| **Backend API or database** | Static site is faster, simpler, cheaper to host | **Use:** Build-time markdown processing, deploy static assets |
-| **Advanced analytics (heatmaps, session replay)** | Premature optimization; Web Vitals (Vercel Analytics) is sufficient | **Defer:** Add analytics in v2 if traffic justifies it |
-| **Internationalization (i18n)** | Single-language site (English); i18n adds complexity | **Defer:** If audience grows, add i18n in v2 |
-
-**Why avoid these:**
-- **Search/filter:** Exploration is primary UX; search contradicts discovery model
-- **CMS:** Adds backend, auth, hosting costs; markdown + Git is simpler for single author
-- **Embedded video:** Slow loading, mobile-unfriendly; linking is standard UX
-- **Real-time collaboration:** No use case (single author, read-only portfolio)
-- **Animation libraries:** tldraw handles canvas animations; CSS is sufficient for UI
-
-**When to reconsider:**
-- Search: If user testing shows people get lost (can't find specific content)
-- CMS: If content updates become too frequent (daily), Git workflow may be cumbersome
-- Embedded video: If showcasing demo videos as primary content (not YouTube links)
-- Collaboration: If building a team portfolio (multiple authors editing canvas)
-
-**Sources:** Product scoping best practices (MVP focus), tldraw capabilities (built-in animations), static site benefits (MEDIUM confidence)
+| Feature | Why Requested | Why Problematic | Alternative |
+|---------|---------------|-----------------|-------------|
+| Comments section | Social validation, discussion | Requires backend (or Disqus with tracking), spam moderation; single-author blog does not need it | Link to Twitter/X or email for discussion |
+| CMS / admin panel | "Easy" content editing | Adds backend, auth, hosting costs; Git workflow is already in place and works for a developer author | Continue using markdown files + Git commits to publish |
+| Infinite scroll | Modern feel, no pagination click | Breaks browser history/back button, poor for SEO (search engines cannot follow dynamic loads) | Simple pagination or show all posts (up to ~50); no pagination needed for a small blog |
+| Server-side rendering | SEO improvements | Overkill for a static blog — build-time rendering gives the same SEO benefits with simpler hosting | Vite static generation (vite-ssg or custom static export) |
+| Email newsletter | Recurring readership | Requires email service (Mailchimp etc.), consent management, GDPR compliance; complexity far exceeds value for a personal blog v1 | RSS feed satisfies the subscribe use case without infrastructure |
+| View counters / analytics dashboard | Curiosity about traffic | Adds JS payload, external calls, privacy implications | Use Vercel built-in analytics (zero-config, privacy-respecting) |
+| Social sharing buttons | "Shareability" | Large JS payload from social SDKs; users who want to share know how to copy URLs | OG tags make native sharing look great — that is enough |
+| Related posts (ML-based) | Discovery | Heavy to compute; manual tags + categories + search covers discovery | Tag/category browsing + search is sufficient |
 
 ---
 
 ## Feature Dependencies
 
-Visual dependency graph — some features require others to be built first.
-
 ```
-Foundation
-├─ Vite + React + tldraw setup
-│  ├─ Pan/zoom navigation (tldraw built-in)
-│  ├─ Touch support (tldraw built-in)
-│  └─ Keyboard navigation (tldraw built-in)
-│
-├─ Markdown content pipeline
-│  ├─ gray-matter (parse frontmatter: dates, URLs, types)
-│  ├─ Build-time JSON generation
-│  └─ Content type definitions (TypeScript)
-│
-├─ Custom shapes
-│  ├─ YouTube node (thumbnail + link)
-│  ├─ Blog post node (card + link)
-│  ├─ Project node (card + link)
-│  └─ Portfolio hub (16:9 about me)
-│     └─ Timeline chronological layout (requires date data from markdown)
-│        └─ Visual hierarchy (requires portfolio hub as anchor)
-│
-├─ UI chrome
-│  ├─ Tailwind CSS setup
-│  ├─ Header/nav (outside canvas)
-│  └─ Loading states (before canvas ready)
-│
-└─ Advanced features
-   ├─ Game mode (requires custom shapes + timeline layout)
-   ├─ Monorepo blog (independent, can be parallel)
-   └─ Performance optimization (requires profiling data)
+Monorepo structure (Turborepo + pnpm workspaces)
+    └──enables──> @osaka/content shared package
+                      ├──consumed by──> Portfolio app (apps/portfolio)
+                      └──consumed by──> Blog app (apps/blog)
+
+Blog app foundations
+    ├── Markdown pipeline (already built in portfolio → extract to shared package)
+    │      └── Post frontmatter parsing (title, date, tags, categories, slug)
+    │               └── RSS feed (needs slug + title + date + excerpt)
+    │               └── Sitemap (needs slug + date)
+    │               └── Category pages (needs categories array)
+    │               └── Tag pages (needs tags array)
+    │
+    ├── Prose rendering (remark + rehype pipeline)
+    │      ├── Syntax highlighting (Shiki — build-time, no runtime cost)
+    │      ├── Copy-code button (rehype plugin or JS — post-v1)
+    │      └── Table of contents (rehype-toc or custom — post-v1)
+    │
+    └── Post index page
+           └── Post detail page
+                  ├── OG tags (per-post)
+                  ├── Reading time (computed from word count)
+                  └── Canvas backlink (links to portfolio with post hash — post-v1)
+
+Search (Pagefind)
+    └──requires──> Static HTML output (must run AFTER build)
+                       └── pagefind --site dist/ as Turborepo pipeline step
+
+Dark mode
+    └──requires──> Tailwind v4 @theme tokens (already exist in portfolio — reuse)
 ```
 
-**Critical path (must be sequential):**
-1. **Vite + React + tldraw** → Foundation for all canvas features
-2. **Markdown pipeline** → Provides data for custom shapes
-3. **Custom shapes** → Display timeline content
-4. **Timeline layout** → Position shapes chronologically
-5. **Game mode** → Enhances navigation (additive)
+### Dependency Notes
 
-**Parallel tracks:**
-- **UI chrome** (Tailwind, header) can be built alongside custom shapes
-- **Blog site** (letters.illulachy.me) can be separate workstream
-- **Performance optimization** happens continuously (monitor in phases 1-7)
-
-**Blockers:**
-- Cannot build timeline layout without custom shapes (need to know node dimensions)
-- Cannot build game mode without timeline layout (need to know node positions for traversal)
-- Cannot optimize performance without real content (need to test with 50-100 nodes)
-
-**Sources:** tldraw examples (shape dependencies), standard web app build order (foundation → features), project planning best practices (HIGH confidence)
+- **Shared content package requires monorepo first:** Cannot share markdown between apps without Turborepo workspace wiring. This is step zero.
+- **RSS and sitemap require post metadata:** Both are computed from the same frontmatter fields (title, date, slug, excerpt); build together in the same pipeline step.
+- **Pagefind requires static HTML output:** Must run `pagefind --site dist/` after `vite build`; wire as a post-build step in Turborepo pipeline.
+- **Syntax highlighting has no runtime dependency:** Shiki runs at build time — zero client JS bundle impact.
+- **OG tags require per-post routing:** Each post needs its own HTML file with unique meta tags; static generation per route is required (not SPA client-side routing alone).
 
 ---
 
-## MVP Recommendation
+## MVP Definition
 
-**Core MVP (ship in 2-3 weeks):**
+### Launch With (v1 — this milestone)
 
-### Must-Have (Phases 1-5)
-1. **Infinite canvas with pan/zoom** — tldraw setup
-2. **Markdown content pipeline** — gray-matter + build-time processing
-3. **Custom shapes (4 types)** — YouTube, blog, project, portfolio hub
-4. **Timeline chronological layout** — date-based positioning (left = oldest, right = newest)
-5. **Clickable nodes** — external links (YouTube, blog, projects)
-6. **UI chrome** — Tailwind header, loading state, responsive layout
-7. **Deploy to illulachy.me** — Vercel static SPA
+Minimum to make writing.illulachy.me a real, usable blog.
 
-**MVP success criteria:**
-- [ ] Users can pan/zoom on desktop and mobile
-- [ ] Timeline shows 50+ nodes chronologically
-- [ ] Click opens external URLs (YouTube, blog)
-- [ ] Loads in <3 seconds (LCP)
-- [ ] Maintains 60 FPS during pan/zoom
+- [ ] Turborepo + pnpm monorepo structure — enables shared content; required before building blog app
+- [ ] `@osaka/content` shared package — markdown source of truth consumed by both portfolio and blog
+- [ ] Blog app scaffolding (apps/blog) — Vite + React + routing
+- [ ] Post list page — reverse-chronological, title + date + excerpt
+- [ ] Post detail page — full markdown rendering, reading time, date
+- [ ] Syntax highlighting (Shiki) — required for developer content
+- [ ] Categories listing + filtered pages — broad topic groupings
+- [ ] Tags listing + filtered pages — fine-grained labels
+- [ ] RSS feed (`/rss.xml`) — subscribe use case
+- [ ] Sitemap (`/sitemap.xml`) — SEO baseline
+- [ ] OG / meta tags per post — social sharing
+- [ ] Dark mode — matches portfolio visual identity
+- [ ] Responsive prose layout — mobile-first reading experience
+- [ ] Deploy to writing.illulachy.me (Vercel) — separate deployment from portfolio
 
-### Should-Have (Phase 6)
-- **Game mode** — spaceship cursor, arrow key traversal
-  - Adds personality and memorability
-  - Not blocking for core timeline exploration
+### Add After Validation (v1.x)
 
-### Defer to v1.1 or v2
-- **Monorepo blog** (Phase 7) — letters.illulachy.me can deploy separately
-- **Search/filter** — wait for user feedback (is navigation confusing?)
-- **Advanced animations** — CSS is sufficient for v1
-- **Performance optimization** — optimize based on real profiling data, not assumptions
+Features to add once core blog is live and being used.
 
-**MVP rationale:**
-- **Focus on exploration UX:** Core value is spatial navigation and discovery
-- **Prove canvas performance:** 50+ nodes is sufficient to test performance limits
-- **Defer blog integration:** Portfolio works standalone; blog is separate deployment
-- **Defer game mode:** Playful but not critical; can add after core timeline validated
+- [ ] Full-text search (Pagefind) — add when post count makes browsing impractical (>20 posts)
+- [ ] Copy-code button — small DX improvement; add when developer posts go live
+- [ ] Table of contents — add for long technical posts (>2000 words)
+- [ ] Canvas backlink ("See on timeline") — add when deep-link parameter is implemented in portfolio
 
-**Time estimate:**
-- Phase 1 (Foundation): 1-2 days
-- Phase 2 (Content): 2-3 days
-- Phase 3 (Custom shapes): 3-5 days
-- Phase 4 (Timeline layout): 2-3 days
-- Phase 5 (UI chrome): 2-3 days
-- **Total MVP:** 10-16 days (2-3 weeks)
+### Future Consideration (v2+)
 
-**Post-MVP (v1.1):**
-- Phase 6 (Game mode): +1-2 days
-- Phase 7 (Monorepo blog): +2-3 days
-- Phase 8 (Performance): +1-2 days
+- [ ] Email newsletter — only if RSS subscriber count signals demand
+- [ ] Comments — only if there is consistent readership wanting to discuss
+- [ ] Automatic OG image generation — nice for social presence, significant build complexity
 
-**Sources:** Agile MVP scoping, tldraw learning curve estimates, standard web app build timelines (MEDIUM confidence)
+---
+
+## Feature Prioritization Matrix
+
+| Feature | User Value | Implementation Cost | Priority |
+|---------|------------|---------------------|----------|
+| Monorepo + shared content package | HIGH | MEDIUM | P1 |
+| Post list + post detail pages | HIGH | LOW | P1 |
+| Markdown rendering + syntax highlighting (Shiki) | HIGH | LOW | P1 |
+| Categories + tags (listing pages) | HIGH | LOW | P1 |
+| RSS feed | HIGH | MEDIUM | P1 |
+| OG / meta tags | HIGH | LOW | P1 |
+| Responsive layout + dark mode | HIGH | LOW | P1 |
+| Sitemap | MEDIUM | LOW | P1 |
+| Reading time | MEDIUM | LOW | P1 |
+| Full-text search (Pagefind) | HIGH | MEDIUM | P2 |
+| Copy-code button | MEDIUM | LOW | P2 |
+| Table of contents | MEDIUM | MEDIUM | P2 |
+| Canvas backlink | MEDIUM | MEDIUM | P2 |
+| Comments | LOW | HIGH | P3 |
+| Email newsletter | LOW | HIGH | P3 |
+
+**Priority key:**
+- P1: Must have for launch
+- P2: Should have, add when possible
+- P3: Nice to have, future consideration
+
+---
+
+## Competitor Feature Analysis
+
+Reference blogs for comparison (all markdown-driven personal developer blogs).
+
+| Feature | steipete.me (Astro) | timlrx/tailwind-nextjs-starter-blog | Our Approach (Vite + React) |
+|---------|---------------------|--------------------------------------|------------------------------|
+| Markdown rendering | Astro content collections | MDX + contentlayer | remark + rehype pipeline |
+| Syntax highlighting | Shiki | Shiki | Shiki (build-time) |
+| RSS | @astrojs/rss | Built-in | Custom rss or feed package |
+| Search | None observed | kbar (command palette) | Pagefind (post-v1) |
+| Categories / tags | Not confirmed in README | Yes (built-in) | Yes (from frontmatter) |
+| Dark mode | Yes (Tailwind) | Yes | Yes (Tailwind v4 @theme tokens) |
+| OG images | Yes | Auto-generated | Frontmatter-driven static |
+| Monorepo | Not observed | No | Yes (Turborepo) |
+| Shared content | No | No | Yes (@osaka/content workspace) |
+| Canvas integration | No | No | Yes (unique differentiator) |
 
 ---
 
 ## Sources
 
-### Primary (High Confidence)
-- tldraw examples: https://tldraw.dev/examples
-- Web Vitals standards: https://web.dev/vitals
-- Accessibility guidelines (keyboard navigation): https://www.w3.org/WAI/WCAG21/Understanding/
-- steipete.me inspiration: https://github.com/steipete/steipete.me
+- [Astro RSS docs](https://docs.astro.build/en/recipes/rss/) — RSS implementation patterns (HIGH confidence)
+- [Pagefind replacing Lunr for static sites (2026)](https://www.allaboutken.com/posts/20260228-replacing-lunr-with-pagefind/) — Pagefind vs Lunr analysis (MEDIUM confidence)
+- [Turborepo + shared packages tutorial 2026](https://noqta.tn/en/tutorials/turborepo-nextjs-monorepo-shared-packages-2026) — monorepo shared content patterns (MEDIUM confidence)
+- [Astro vs Next.js for blogs 2026](https://sourabhyadav.com/blog/astro-vs-nextjs-for-blogs-2026/) — framework comparison for blog sites (MEDIUM confidence)
+- [steipete.me GitHub](https://github.com/steipete/steipete.me) — inspiration reference; Astro-based markdown blog structure (MEDIUM confidence)
+- [Pagination vs infinite scroll for blogs](https://nexterwp.com/blog/pagination-vs-infinite-scroll/) — UX pattern analysis (MEDIUM confidence)
+- [React + Vite monorepo with pnpm](https://dev.to/lico/react-monorepo-setup-tutorial-with-pnpm-and-vite-react-project-ui-utils-5705) — Vite monorepo patterns (MEDIUM confidence)
+- [SEO + OG tags for React/Vite](https://dev.to/ali_dz/optimizing-seo-in-a-react-vite-project-the-ultimate-guide-3mbh) — meta tag implementation (MEDIUM confidence)
 
-### Secondary (Medium Confidence)
-- Infinite canvas design patterns (Miro, FigJam, Figma)
-- Portfolio design trends (2024)
-- Agile MVP scoping best practices
-
-### Tertiary (Context from Training Data)
-- User engagement metrics (session duration, click rates)
-- Performance budgets (FPS, node counts)
-- Timeline layout algorithms (need experimentation)
+---
+*Feature research for: blog site (writing.illulachy.me) + Turborepo monorepo*
+*Researched: 2026-03-28*

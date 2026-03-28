@@ -1,231 +1,186 @@
 # Project Research Summary
 
-**Project:** illulachy.me (Infinite Canvas Portfolio)
-**Domain:** Interactive Portfolio/Timeline Sites
-**Researched:** 2025-01-19
+**Project:** osaka (illulachy.me) — milestone v1.1
+**Domain:** Turborepo monorepo conversion + blog site (writing.illulachy.me)
+**Researched:** 2026-03-28
 **Confidence:** HIGH
 
 ## Executive Summary
 
-This project is an infinite canvas portfolio site built with **Vite + React 19 + TypeScript + tldraw 4.5**. The core experience is spatial exploration: users pan and zoom through a 2D timeline of personal content (YouTube videos, blog posts, projects, milestones) positioned chronologically from left (oldest) to right (newest). A central 16:9 "portfolio hub" node serves as the visual anchor. Optional "game mode" adds playful spaceship navigation with arrow keys.
+This milestone converts the existing single-app Vite+React portfolio (Phases 1-6, complete) into a Turborepo pnpm monorepo, then adds a second app — a full markdown blog at writing.illulachy.me built with Astro. The core architectural insight is that a `packages/content` workspace package (with no build step) becomes the single source of truth for all markdown files, TypeScript types, and generation scripts. Both apps consume it: the portfolio via its existing Vite plugin generating timeline JSON, and the blog via Astro Content Collections reading markdown directly. This avoids duplication and lets a single markdown edit propagate to both apps automatically.
 
-The recommended approach is a **client-side SPA with build-time content processing**: markdown files (with YAML frontmatter for dates/URLs) are parsed at build time by gray-matter + remark into bundled JSON. tldraw provides the infinite canvas engine with custom shape utilities for timeline nodes. The architecture separates canvas rendering (tldraw) from UI chrome (Tailwind CSS). Deploy as a static site to Vercel with Turborepo orchestrating a monorepo (portfolio + blog subdomain).
+The recommended approach is Astro 5.18.x for the blog (zero-JS by default, built-in content collections with Zod validation, native markdown processing, 5x faster builds vs v4), Turborepo 2.8.x for build orchestration, and pnpm 9.x for workspace management. The shared content package uses the Just-in-Time pattern — TypeScript source exported directly with no compile step, since both Vite and Astro are bundlers that handle TypeScript natively. Pagefind provides fully static client-side search with no infrastructure cost, deferred until post count makes browsing impractical.
 
-**Key risks:** (1) Canvas performance degradation beyond 200 nodes—mitigate with FPS profiling from day one and lazy-loading architecture; (2) Timeline node overlap from date clustering—requires collision detection algorithm in Phase 4; (3) Touch gesture conflicts on mobile—test on real devices early. The stack is production-ready (tldraw has 45K+ GitHub stars), but timeline layout algorithms need experimentation.
+The key risk is the monorepo migration itself: moving the existing portfolio app to `apps/portfolio/` will break relative paths, Vite config assumptions, and TypeScript paths unless handled deliberately with `git mv` and immediate build verification at each step. A secondary risk is Tailwind v4's auto-detection not scanning shared packages — requires explicit `@source` directives, a known upstream issue (tailwindlabs/tailwindcss#13136) with a clear fix. Both risks are well-understood with documented solutions. The migration must be sequenced in discrete verifiable steps before any new blog features are built.
+
+---
 
 ## Key Findings
 
 ### Recommended Stack
 
-Build with **Vite** (not Next.js) because tldraw is client-only and SSR adds complexity with no benefit. **React 19** is required by tldraw with **TypeScript 5.9** for type-safe custom shapes. The infinite canvas is powered by **tldraw 4.5**, a production-ready SDK with 200K+ weekly npm downloads that handles pan/zoom, touch gestures, keyboard navigation, and performance optimizations (LOD rendering, culling) automatically.
+The new stack additions are all additive — the existing React 19, Vite 8.x, Konva.js, Tailwind v4, shadcn/ui, Motion.dev, and gray-matter+zod+fast-glob pipeline are not re-evaluated. Turborepo 2.8.x orchestrates the task graph with caching. pnpm 9.x provides the workspace protocol and strict dependency resolution that prevents phantom dependency issues. Astro 5.18.x is the correct blog framework for this use case: content-first, zero JS by default, Vite-based internally, with built-in Zod-validated Content Collections.
 
-**Core technologies:**
-- **tldraw 4.5** — Infinite canvas SDK with custom shape APIs, provides pan/zoom/touch/keyboard out of the box
-- **Vite 8.0** — Fast HMR optimized for client-side SPAs, 10-20x faster than Webpack
-- **React 19 + TypeScript** — Required by tldraw (peer dependency), essential for strongly-typed Editor API
-- **gray-matter + remark** — Markdown pipeline at build time (parse frontmatter → JSON), no runtime parsing
-- **Tailwind CSS 4.2** — UI chrome (header, loading, overlays) around canvas; tldraw.css handles canvas styling
-- **Turborepo + pnpm** — Monorepo orchestration for portfolio + blog sites with caching and fast installs
-- **Vercel** — Zero-config deployment for Vite SPAs, automatic monorepo detection, edge network
-
-**Why this stack:** tldraw is React-first with hooks-based APIs, unlike imperative libraries (Fabric.js, Konva). Vite's dev server is optimized for React Fast Refresh. Markdown + Git workflow is simpler than CMS (Contentful, Sanity) for single-author content. Static SPA deployment is faster and cheaper than server-side rendering (canvas apps don't benefit from SSR).
+**Core technologies (new in v1.1):**
+- **Turborepo 2.8.x**: build orchestration and caching — simpler than Nx for a 2-app monorepo; uses `tasks` key (not deprecated `pipeline`)
+- **pnpm 9.x**: workspace management — `workspace:*` protocol for local packages; strict deps that eliminate phantom dependency reliance
+- **Astro 5.18.x**: blog site framework — zero-JS SSG by default; built-in Content Collections with Zod; 5x faster markdown builds than v4; Vite-based internally
+- **@astrojs/rss**: RSS feed generation — integrates directly with `getCollection()`, no external XML library needed
+- **@astrojs/sitemap 3.7.x**: sitemap at build time — one-line config addition; version 3.7.1 confirmed current
+- **Pagefind 1.4.x**: static full-text search — post-build binary index; chunked WASM download; zero infrastructure; framework-agnostic
+- **packages/content (JIT, no-build)**: shared workspace package — exports TypeScript source directly; consumed by both Vite and Astro without a compile step
 
 ### Expected Features
 
-**Must have (table stakes):**
-- **Pan/zoom navigation** — core interaction model (mouse drag, scroll wheel, touch gestures, arrow keys)
-- **60 FPS performance** — canvas apps feel janky if frame rate drops; requires optimization from day one
-- **Touch support** — ~50% of traffic is mobile; pinch-to-zoom is standard gesture
-- **Chronological ordering** — timeline must show time progression clearly (left = oldest, right = newest)
-- **Clickable nodes** — timeline nodes link to external content (YouTube, blog, projects); no inline embedding
-- **Visual hierarchy** — central portfolio hub (16:9 about me) as entry point and visual anchor
-- **Loading states** — spinner while canvas initializes (tldraw + content loading takes 1-2 seconds)
+All feature decisions are scoped to v1.1. The canvas portfolio (Phases 1-6) is complete and must remain functional throughout this milestone.
 
-**Should have (competitive differentiators):**
-- **Game mode (spaceship navigation)** — hotkey toggle, spaceship cursor CSS, arrow key traversal between nodes; playful and memorable
-- **Markdown-driven content** — developer-friendly Git workflow (no CMS); version controlled
-- **Multiple content types** — 4 custom shape types (YouTube, blog, project, milestone) for rich storytelling
-- **Monorepo blog integration** — unified codebase for portfolio + blog (letters.illulachy.me)
-- **Static SPA (fast loading)** — no SSR complexity, edge-deployed, instant loads
+**Must have — table stakes for launch:**
+- Turborepo + pnpm monorepo scaffold — prerequisite for everything; must come first
+- `@illulachy/content` shared package — single source of truth for markdown, TypeScript types, and generation scripts
+- Post list page (reverse-chronological) and individual post pages (full markdown rendering + reading time)
+- Markdown rendering with Shiki syntax highlighting — build-time, zero runtime JS
+- Category and tag listing pages — static pages generated via `getStaticPaths()`
+- RSS feed at `/rss.xml` — subscribe use case without infrastructure
+- Sitemap at `/sitemap.xml` — SEO baseline
+- Per-post Open Graph and canonical meta tags — social sharing previews
+- Responsive prose layout and dark mode (Catppuccin Mocha tokens already exist in portfolio — reuse)
+- Blog deployed to writing.illulachy.me on Vercel (separate project from portfolio)
 
-**Defer (v2+):**
-- **Search/filter** — premature for explore-first UX; contradicts discovery model (add if users report confusion)
-- **CMS/admin panel** — overkill for single-author site; markdown + Git is simpler
-- **Embedded video playback** — increases bundle size, slow on mobile; link to YouTube instead
-- **Real-time collaboration** — no use case (single author, read-only portfolio)
-- **Advanced analytics** — Web Vitals (Vercel Analytics) sufficient for v1; defer heatmaps/session replay
+**Should have — add in v1.x after core is live:**
+- Full-text search with Pagefind — add when post count exceeds ~20, making browsing impractical
+- Copy-code button for code blocks — small DX win for developer content
+- Table of contents for long posts — add for posts over 2000 words
+- Canvas portfolio backlink ("See on timeline") — add when deep-link parameter is implemented in portfolio
+
+**Defer to v2+:**
+- Email newsletter — only if RSS subscriber count signals demand
+- Comments — only if consistent readership wants discussion
+- Automatic OG image generation — significant build complexity for v1
 
 ### Architecture Approach
 
-The architecture follows a **client-side SPA pattern with build-time content processing**. tldraw Editor manages canvas state (shapes, viewport, interactions) while React Context handles app state (timeline data, game mode toggle). Markdown files are parsed at build time (gray-matter → JSON) and bundled with the app—no runtime parsing. Custom shapes are registered as tldraw shape utilities (React components rendered on canvas). UI chrome (header, nav, loading) lives outside the canvas (Tailwind CSS) while canvas area uses tldraw's built-in styling.
+The migration follows a strict 6-step sequence to avoid breaking the existing portfolio at any point. The monorepo structure places the existing app at `apps/portfolio/`, creates `apps/blog/` as a new Astro app, and extracts shared content to `packages/content/`. The defining pattern is the Just-in-Time internal package: `packages/content` has no build step, pointing `exports` directly at TypeScript source files. Both consuming bundlers (Vite, Astro) compile TypeScript natively, so no compile step is needed. Turborepo enforces build order — `generate-content` (portfolio only) must run before portfolio build, and both app builds run in parallel after that. Astro reads markdown natively via a `glob()` loader pointed at `packages/content/content/` using an absolute path constructed with `fileURLToPath`.
 
 **Major components:**
-1. **tldraw Canvas** — infinite canvas engine with pan/zoom, shape rendering, Editor API for runtime control
-2. **Custom Shapes** — 4 timeline node types (YouTube, blog, project, portfolio hub) as tldraw shape utilities
-3. **Content Pipeline** — build-time markdown → JSON transformation (gray-matter + remark + Vite plugin)
-4. **App State (Context)** — timeline data loaded at mount, game mode toggle, loading state
-5. **UI Chrome** — Tailwind-styled header/nav/loading screen positioned outside canvas bounds
-
-**Data flow:** Author commits markdown → Build time: Vite runs content pipeline (parse frontmatter, calculate positions, generate timeline.json) → Runtime: App loads timeline.json, creates tldraw shapes → User pans/zooms (tldraw handles), clicks node (opens external URL).
-
-**Key patterns:** (1) Register custom shapes at app initialization; (2) Parse markdown at build time (not runtime); (3) Handle node clicks via Editor API event listeners; (4) Calculate timeline positions algorithmically from dates (not hardcoded).
+1. **packages/content** — markdown files, TypeScript types (`ContentNode`, `TimelineData`, `AboutData`), generation scripts; no build step; consumed by both apps via `workspace:*`
+2. **apps/portfolio** — existing Vite+React canvas app moved wholesale to `apps/portfolio/`; runs `generate-content` before build to produce `timeline.json` and `about.json`
+3. **apps/blog** — new Astro 5.18.x app; reads same markdown via Content Collections glob loader; generates RSS, sitemap, category/tag pages; builds Pagefind index post-build
+4. **turbo.json** — defines `generate-content → portfolio build` dependency; parallel builds for both apps; `pagefind` task depends on blog `build`
+5. **pnpm-workspace.yaml** — declares `apps/*` and `packages/*`; must be created before any turbo commands run
 
 ### Critical Pitfalls
 
-1. **Canvas performance degradation beyond 200 nodes** — FPS drops below 30 as timeline grows, making pan/zoom janky. **Prevention:** Test with 100+ nodes from day one, profile with Chrome DevTools (target 60 FPS), optimize custom shapes (minimize DOM nodes, lazy-load images, React.memo), plan for lazy-loading architecture (Phase 8).
+1. **Flat node_modules phantom deps break after npm-to-pnpm switch** — audit all imports vs declared deps with `pnpm why` before switching; fix every "Cannot find module" error; never install app packages at workspace root as a shortcut
+2. **Moving existing app to apps/portfolio/ breaks relative paths and git history** — use `git mv` (not file copy) to preserve history; update `vite.config.ts` root and resolve aliases; run `tsc --noEmit && vite build` immediately after the move before any other work
+3. **Tailwind v4 does not auto-scan sibling packages** — add `@source` directives in each app's CSS entry pointing to all packages containing Tailwind classes; this is the officially documented fix for tailwindlabs/tailwindcss#13136
+4. **Undeclared env variables cause wrong cached build artifacts in CI/CD** — declare all env vars read during build in `turbo.json` `env` field; use `VITE_*` glob to catch all Vite-prefixed vars
+5. **pnpm-workspace.yaml must exist before any turbo command** — create it first, then `pnpm install`, then install Turborepo; missing this produces a misleading error about `--workspace-root`
 
-2. **SSR complexity with tldraw (Next.js)** — Attempting server-side rendering causes "window is not defined" errors, requires complex dynamic imports, provides no benefit (canvas isn't indexable by search engines). **Prevention:** Use Vite (client-side SPA), skip SSR entirely, deploy static HTML.
-
-3. **Timeline node overlap from date clustering** — Multiple entries with same/close dates render on top of each other, making content unreadable/unclickable. **Prevention:** Implement collision detection algorithm (check overlaps, adjust Y position), vertical stacking for same-day entries, enforce minimum spacing (50px), visual grouping for clusters.
-
-4. **Runtime markdown parsing (slow initial load)** — Fetching/parsing markdown at runtime causes 3-5+ second loads and large bundle size. **Prevention:** Parse markdown at build time (Vite plugin), bundle pre-processed JSON, keep markdown for authoring only.
-
-5. **Touch gesture conflicts on mobile** — Canvas pan conflicts with browser scroll, pinch-to-zoom conflicts with browser zoom, causing confusing UX. **Prevention:** Disable browser zoom (`user-scalable=no`), verify tldraw handles touch events correctly, test on real devices (iPhone, Android, iPad—simulator insufficient).
+---
 
 ## Implications for Roadmap
 
-Based on research, suggested phase structure follows **dependency order** (foundation → content → layout → features) with **performance validation** at each step:
+The architecture research provides a precise migration sequence that directly maps to roadmap phases. The dependency constraint is hard: the monorepo scaffold and portfolio migration must be complete and verified before any blog work begins. Features are then layered from foundational (readable posts) to complete (discoverable) to deployed (live with search).
 
-### Phase 1: Foundation
-**Rationale:** tldraw + Vite + React setup must come first—all other features depend on canvas infrastructure. This phase validates that the core stack works before building custom features.
-**Delivers:** Working infinite canvas with pan/zoom, basic tldraw integration, TypeScript types
-**Addresses:** Table stakes pan/zoom navigation, touch support (built-in to tldraw)
-**Avoids:** Pitfall #2 (SSR complexity)—use Vite, not Next.js from day one
-**Research flag:** Standard patterns (tldraw docs, Vite docs)—skip `/gsd-research-phase`
+### Phase 1: Monorepo Scaffold and Portfolio Migration
 
-### Phase 2: Content Pipeline
-**Rationale:** Timeline needs data before we can render nodes. Build-time markdown processing establishes content workflow and prevents Pitfall #4 (runtime parsing).
-**Delivers:** Markdown → JSON transformation at build time (gray-matter + remark), TypeScript content types, sample timeline data (10-20 entries)
-**Uses:** gray-matter, remark, Vite plugin for build-time processing
-**Avoids:** Pitfall #4 (runtime markdown parsing)—parse at build time, bundle JSON
-**Research flag:** Standard patterns (gray-matter docs)—skip `/gsd-research-phase`
+**Rationale:** This is the hard prerequisite for everything. No blog features can be built until the monorepo is in place and the existing portfolio builds correctly inside it. The migration is mechanical but failure-prone — it must be its own phase with discrete verification gates.
+**Delivers:** Turborepo + pnpm monorepo at repo root; existing portfolio running at `apps/portfolio/` with identical behavior to pre-migration; `pnpm-workspace.yaml`, root `turbo.json`, and root `package.json` as workspace root; `package-lock.json` replaced with `pnpm-lock.yaml`
+**Addresses:** FEATURES.md monorepo structure prerequisite
+**Avoids:** Pitfalls 1 (phantom deps), 2 (missing workspace yaml), 3 (broken paths after app move), 5 (turbo env vars), 9 (root package pollution), 10 (missing turbo outputs), 11 (combined scripts not cacheable)
 
-### Phase 3: Custom Shapes
-**Rationale:** Cannot render timeline without custom shape utilities. This phase implements tldraw's shape API with 4 content types before tackling complex layout logic.
-**Delivers:** 4 custom shape types (YouTube, blog, project, portfolio hub) registered with tldraw, basic click handlers (open external URLs)
-**Implements:** Custom shape utilities (tldraw architecture pattern)
-**Addresses:** Clickable nodes, visual hierarchy (portfolio hub), multiple content types
-**Avoids:** Pitfall #1 (performance)—optimize shapes early (minimize DOM nodes, React.memo)
-**Research flag:** Standard patterns (tldraw custom shapes docs)—skip `/gsd-research-phase`
+### Phase 2: Shared Content Package
 
-### Phase 4: Timeline Layout
-**Rationale:** Most complex feature—chronological positioning with collision detection. Requires experimentation and algorithm research. Depends on Phase 3 (need shape dimensions for collision detection).
-**Delivers:** Chronological positioning algorithm (X = date, Y = vertical offset), collision detection (prevent overlaps), visual grouping for date clusters
-**Addresses:** Table stakes chronological ordering
-**Avoids:** Pitfall #3 (node overlap)—collision detection from start, vertical stacking
-**Research flag:** **NEEDS `/gsd-research-phase`**—timeline layout algorithms sparse in docs, requires testing with realistic data
+**Rationale:** The `packages/content` package must exist and be wired to the portfolio before the blog app is created. Validating it against the portfolio first (which already works) gives confidence before adding a second consumer. This is also the phase where circular dependency risk is highest — enforcing one-directional dependency now prevents problems later.
+**Delivers:** `@illulachy/content` workspace package with markdown files, TypeScript types, and generation scripts moved from portfolio root; portfolio building correctly using the package via `workspace:*`; `generate-content` Turborepo task with correct input/output caching
+**Uses:** JIT internal package pattern (exports pointing at `.ts` source); Turborepo `dependsOn` for task pipeline
+**Implements:** `packages/content` architecture component; content lifecycle data flow
+**Avoids:** Pitfalls 4 (Tailwind cross-package scanning), 6 (circular task dependencies), 8 (shared package build ordering)
 
-### Phase 5: UI Chrome
-**Rationale:** Canvas core is functional by Phase 4; now add polish with header/nav/loading. Can be built in parallel with Phase 4 (independent systems).
-**Delivers:** Tailwind CSS setup, header/nav outside canvas, loading spinner, responsive layout (mobile/desktop)
-**Uses:** Tailwind CSS 4.2, clsx for conditional classes
-**Addresses:** Loading states, responsive layout
-**Research flag:** Standard patterns (Tailwind docs)—skip `/gsd-research-phase`
+### Phase 3: Blog App Foundation
 
-### Phase 6: Game Mode
-**Rationale:** Playful differentiator but not blocking for core timeline exploration. Depends on Phase 4 (needs node positions for arrow key traversal).
-**Delivers:** Hotkey toggle (G key), spaceship cursor CSS, arrow key navigation between nodes (chronological or spatial order)
-**Addresses:** Should-have game mode navigation
-**Research flag:** Minor research—define "next" node logic (chronological vs. spatial proximity)
+**Rationale:** With the monorepo stable and content package wired, the blog app can be scaffolded. This phase establishes the Astro app, connects it to the shared content, and delivers the minimum viable readable blog — post list, individual posts, responsive layout, dark mode. No blog is usable without these.
+**Delivers:** `apps/blog/` Astro 5.18.x app; Content Collections pointed at `packages/content/content/` via absolute `fileURLToPath` path; post list page (reverse-chronological); individual post pages with full markdown rendering, Shiki syntax highlighting, and reading time; responsive prose layout; dark mode using existing Catppuccin Mocha tokens
+**Uses:** Astro 5.18.x, @astrojs/tailwind (same Tailwind v4 config as portfolio), Shiki (build-time, zero runtime cost)
+**Avoids:** Pitfall 4 (Tailwind v4 `@source` directive needed for blog app), Pitfall 7 (workspace:* must resolve from root in CI)
 
-### Phase 7: Monorepo Blog
-**Rationale:** Blog site (letters.illulachy.me) can be developed independently. Turborepo integration unifies deployment but doesn't block portfolio MVP.
-**Delivers:** Blog site scaffolding (Vite + React or Astro), Turborepo + pnpm workspace setup, shared content package (types, markdown files)
-**Uses:** Turborepo 2.8, pnpm 10.32, shared packages pattern
-**Research flag:** Standard patterns (Turborepo docs)—skip `/gsd-research-phase`
+### Phase 4: Blog Discovery and SEO
 
-### Phase 8: Performance Optimization
-**Rationale:** Optimize based on real profiling data (not assumptions). By Phase 8, have realistic content (50-100+ nodes) to test performance limits.
-**Delivers:** FPS profiling, bundle size analysis, lazy-loading for timeline segments (if needed), image optimization (WebP thumbnails)
-**Addresses:** Table stakes 60 FPS performance at scale
-**Avoids:** Pitfall #1 (performance degradation)—profile early, optimize bottlenecks
-**Research flag:** **NEEDS `/gsd-research-phase`**—canvas performance at 100+ nodes requires testing, may need lazy-loading architecture
+**Rationale:** A blog without RSS, sitemap, meta tags, and category/tag pages is incomplete for real readership. These are low-complexity additions that complete the "table stakes" feature set. They share a common dependency on post metadata and can be built as a unit. No new infrastructure is required.
+**Delivers:** Category listing pages and filtered views; tag listing pages and filtered views; RSS feed at `/rss.xml`; sitemap at `/sitemap.xml`; per-post Open Graph and canonical meta tags; 404 page; navigation header linking portfolio and blog
+**Uses:** @astrojs/rss (integrates with `getCollection()`), @astrojs/sitemap 3.7.x, Astro `getStaticPaths()` for tag/category routes
+**Implements:** Complete table stakes feature set from FEATURES.md
+
+### Phase 5: Blog Deployment and Pagefind Search
+
+**Rationale:** Deploy to writing.illulachy.me as a separate Vercel project, configure CI/CD, then add Pagefind search as the first differentiating feature. Search is placed after deployment because it requires static HTML output and post-build pipeline wiring — easier to validate once the deployment pipeline is stable.
+**Delivers:** Blog deployed to writing.illulachy.me; Vercel monorepo configuration (`pnpm install` from workspace root, build filter `--filter=apps/blog`); Pagefind static search index wired as `pagefind` Turborepo task; copy-code button for code blocks
+**Uses:** Pagefind 1.4.x (runs post-build against `dist/`), `astro-pagefind` integration or custom Pagefind JS API
+**Avoids:** Pitfall 7 (workspace:* resolution in CI — always `pnpm install --frozen-lockfile` from workspace root)
 
 ### Phase Ordering Rationale
 
-- **Phases 1-3 are sequential dependencies:** Cannot build custom shapes without canvas foundation, cannot render timeline without content pipeline, cannot implement layout without shape definitions.
-- **Phase 4 (layout) is the highest-risk phase:** Timeline positioning algorithm is most complex, requires collision detection research, has no off-the-shelf solution.
-- **Phase 5 (UI chrome) can be parallel with Phase 4:** Independent systems (canvas vs. DOM outside canvas).
-- **Phases 6-7 are additive enhancements:** Game mode and blog are "nice-to-have" features that don't block core timeline MVP.
-- **Phase 8 must come last:** Requires realistic content scale (50-100+ nodes) to identify bottlenecks; premature optimization without profiling wastes time.
+- Phases 1 and 2 are strictly ordered by hard dependency: the turbo workspace must exist before `packages/content` can be wired, and the content package must be wired before the blog can consume it
+- The portfolio must remain functionally identical at the end of every phase — this is a non-negotiable verification gate throughout the migration
+- Phases 3, 4, and 5 layer blog functionality from foundational to complete to deployed, matching the feature dependency chain in FEATURES.md (post metadata → RSS/sitemap/tags → search/deployment)
+- Pitfall-to-phase mapping from PITFALLS.md was used directly to assign prevention responsibilities to the correct phase, ensuring each critical pitfall is addressed before the work that triggers it begins
 
 ### Research Flags
 
-**Phases needing `/gsd-research-phase` during planning:**
-- **Phase 4 (Timeline Layout):** Complex—timeline positioning algorithms with collision detection are sparse in docs, requires experimentation with date clustering strategies (vertical stacking, minimum spacing, visual grouping). No off-the-shelf solution.
-- **Phase 8 (Performance):** Moderate—canvas performance at 100+ nodes requires testing, may need lazy-loading or pagination if FPS drops below 60. tldraw has built-in optimizations (LOD, culling) but limits unclear until profiling.
+Phases likely needing deeper research during planning:
+- **Phase 1 (Monorepo Migration):** pnpm phantom dep audit for an existing app with 6 completed phases of features may surface non-obvious transitive dependencies; tldraw in particular is flagged for pnpm strict mode peer dep issues
+- **Phase 5 (Deployment):** Vercel monorepo configuration for two separate apps (`apps/portfolio` and `apps/blog`) deploying from a single repo root — specifically whether automatic Turborepo detection handles both as distinct projects with separate domains
 
-**Phases with standard patterns (skip research-phase):**
-- **Phase 1 (Foundation):** Well-documented (tldraw.dev, Vite docs)—setup patterns are standard
-- **Phase 2 (Content):** Well-documented (gray-matter, remark docs)—build-time markdown processing is common pattern
-- **Phase 3 (Custom Shapes):** Well-documented (tldraw custom shapes API)—examples available
-- **Phase 5 (UI Chrome):** Standard React + Tailwind patterns
-- **Phase 6 (Game Mode):** Minor—arrow key navigation logic is straightforward (chronological order or spatial proximity)
-- **Phase 7 (Monorepo):** Well-documented (Turborepo docs)—standard Turborepo + pnpm workspace setup
+Phases with standard patterns (skip research-phase):
+- **Phase 2 (Content Package):** JIT internal package pattern is documented in Turborepo official docs with exact `package.json` and `exports` examples
+- **Phase 3 (Blog Foundation):** Astro 5.x Content Collections, Shiki integration, and Tailwind v4 in Astro are all officially documented; the `glob()` loader path pattern is specified in ARCHITECTURE.md
+- **Phase 4 (Discovery/SEO):** `@astrojs/rss` + `@astrojs/sitemap` + `getStaticPaths()` are textbook Astro patterns with official tutorials and examples
+
+---
 
 ## Confidence Assessment
 
 | Area | Confidence | Notes |
 |------|------------|-------|
-| **Stack** | **HIGH** | tldraw is production-ready (45K+ GitHub stars, 200K+ weekly downloads), Vite + React + TypeScript are industry standard, official docs are comprehensive |
-| **Features** | **HIGH** | Table stakes features well-defined (pan/zoom, touch, chronological order), differentiators validated by portfolio design trends (game mode, markdown-driven) |
-| **Architecture** | **HIGH** | Client-side SPA + build-time content processing is standard pattern for canvas apps, tldraw architecture docs are detailed, monorepo patterns well-documented |
-| **Pitfalls** | **MEDIUM** | Critical pitfalls validated by tldraw GitHub issues (performance, SSR), but timeline-specific challenges (node overlap, layout algorithms) need Phase 4 experimentation |
+| Stack | HIGH | All technology versions verified against npm registry within 8 days of research date; official docs consulted for all major choices; alternatives explicitly evaluated and rejected with rationale |
+| Features | HIGH | Feature set is well-established for markdown developer blogs; table stakes/differentiators/anti-features are clearly reasoned; prioritization matrix is concrete with explicit P1/P2/P3 designations |
+| Architecture | HIGH (structure), MEDIUM (Astro out-of-tree paths) | Turborepo structure and pnpm workspace patterns sourced from official docs; Astro glob loader absolute path pattern is confirmed but relies on a single implementation approach that should be validated early in Phase 3 |
+| Pitfalls | HIGH | Critical pitfalls sourced from official docs, known upstream issues (tailwindlabs/tailwindcss#13136), and multiple community references; recovery strategies documented for each pitfall |
 
-**Overall confidence:** **HIGH**
-
-Stack and architecture are production-ready with extensive documentation. Feature scope is well-defined. Main uncertainty is **timeline layout algorithm** (Phase 4)—collision detection and date clustering strategies need experimentation during that phase. Performance limits (Phase 8) also require profiling with realistic content scale.
+**Overall confidence:** HIGH
 
 ### Gaps to Address
 
-**During Phase 4 planning (Timeline Layout):**
-- **Layout algorithm selection:** Test multiple strategies for chronological positioning:
-  - Simple linear (X = date, no Y offset)—will have overlaps
-  - Collision detection with vertical stacking (check overlaps, adjust Y)
-  - Force-directed graph layout (D3.js patterns)—may be overkill
-  - **Recommendation:** Start with linear + collision detection, iterate based on visual results
-- **Date clustering strategy:** How to handle multiple entries per day/week? Vertical stacking? Visual grouping with connecting lines?
-- **Minimum spacing:** What's the right minimum distance between nodes? 50px? 100px? Test with realistic content.
+- **Astro Content Collections with out-of-tree base path:** The `fileURLToPath` pattern for pointing the glob loader outside `apps/blog/` (to `packages/content/content/`) is the documented approach but should be validated early in Phase 3 before building blog features on top of it. If Astro's HMR or dev server has issues with out-of-tree content paths, the fallback is symlinking `packages/content/content/` into `apps/blog/src/content/`.
+- **tldraw peer deps under pnpm strict mode:** PITFALLS.md explicitly flags this — tldraw may access peer deps not directly declared. Run `pnpm why` for all tldraw dependencies during Phase 1 before the phantom dep window closes. Peer deps must be listed explicitly in `apps/portfolio/package.json`.
+- **Pagefind + Turborepo remote cache output coverage:** Pagefind generates a binary WASM index in `dist/pagefind/`. Confirm the `outputs` field in `turbo.json` includes `dist/pagefind/**` so remote cache restores the search index correctly without re-running Pagefind on every build.
 
-**During Phase 8 planning (Performance):**
-- **Node count limits:** At what point does FPS drop below 60? 100 nodes? 200 nodes? 500 nodes?
-- **Lazy-loading architecture:** If limits hit early, design pagination (load timeline segments on demand, e.g., by year or decade)
-- **Mobile performance:** Test on real devices (iPhone, Android)—mobile GPUs are weaker than desktop
-- **Bundle size:** tldraw is ~200KB alone; total target is <500KB JS (gzip). Monitor with Vite bundle analysis.
-
-**During implementation (all phases):**
-- **Touch gesture testing:** Cannot rely on desktop simulator—test on real iPhone/Android/iPad for pinch-to-zoom, pan, tap
-- **Markdown schema validation:** Implement Zod schema for frontmatter at build time (fail fast on invalid dates, URLs)
-- **Dark mode:** tldraw supports themes, but custom shapes need CSS variables to adapt (test both light/dark)
+---
 
 ## Sources
 
 ### Primary (HIGH confidence)
-- **tldraw npm package & GitHub:** 45K+ stars, 200K+ weekly downloads — https://github.com/tldraw/tldraw, https://www.npmjs.com/package/tldraw
-- **tldraw documentation:** https://tldraw.dev/docs (architecture, custom shapes API, performance guide)
-- **Vite documentation:** https://vite.dev (SPA setup, build optimization)
-- **React 19 documentation:** https://react.dev (hooks, concurrent features)
-- **Tailwind CSS documentation:** https://tailwindcss.com (v4 Vite integration)
-- **Turborepo documentation:** https://turbo.build (monorepo patterns, build pipeline)
-- **Web Vitals standards:** https://web.dev/vitals (LCP, FID, CLS targets)
-- **npm registry:** Package versions and peer dependencies
+- Turborepo npm registry (v2.8.20, published 8 days before research) and official docs — workspace structure, task pipeline, caching, Vite guide: https://turborepo.dev/docs
+- Turborepo blog "Turbo 2.7" (January 26, 2026): https://turborepo.dev/blog/turbo-2-7 — `tasks` key, composable configs
+- Astro npm registry (v5.18.0 stable) and official docs — Content Collections, RSS, sitemap, blog tag tutorial: https://docs.astro.build
+- Astro 5.0 release announcement (December 2024): https://astro.build/blog/astro-5/
+- Astro February 2026 what's new: https://astro.build/blog/whats-new-february-2026/
+- @astrojs/sitemap npm registry (v3.7.1, published within 7 days of research)
+- Pagefind official site (v1.4.0 stable): https://pagefind.app/
+- pnpm workspace docs: https://pnpm.io/workspaces
+- Tailwind CSS v4 upstream issue tailwindlabs/tailwindcss#13136 — monorepo content auto-scanning
 
 ### Secondary (MEDIUM confidence)
-- **tldraw GitHub issues:** Performance label — https://github.com/tldraw/tldraw/issues?q=label%3Aperformance
-- **steipete.me inspiration:** Markdown-driven monorepo pattern (Astro-based, not canvas) — https://github.com/steipete/steipete.me
-- **gray-matter documentation:** https://github.com/jonschlinkert/gray-matter
-- **remark documentation:** https://github.com/remarkjs/remark
-- **Vercel + Vite integration:** Official deployment guides
-- **Canvas performance patterns:** LOD rendering, culling, virtualization (from tldraw issue tracker and canvas app best practices)
-
-### Tertiary (LOW confidence, needs validation during implementation)
-- **Timeline layout algorithms:** D3.js time scales, force-directed graphs, collision detection patterns (need Phase 4 experimentation)
-- **Canvas FPS targets for 200+ nodes:** Requires performance testing with realistic content
-- **Touch gesture best practices on mobile canvas:** Needs device testing (viewport settings, gesture conflicts)
-- **Optimal node positioning logic:** Chronological vs. spatial, minimum spacing, visual grouping (needs design iteration)
+- Tailwind v4 in Turborepo fix: https://medium.com/@philippbtrentmann/setting-up-tailwind-css-v4-in-a-turbo-monorepo-7688f3193039
+- astro-pagefind integration: https://github.com/shishkin/astro-pagefind
+- steipete.me GitHub — reference Astro markdown blog: https://github.com/steipete/steipete.me
+- Pagefind replacing Lunr for static sites (2026): https://www.allaboutken.com/posts/20260228-replacing-lunr-with-pagefind/
+- Astro vs Next.js for blogs (2026): https://sourabhyadav.com/blog/astro-vs-nextjs-for-blogs-2026/
+- Turborepo pitfalls (DEV Community): https://dev.to/_gdelgado/pitfalls-when-adding-turborepo-to-your-project-4cel
+- Turborepo migration (Dub): https://dub.co/blog/turborepo-migration
+- Turborepo + shared packages tutorial 2026: https://noqta.tn/en/tutorials/turborepo-nextjs-monorepo-shared-packages-2026
 
 ---
 
-**Research completed:** 2025-01-19  
-**Ready for roadmap:** Yes  
-**Next step:** Requirements definition → Roadmap creation with phase structure above
+*Research completed: 2026-03-28*
+*Ready for roadmap: yes*
