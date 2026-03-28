@@ -145,39 +145,37 @@ Requirements for milestone v1.1: Turborepo + Blog Site. Each maps to roadmap pha
 
 ## Traceability
 
-Which phases cover which requirements. Updated during roadmap creation.
-
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| MONO-01 | TBD | Pending |
-| MONO-02 | TBD | Pending |
-| MONO-03 | TBD | Pending |
-| MONO-04 | TBD | Pending |
-| MONO-05 | TBD | Pending |
-| BLOG-01 | TBD | Pending |
-| BLOG-02 | TBD | Pending |
-| BLOG-03 | TBD | Pending |
-| BLOG-04 | TBD | Pending |
-| TAX-01 | TBD | Pending |
-| TAX-02 | TBD | Pending |
-| TAX-03 | TBD | Pending |
-| TAX-04 | TBD | Pending |
-| SEO-01 | TBD | Pending |
-| SEO-02 | TBD | Pending |
-| SEO-03 | TBD | Pending |
-| SEO-04 | TBD | Pending |
-| VIS-01 | TBD | Pending |
-| VIS-02 | TBD | Pending |
-| SRCH-01 | TBD | Pending |
-| SRCH-02 | TBD | Pending |
-| SRCH-03 | TBD | Pending |
-| SRCH-04 | TBD | Pending |
+| MONO-01 | Phase 7 | Pending |
+| MONO-02 | Phase 7 | Pending |
+| MONO-03 | Phase 7 | Pending |
+| MONO-04 | Phase 7 | Pending |
+| MONO-05 | Phase 7 | Pending |
+| BLOG-01 | Phase 8 | Pending |
+| BLOG-02 | Phase 8 | Pending |
+| BLOG-03 | Phase 8 | Pending |
+| BLOG-04 | Phase 8 | Pending |
+| VIS-01 | Phase 8 | Pending |
+| VIS-02 | Phase 8 | Pending |
+| TAX-01 | Phase 9 | Pending |
+| TAX-02 | Phase 9 | Pending |
+| TAX-03 | Phase 9 | Pending |
+| TAX-04 | Phase 9 | Pending |
+| SEO-01 | Phase 9 | Pending |
+| SEO-02 | Phase 9 | Pending |
+| SEO-03 | Phase 9 | Pending |
+| SEO-04 | Phase 9 | Pending |
+| SRCH-01 | Phase 10 | Pending |
+| SRCH-02 | Phase 10 | Pending |
+| SRCH-03 | Phase 10 | Pending |
+| SRCH-04 | Phase 10 | Pending |
 
 **Coverage:**
 - v1.1 requirements: 23 total
-- Mapped to phases: 0
-- Unmapped: 23 ⚠️
+- Mapped to phases: 23 ✓
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-03-28*
-*Last updated: 2026-03-28 after initial definition*
+*Last updated: 2026-03-28 after roadmap creation — all 23 requirements mapped*
