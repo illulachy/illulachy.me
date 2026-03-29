@@ -1,0 +1,56 @@
+---
+import BaseLayout from './BaseLayout.astro'
+
+interface Props {
+  frontmatter: {
+    title: string
+    date: string
+    excerpt: string
+    category: string
+  }
+  readingTime: string
+}
+
+const { frontmatter, readingTime } = Astro.props
+const formattedDate = new Date(frontmatter.date).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+})
+const pageTitle = `${frontmatter.title} \u2014 Writing`
+---
+
+<BaseLayout title={pageTitle}>
+  <main class="max-w-[65ch] mx-auto px-8 max-sm:px-4 py-16">
+    <article>
+      <header class="mb-8">
+        <h1 class="font-heading text-4xl font-semibold text-text-primary leading-tight tracking-tight mb-3">
+          {frontmatter.title}
+        </h1>
+        <div class="flex items-center gap-2 text-sm text-text-tertiary tracking-wide">
+          <time datetime={frontmatter.date}>{formattedDate}</time>
+          <span aria-hidden="true">&middot;</span>
+          <span>{readingTime}</span>
+        </div>
+      </header>
+      <div class="prose max-w-none
+        prose-headings:font-heading prose-headings:text-text-primary prose-headings:tracking-tight
+        prose-p:text-text-secondary prose-p:leading-normal
+        prose-a:text-interactive-default prose-a:no-underline hover:prose-a:text-interactive-hover
+        prose-strong:text-text-primary
+        prose-code:text-text-primary
+        prose-pre:bg-surface-container-low prose-pre:rounded-md
+        prose-blockquote:border-border-subtle prose-blockquote:text-text-secondary
+        prose-li:text-text-secondary
+        prose-hr:border-border-ghost
+      ">
+        <slot />
+      </div>
+      <footer class="mt-16 pt-8">
+        <a href="/" class="text-interactive-default hover:text-interactive-hover text-sm tracking-wide transition-colors duration-150">
+          &larr; Browse all posts
+        </a>
+      </footer>
+    </article>
+  </main>
+</BaseLayout>
