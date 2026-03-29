@@ -39,7 +39,7 @@
       "type": "blog",
       "title": "Discovering tldraw - An Infinite Canvas Library",
       "date": "2023-11-03T00:00:00.000Z",
-      "url": "https://letters.illulachy.me/tldraw-discovery",
+      "url": "https://writing.illulachy.me/tldraw-discovery",
       "description": "First impressions of tldraw for creative tools"
     },
     {
@@ -65,7 +65,7 @@
       "type": "blog",
       "title": "2023 Year in Review",
       "date": "2024-01-01T00:00:00.000Z",
-      "url": "https://letters.illulachy.me/2023-review",
+      "url": "https://writing.illulachy.me/2023-review",
       "description": "Reflecting on a year of building and learning"
     },
     {
@@ -73,7 +73,7 @@
       "type": "blog",
       "title": "Deep Dive into TypeScript Generics",
       "date": "2024-01-15T00:00:00.000Z",
-      "url": "https://letters.illulachy.me/typescript-generics",
+      "url": "https://writing.illulachy.me/typescript-generics",
       "description": "Advanced TypeScript patterns explained"
     },
     {
@@ -95,5 +95,5 @@
       "description": "The idea behind this portfolio site"
     }
   ],
-  "lastUpdated": "2026-03-29T01:42:19.517Z"
+  "lastUpdated": "2026-03-29T01:44:04.757Z"
 }
