@@ -2,37 +2,37 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Turborepo + Blog Site
-status: planning
-last_updated: "2026-03-29T01:45:52.092Z"
-last_activity: 2026-03-28 — v1.1 roadmap created (Phases 7-10)
+status: in_progress
+last_updated: "2026-03-29"
+last_activity: 2026-03-29 — Phase 7 complete (monorepo scaffold + @illu/content + blog placeholder)
 progress:
   total_phases: 10
   completed_phases: 7
-  total_plans: 12
-  completed_plans: 12
-  percent: 0
+  total_plans: 14
+  completed_plans: 14
+  percent: 25
 ---
 
 # Project State: illulachy.me
 
-**Last updated:** 2026-03-28
-**Status:** Ready to plan Phase 7
+**Last updated:** 2026-03-29
+**Status:** Phase 7 complete — ready for Phase 8
 
 ## Project Reference
 
 See: .planning/PROJECT.md (updated 2026-03-28)
 
 **Core value:** The canvas must feel smooth and intuitive to explore — pan/zoom navigation works flawlessly, and the timeline layout clearly communicates my journey over time.
-**Current focus:** Milestone v1.1 — Phase 7: Monorepo Scaffold
+**Current focus:** Milestone v1.1 — Phase 8 next (blog features)
 
 ## Current Position
 
-Phase: 7 of 10 (Monorepo Scaffold)
-Plan: — (not yet planned)
-Status: Ready to plan
-Last activity: 2026-03-28 — v1.1 roadmap created (Phases 7-10)
+Phase: 7 of 10 (Monorepo Scaffold) — COMPLETE
+Plan: all plans done
+Status: Verified — ready for Phase 8
+Last activity: 2026-03-29 — Phase 7 executed and verified
 
-Progress: [░░░░░░░░░░] 0% (v1.1 milestone)
+Progress: [██░░░░░░░░] 25% (v1.1 milestone — 1 of 4 phases done)
 
 ## Performance Metrics
 
@@ -74,16 +74,15 @@ None yet.
 
 ### Blockers/Concerns
 
-- Phase 7 risk: pnpm strict mode may surface tldraw phantom dep issues — run `pnpm why` on all tldraw deps before switching
-- Phase 7 risk: moving portfolio to apps/portfolio/ breaks relative paths — use `git mv`, verify build immediately after
 - Phase 8 risk: Astro out-of-tree content paths (fileURLToPath pattern) — validate early before building blog features on top
+- Node 22.19.0 required (Vite 8 / rolldown) — add `.nvmrc` with `22` as follow-up
 
 ## Session Continuity
 
-**Last session:** 2026-03-29T01:45:52.089Z
-**Completed:** v1.1 roadmap created — 4 phases (7-10), 23 requirements mapped
-**Resumed:** 2026-03-28 — proceeding to plan Phase 7 (CONTEXT.md exists)
+**Last session:** 2026-03-29
+**Completed:** Phase 7 (Monorepo Scaffold) — planned, executed, and verified
+**Next:** Phase 8 — Blog Features (discuss → plan → execute)
 **Resume file:** None
 
 ---
-*State updated: 2026-03-28 after v1.1 roadmap creation*
+*State updated: 2026-03-29 after Phase 7 completion*
