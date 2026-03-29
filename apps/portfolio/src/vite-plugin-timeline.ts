@@ -6,7 +6,7 @@ import path from 'path'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const REPO_ROOT = path.resolve(__dirname, '../../..')
-const CONTENT_GLOB = path.join(REPO_ROOT, 'content', '**', '*.md')
+const CONTENT_GLOB = path.join(REPO_ROOT, 'packages', 'content', 'content', '**', '*.md')
 
 export function timelinePlugin(): Plugin {
   return {
@@ -48,7 +48,7 @@ export function timelinePlugin(): Plugin {
 
 function runGenerator(): Promise<void> {
   return new Promise((resolve, reject) => {
-    const proc = spawn('pnpm', ['run', 'generate-timeline'], {
+    const proc = spawn('pnpm', ['--filter', '@illu/content', 'run', 'generate-timeline'], {
       stdio: 'inherit',
       shell: true,
       cwd: REPO_ROOT

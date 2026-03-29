@@ -1,0 +1,23 @@
+{
+  "name": "@illu/content",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "generate-timeline": "tsx scripts/generate-timeline.ts",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "fast-glob": "^3.3.3",
+    "gray-matter": "^4.0.3",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/node": "^24.12.0",
+    "tsx": "^4.21.0",
+    "vitest": "^4.1.0"
+  }
+}

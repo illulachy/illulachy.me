@@ -7,11 +7,10 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "test": "turbo test",
-    "generate-timeline": "npx tsx scripts/generate-timeline.ts"
+    "generate-timeline": "pnpm --filter @illu/content generate-timeline"
   },
   "devDependencies": {
-    "turbo": "^2.8.21",
-    "tsx": "^4.21.0"
+    "turbo": "^2.8.21"
   },
   "pnpm": {
     "onlyBuiltDependencies": ["fsevents", "esbuild"]

@@ -27,7 +27,8 @@
     /* Path Aliases */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@illu/content": ["../../packages/content/src/index.ts"]
     }
   },
   "include": ["src"]
