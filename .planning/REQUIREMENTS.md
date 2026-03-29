@@ -18,7 +18,7 @@ Requirements for milestone v1.1: Turborepo + Blog Site. Each maps to roadmap pha
 ### Blog Content
 
 - [x] **BLOG-01**: User can view a post list page with titles, dates, and excerpts in reverse-chronological order
-- [ ] **BLOG-02**: User can read a full blog post with rendered markdown (headings, code blocks, lists, links, images)
+- [x] **BLOG-02**: User can read a full blog post with rendered markdown (headings, code blocks, lists, links, images)
 - [x] **BLOG-03**: Code blocks display syntax highlighting via Shiki (build-time, zero runtime JS)
 - [x] **BLOG-04**: Each post displays estimated reading time
 
@@ -153,7 +153,7 @@ Requirements for milestone v1.1: Turborepo + Blog Site. Each maps to roadmap pha
 | MONO-04 | Phase 7 | Complete |
 | MONO-05 | Phase 7 | Complete |
 | BLOG-01 | Phase 8 | Complete |
-| BLOG-02 | Phase 8 | Pending |
+| BLOG-02 | Phase 8 | Complete |
 | BLOG-03 | Phase 8 | Complete |
 | BLOG-04 | Phase 8 | Complete |
 | VIS-01 | Phase 8 | Complete |

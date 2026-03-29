@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Turborepo + Blog Site
 status: executing
-last_updated: "2026-03-29T16:18:49.504Z"
+last_updated: "2026-03-29T16:19:57.965Z"
 last_activity: 2026-03-29
 progress:
   total_phases: 10
   completed_phases: 7
   total_plans: 15
-  completed_plans: 13
+  completed_plans: 14
   percent: 25
 ---
 
@@ -53,6 +53,7 @@ Progress: [██░░░░░░░░] 25% (v1.1 milestone — 1 of 4 phases
 | Phase 07-monorepo-scaffold P02 | 12m | 2 tasks | 22 files |
 | Phase 08-blog-foundation P01 | 7m | 2 tasks | 16 files |
 | Phase 08-blog-foundation P02 | 4m | 2 tasks | 5 files |
+| Phase 08-blog-foundation P03 | 8m | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -74,6 +75,9 @@ Progress: [██░░░░░░░░] 25% (v1.1 milestone — 1 of 4 phases
 - [Phase 08-blog-foundation]: .nvmrc added with Node 22 — Astro 6 + Vite 8 / rolldown requires Node >=22.12.0
 - [Phase 08-blog-foundation]: mod.rawContent?.() used for markdown body text extraction from Astro eager glob modules
 - [Phase 08-blog-foundation]: Glob path 4 levels deep from src/pages/ validated for cross-workspace content loading
+- [Phase 08-blog-foundation]: Use @shikijs/rehype in unified pipeline for manual markdown rendering from raw strings — Astro built-in only handles .md/.mdx files
+- [Phase 08-blog-foundation]: .shiki CSS class added to global.css alongside .astro-code — @shikijs/rehype outputs shiki class not astro-code
+- [Phase 08-blog-foundation]: prose without prose-invert on post pages — Stitch token CSS vars in global.css handle dark/light switching automatically
 
 ### Pending Todos
 
@@ -86,7 +90,7 @@ None yet.
 
 ## Session Continuity
 
-**Last session:** 2026-03-29T16:18:49.501Z
+**Last session:** 2026-03-29T16:19:57.962Z
 **Completed:** Phase 7 (Monorepo Scaffold) — planned, executed, and verified
 **Next:** Phase 8 — Blog Features (discuss → plan → execute)
 **Resume file:** None

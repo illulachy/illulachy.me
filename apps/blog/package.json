@@ -12,14 +12,19 @@
   "dependencies": {
     "@illu/content": "workspace:*",
     "@illu/tokens": "workspace:*",
-    "astro": "^6.1.1",
-    "@tailwindcss/vite": "^4.2.2",
+    "@shikijs/rehype": "latest",
     "@tailwindcss/typography": "^0.5.19",
+    "@tailwindcss/vite": "^4.2.2",
+    "astro": "^6.1.1",
     "gray-matter": "^4.0.3",
-    "@shikijs/rehype": "latest"
+    "rehype-stringify": "^10.0.1",
+    "remark-gfm": "^4.0.1",
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.1.2",
+    "unified": "^11.0.5"
   },
   "devDependencies": {
-    "vitest": "^3.1.0",
-    "tailwindcss": "^4.0.0"
+    "tailwindcss": "^4.0.0",
+    "vitest": "^3.1.0"
   }
 }
