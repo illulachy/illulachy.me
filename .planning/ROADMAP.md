@@ -153,7 +153,13 @@ Plans:
   3. Code blocks display syntax highlighting with Shiki (no runtime JavaScript required for highlighting)
   4. Each post shows an estimated reading time
   5. Blog uses dark mode matching Catppuccin Mocha color palette with responsive prose layout (max ~65ch width, mobile-first)
-**Plans:** TBD
+**Plans:** 3 plans
+
+Plans:
+- [ ] 08-01-PLAN.md — @illu/tokens package + Tailwind v4 + Shiki themes + BaseLayout + blog post content files (VIS-01, BLOG-03)
+- [ ] 08-02-PLAN.md — Post list page with PostCard component + reading time utility + unit tests (BLOG-01, BLOG-04, VIS-02)
+- [ ] 08-03-PLAN.md — Post detail page with remark+rehype+Shiki pipeline + PostLayout (BLOG-02, BLOG-03, VIS-02)
+
 **UI hint**: yes
 
 ### Phase 9: Discovery and SEO
@@ -194,7 +200,7 @@ Plans:
 | 5. UI Chrome | v1.0 | 2/2 | Complete | 2026-03-23 |
 | 6. Game Mode | v1.0 | 1/1 | Complete | 2026-03-28 |
 | 7. Monorepo Scaffold | v1.1 | 2/2 | Complete   | 2026-03-29 |
-| 8. Blog Foundation | v1.1 | 0/? | Not started | - |
+| 8. Blog Foundation | v1.1 | 0/3 | Planned | - |
 | 9. Discovery and SEO | v1.1 | 0/? | Not started | - |
 | 10. Search and Extras | v1.1 | 0/? | Not started | - |
 
@@ -206,4 +212,4 @@ Plans:
 
 ---
 *Roadmap created: 2025-01-19*
-*Last updated: 2026-03-28 after Phase 7 planning (2 plans created)*
+*Last updated: 2026-03-29 after Phase 8 planning (3 plans created)*
