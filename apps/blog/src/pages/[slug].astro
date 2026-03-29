@@ -1,0 +1,49 @@
+---
+import matter from 'gray-matter'
+import { unified } from 'unified'
+import remarkParse from 'remark-parse'
+import remarkGfm from 'remark-gfm'
+import remarkRehype from 'remark-rehype'
+import rehypeStringify from 'rehype-stringify'
+import rehypeShiki from '@shikijs/rehype'
+// @ts-ignore -- JSON theme objects are compatible with Shiki BundledTheme shape
+import illuDark from '../shiki/illu-dark.json'
+// @ts-ignore
+import illuLight from '../shiki/illu-light.json'
+import PostLayout from '../layouts/PostLayout.astro'
+import { calcReadingTime } from '../lib/reading-time'
+
+export async function getStaticPaths() {
+  const rawFiles = import.meta.glob(
+    '../../../../packages/content/content/posts/**/*.md',
+    { eager: true, query: '?raw', import: 'default' }
+  )
+  return Object.entries(rawFiles).map(([path, raw]) => ({
+    params: { slug: path.split('/').pop()!.replace('.md', '') },
+    props: { raw: raw as string },
+  }))
+}
+
+const { raw } = Astro.props
+const { data: frontmatter, content: body } = matter(raw)
+const readingTime = calcReadingTime(body)
+
+const processor = unified()
+  .use(remarkParse)
+  .use(remarkGfm)
+  .use(remarkRehype, { allowDangerousHtml: true })
+  .use(rehypeShiki, {
+    // D-17: Custom Shiki themes from Stitch palette (illu-dark / illu-light)
+    themes: {
+      light: illuLight as Parameters<typeof rehypeShiki>[0]['themes']['light'],
+      dark: illuDark as Parameters<typeof rehypeShiki>[0]['themes']['dark'],
+    },
+  })
+  .use(rehypeStringify, { allowDangerousHtml: true })
+
+const html = String(await processor.process(body))
+---
+
+<PostLayout frontmatter={frontmatter as any} readingTime={readingTime}>
+  <Fragment set:html={html} />
+</PostLayout>

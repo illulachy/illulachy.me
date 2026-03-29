@@ -1,0 +1,45 @@
+---
+interface Props {
+  post: {
+    slug: string
+    frontmatter: {
+      title: string
+      date: string
+      excerpt: string
+      category: string
+    }
+    readingTime: string
+  }
+}
+
+const { post } = Astro.props
+const formattedDate = new Date(post.frontmatter.date).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+})
+---
+
+<article class="group py-6 -mx-4 px-4 rounded-lg transition-colors duration-150 ease-out hover:bg-surface-container-low">
+  <a href={`/${post.slug}`} class="block no-underline">
+    <div class="flex justify-between gap-6 items-start">
+      <div class="flex-1 min-w-0">
+        <h2 class="font-heading text-4xl font-semibold text-text-primary leading-tight tracking-tight mb-2">
+          {post.frontmatter.title}
+        </h2>
+        <p class="text-text-secondary text-base leading-normal mb-3 line-clamp-2">
+          {post.frontmatter.excerpt}
+        </p>
+        <div class="flex items-center gap-2 text-sm text-text-tertiary tracking-wide">
+          <time datetime={post.frontmatter.date}>{formattedDate}</time>
+          <span aria-hidden="true">&middot;</span>
+          <span>{post.readingTime}</span>
+          <span aria-hidden="true">&middot;</span>
+          <span class="inline-block bg-interactive-bg-subtle text-interactive-default rounded-full px-2 py-0.5 text-sm">
+            {post.frontmatter.category}
+          </span>
+        </div>
+      </div>
+    </div>
+  </a>
+</article>

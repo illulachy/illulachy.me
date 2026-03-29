@@ -1,0 +1,42 @@
+{
+  "name": "illu-light",
+  "type": "light",
+  "colors": {
+    "editor.background": "#F0F0F0",
+    "editor.foreground": "#09090B"
+  },
+  "tokenColors": [
+    {
+      "scope": ["comment", "punctuation.definition.comment"],
+      "settings": { "foreground": "#71717A", "fontStyle": "italic" }
+    },
+    {
+      "scope": ["string", "string.quoted"],
+      "settings": { "foreground": "#9B59D4" }
+    },
+    {
+      "scope": ["keyword", "keyword.control", "storage.type", "storage.modifier"],
+      "settings": { "foreground": "#7C3AED" }
+    },
+    {
+      "scope": ["entity.name.function", "support.function"],
+      "settings": { "foreground": "#7C3AED" }
+    },
+    {
+      "scope": ["variable", "variable.other"],
+      "settings": { "foreground": "#09090B" }
+    },
+    {
+      "scope": ["constant.numeric", "constant.language"],
+      "settings": { "foreground": "#9B59D4" }
+    },
+    {
+      "scope": ["entity.name.type", "entity.name.class", "support.type"],
+      "settings": { "foreground": "#7C3AED" }
+    },
+    {
+      "scope": ["punctuation", "meta.brace"],
+      "settings": { "foreground": "#3F3F46" }
+    }
+  ]
+}

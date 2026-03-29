@@ -1,0 +1,81 @@
+@theme {
+  /* Surfaces */
+  --color-surface-dim: #0A0A0A;
+  --color-surface-default: #131313;
+  --color-surface-container-lowest: #1A1A1A;
+  --color-surface-container-low: #1C1C1C;
+  --color-surface-container: #212121;
+  --color-surface-container-high: #272727;
+  --color-surface-container-highest: #2E2E2E;
+
+  /* Text */
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #A1A1AA;
+  --color-text-tertiary: #71717A;
+  --color-text-quaternary: #52525B;
+  --color-text-inverse: #09090B;
+
+  /* Interactive (Mauve) */
+  --color-accent-mauve: #E0AFFF;
+  --color-interactive-default: #E0AFFF;
+  --color-interactive-hover: #EAC7FF;
+  --color-interactive-active: #D197FF;
+  --color-interactive-disabled: #B380CC;
+
+  /* Interactive Backgrounds */
+  --color-interactive-bg-subtle: rgba(224, 175, 255, 0.1);
+  --color-interactive-bg-medium: rgba(224, 175, 255, 0.2);
+
+  /* Borders (ghost -- No-Line Rule D-09) */
+  --color-border-ghost: rgba(255, 255, 255, 0.06);
+  --color-border-subtle: rgba(255, 255, 255, 0.1);
+
+  /* Semantic */
+  --color-success: #22C55E;
+  --color-error: #EF4444;
+
+  /* Fonts */
+  --font-display: 'Noto Serif', Georgia, serif;
+  --font-heading: 'Noto Serif', Georgia, serif;
+  --font-body: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --font-label: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Border Radius */
+  --radius-none: 0;
+  --radius-sm: 0.125rem;
+  --radius-default: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+
+  /* Motion */
+  --duration-fast: 100ms;
+  --duration-normal: 150ms;
+  --duration-moderate: 200ms;
+
+  /* Touch */
+  --touch-target-min: 44px;
+}
+
+/* Light mode overrides (per D-07) */
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-surface-default: #FAFAFA;
+    --color-surface-container-lowest: #F5F5F5;
+    --color-surface-container-low: #F0F0F0;
+    --color-surface-container: #EBEBEB;
+    --color-surface-container-high: #E5E5E5;
+    --color-surface-container-highest: #E0E0E0;
+    --color-text-primary: #09090B;
+    --color-text-secondary: #3F3F46;
+    --color-text-tertiary: #71717A;
+    --color-text-inverse: #FFFFFF;
+    --color-accent-mauve: #9B59D4;
+    --color-interactive-default: #9B59D4;
+    --color-interactive-hover: #7C3AED;
+    --color-border-ghost: rgba(0, 0, 0, 0.06);
+    --color-border-subtle: rgba(0, 0, 0, 0.1);
+  }
+}

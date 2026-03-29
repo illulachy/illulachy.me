@@ -1,16 +1,48 @@
 ---
-// Phase 7 placeholder — blog features built in Phase 8
+import BaseLayout from '../layouts/BaseLayout.astro'
+import PostCard from '../components/PostCard.astro'
+import { calcReadingTime } from '../lib/reading-time'
+
+const postModules = import.meta.glob(
+  '../../../../packages/content/content/posts/**/*.md',
+  { eager: true }
+)
+
+interface PostFrontmatter {
+  title: string
+  date: string
+  excerpt: string
+  tags: string[]
+  category: string
+}
+
+const posts = Object.entries(postModules)
+  .map(([path, mod]: [string, any]) => ({
+    slug: path.split('/').pop()!.replace('.md', ''),
+    frontmatter: mod.frontmatter as PostFrontmatter,
+    readingTime: calcReadingTime(mod.rawContent?.() ?? ''),
+  }))
+  .filter(post => post.frontmatter?.title)
+  .sort((a, b) =>
+    new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime()
+  )
 ---
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>writing.illulachy.me</title>
-  </head>
-  <body>
-    <main>
-      <h1>writing.illulachy.me</h1>
-      <p>Coming soon.</p>
-    </main>
-  </body>
-</html>
+
+<BaseLayout>
+  <main class="max-w-[680px] mx-auto px-8 max-sm:px-4 py-16">
+    <h1 class="font-display text-5xl font-semibold text-text-primary leading-tight tracking-tighter mb-12">
+      Writing
+    </h1>
+
+    {posts.length === 0 ? (
+      <div class="text-center py-16">
+        <h2 class="font-heading text-2xl font-semibold text-text-primary mb-4">Nothing here yet</h2>
+        <p class="text-text-secondary">Posts are on their way. Check back soon.</p>
+      </div>
+    ) : (
+      <div class="flex flex-col gap-8">
+        {posts.map(post => <PostCard post={post} />)}
+      </div>
+    )}
+  </main>
+</BaseLayout>
