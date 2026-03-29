@@ -19,7 +19,7 @@ Requirements for milestone v1.1: Turborepo + Blog Site. Each maps to roadmap pha
 
 - [ ] **BLOG-01**: User can view a post list page with titles, dates, and excerpts in reverse-chronological order
 - [ ] **BLOG-02**: User can read a full blog post with rendered markdown (headings, code blocks, lists, links, images)
-- [ ] **BLOG-03**: Code blocks display syntax highlighting via Shiki (build-time, zero runtime JS)
+- [x] **BLOG-03**: Code blocks display syntax highlighting via Shiki (build-time, zero runtime JS)
 - [ ] **BLOG-04**: Each post displays estimated reading time
 
 ### Taxonomy & Navigation
@@ -38,7 +38,7 @@ Requirements for milestone v1.1: Turborepo + Blog Site. Each maps to roadmap pha
 
 ### Visual Identity
 
-- [ ] **VIS-01**: Blog uses dark mode matching Stitch design system palette (charcoal + white + mauve) via Tailwind v4 @theme tokens (Note: original spec referenced Catppuccin Mocha; superseded by .stich/DESIGN.md custom palette per CONTEXT.md D-05)
+- [x] **VIS-01**: Blog uses dark mode matching Stitch design system palette (charcoal + white + mauve) via Tailwind v4 @theme tokens (Note: original spec referenced Catppuccin Mocha; superseded by .stich/DESIGN.md custom palette per CONTEXT.md D-05)
 - [ ] **VIS-02**: Blog has responsive prose layout (max-width ~65ch, fluid typography, mobile-first)
 
 ### Search & Extras
@@ -154,9 +154,9 @@ Requirements for milestone v1.1: Turborepo + Blog Site. Each maps to roadmap pha
 | MONO-05 | Phase 7 | Complete |
 | BLOG-01 | Phase 8 | Pending |
 | BLOG-02 | Phase 8 | Pending |
-| BLOG-03 | Phase 8 | Pending |
+| BLOG-03 | Phase 8 | Complete |
 | BLOG-04 | Phase 8 | Pending |
-| VIS-01 | Phase 8 | Pending |
+| VIS-01 | Phase 8 | Complete |
 | VIS-02 | Phase 8 | Pending |
 | TAX-01 | Phase 9 | Pending |
 | TAX-02 | Phase 9 | Pending |
