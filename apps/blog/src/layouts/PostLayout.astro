@@ -18,9 +18,15 @@ const formattedDate = new Date(frontmatter.date).toLocaleDateString('en-US', {
   day: 'numeric',
 })
 const pageTitle = `${frontmatter.title} \u2014 Writing`
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href
 ---
 
-<BaseLayout title={pageTitle}>
+<BaseLayout
+  title={pageTitle}
+  description={frontmatter.excerpt}
+  canonicalUrl={canonicalUrl}
+  ogType="article"
+>
   <main class="max-w-[65ch] mx-auto px-8 max-sm:px-4 py-16">
     <article>
       <header class="mb-8">

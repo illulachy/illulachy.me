@@ -1,10 +1,27 @@
 ---
 import '../styles/global.css'
+import Nav from '../components/Nav.astro'
 
 interface Props {
   title?: string
+  description?: string
+  ogImage?: string
+  canonicalUrl?: string
+  ogType?: string
+  hideNav?: boolean
 }
-const { title = 'Writing \u2014 illulachy.me' } = Astro.props
+const {
+  title = 'Writing \u2014 illulachy.me',
+  description = 'Thoughts on engineering, learning, and building.',
+  ogImage = '/og-default.svg',
+  canonicalUrl,
+  ogType = 'website',
+  hideNav = false,
+} = Astro.props
+
+const ogImageAbsolute = ogImage.startsWith('http')
+  ? ogImage
+  : new URL(ogImage, Astro.site).href
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -18,8 +35,17 @@ const { title = 'Writing \u2014 illulachy.me' } = Astro.props
       href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=Space+Grotesk:wght@400;600&display=swap"
       rel="stylesheet"
     />
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageAbsolute} />
+    <meta property="og:type" content={ogType} />
+    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+    {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
+    <link rel="alternate" type="application/rss+xml" title="Writing \u2014 illulachy.me" href="/rss.xml" />
   </head>
   <body class="bg-surface-default text-text-primary font-body antialiased">
+    {!hideNav && <Nav />}
     <slot />
   </body>
 </html>
