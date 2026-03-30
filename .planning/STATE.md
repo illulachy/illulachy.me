@@ -2,21 +2,21 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Turborepo + Blog Site
-status: executing
-last_updated: "2026-03-30T03:49:22.239Z"
-last_activity: 2026-03-29
+status: verifying
+last_updated: "2026-03-30T16:16:18.246Z"
+last_activity: 2026-03-30
 progress:
   total_phases: 10
   completed_phases: 8
-  total_plans: 15
-  completed_plans: 15
+  total_plans: 17
+  completed_plans: 16
   percent: 25
 ---
 
 # Project State: illulachy.me
 
 **Last updated:** 2026-03-29
-**Status:** Ready to execute
+**Status:** Phase complete — ready for verification
 
 ## Project Reference
 
@@ -29,8 +29,8 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 
 Phase: 08 (blog-foundation) — EXECUTING
 Plan: 3 of 3
-Status: Ready to execute
-Last activity: 2026-03-29
+Status: Phase complete — ready for verification
+Last activity: 2026-03-30
 
 Progress: [██░░░░░░░░] 25% (v1.1 milestone — 1 of 4 phases done)
 
@@ -54,6 +54,7 @@ Progress: [██░░░░░░░░] 25% (v1.1 milestone — 1 of 4 phases
 | Phase 08-blog-foundation P01 | 7m | 2 tasks | 16 files |
 | Phase 08-blog-foundation P02 | 4m | 2 tasks | 5 files |
 | Phase 08-blog-foundation P03 | 8m | 2 tasks | 5 files |
+| Phase 09-discovery-and-seo P01 | 3min | 3 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -78,6 +79,9 @@ Progress: [██░░░░░░░░] 25% (v1.1 milestone — 1 of 4 phases
 - [Phase 08-blog-foundation]: Use @shikijs/rehype in unified pipeline for manual markdown rendering from raw strings — Astro built-in only handles .md/.mdx files
 - [Phase 08-blog-foundation]: .shiki CSS class added to global.css alongside .astro-code — @shikijs/rehype outputs shiki class not astro-code
 - [Phase 08-blog-foundation]: prose without prose-invert on post pages — Stitch token CSS vars in global.css handle dark/light switching automatically
+- [Phase 09-discovery-and-seo]: SVG used instead of PNG for og-default — developer can convert if Twitter/X requires PNG — SVG works for most social crawlers; static PNG conversion can be done at deploy time
+- [Phase 09-discovery-and-seo]: PostCard outer anchor removed — only title+excerpt is the post link to avoid nested anchors — Nested <a> tags are invalid HTML and break category pill click behavior
+- [Phase 09-discovery-and-seo]: 404.astro is a standalone HTML shell with no BaseLayout — ensures nav never appears on 404 — Per D-21: 404 must not show nav; standalone page is safer than hideNav prop risk
 
 ### Pending Todos
 
@@ -90,10 +94,10 @@ None yet.
 
 ## Session Continuity
 
-**Last session:** 2026-03-30T03:49:22.235Z
+**Last session:** 2026-03-30T16:16:18.242Z
 **Completed:** Phase 7 (Monorepo Scaffold) — planned, executed, and verified
 **Next:** Phase 8 — Blog Features (discuss → plan → execute)
-**Resume file:** .planning/phases/09-discovery-and-seo/09-UI-SPEC.md
+**Resume file:** None
 
 ---
 *State updated: 2026-03-29 after Phase 7 completion*

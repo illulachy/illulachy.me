@@ -26,15 +26,15 @@ Requirements for milestone v1.1: Turborepo + Blog Site. Each maps to roadmap pha
 
 - [ ] **TAX-01**: User can browse posts by category via category listing pages
 - [ ] **TAX-02**: User can browse posts by tag via tag listing pages
-- [ ] **TAX-03**: Blog has a navigation header linking to portfolio (illulachy.me) and blog index
-- [ ] **TAX-04**: Blog displays a styled 404 page for invalid URLs
+- [x] **TAX-03**: Blog has a navigation header linking to portfolio (illulachy.me) and blog index
+- [x] **TAX-04**: Blog displays a styled 404 page for invalid URLs
 
 ### SEO & Discovery
 
 - [ ] **SEO-01**: Blog generates an RSS feed at /rss.xml with post titles, dates, excerpts, and canonical URLs
 - [ ] **SEO-02**: Blog generates a sitemap at /sitemap.xml listing all post URLs
-- [ ] **SEO-03**: Each post page includes OG/meta tags (og:title, og:description, og:image) for social sharing
-- [ ] **SEO-04**: Each post page includes a canonical URL link tag
+- [x] **SEO-03**: Each post page includes OG/meta tags (og:title, og:description, og:image) for social sharing
+- [x] **SEO-04**: Each post page includes a canonical URL link tag
 
 ### Visual Identity
 
@@ -160,12 +160,12 @@ Requirements for milestone v1.1: Turborepo + Blog Site. Each maps to roadmap pha
 | VIS-02 | Phase 8 | Complete |
 | TAX-01 | Phase 9 | Pending |
 | TAX-02 | Phase 9 | Pending |
-| TAX-03 | Phase 9 | Pending |
-| TAX-04 | Phase 9 | Pending |
+| TAX-03 | Phase 9 | Complete |
+| TAX-04 | Phase 9 | Complete |
 | SEO-01 | Phase 9 | Pending |
 | SEO-02 | Phase 9 | Pending |
-| SEO-03 | Phase 9 | Pending |
-| SEO-04 | Phase 9 | Pending |
+| SEO-03 | Phase 9 | Complete |
+| SEO-04 | Phase 9 | Complete |
 | SRCH-01 | Phase 10 | Pending |
 | SRCH-02 | Phase 10 | Pending |
 | SRCH-03 | Phase 10 | Pending |

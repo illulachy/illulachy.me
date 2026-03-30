@@ -174,10 +174,10 @@ Plans:
   5. RSS feed at /rss.xml contains post titles, dates, excerpts, and canonical URLs and validates in feed readers
   6. Sitemap at /sitemap.xml lists all post URLs
   7. Sharing a blog post URL on social media displays the correct OG title, description, and image preview
-**Plans:** 2 plans
+**Plans:** 1/2 plans executed
 
 Plans:
-- [ ] 09-01-PLAN.md — Nav component, BaseLayout OG/meta extension, PostCard category links, slugify utility with tests, 404 page, OG image asset (TAX-03, TAX-04, SEO-03, SEO-04)
+- [x] 09-01-PLAN.md — Nav component, BaseLayout OG/meta extension, PostCard category links, slugify utility with tests, 404 page, OG image asset (TAX-03, TAX-04, SEO-03, SEO-04)
 - [ ] 09-02-PLAN.md — Category listing pages, tag listing pages, RSS feed endpoint with tests, sitemap integration (TAX-01, TAX-02, SEO-01, SEO-02)
 
 **UI hint**: yes
@@ -206,7 +206,7 @@ Plans:
 | 6. Game Mode | v1.0 | 1/1 | Complete | 2026-03-28 |
 | 7. Monorepo Scaffold | v1.1 | 2/2 | Complete   | 2026-03-29 |
 | 8. Blog Foundation | v1.1 | 2/3 | In Progress|  |
-| 9. Discovery and SEO | v1.1 | 0/2 | Not started | - |
+| 9. Discovery and SEO | v1.1 | 1/2 | In Progress|  |
 | 10. Search and Extras | v1.1 | 0/? | Not started | - |
 
 ## Coverage
