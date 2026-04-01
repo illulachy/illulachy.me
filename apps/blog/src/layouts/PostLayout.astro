@@ -1,5 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro'
+import TableOfContents from '../components/TableOfContents.astro'
 
 interface Props {
   frontmatter: {
@@ -9,9 +10,10 @@ interface Props {
     category: string
   }
   readingTime: string
+  showTimelineLink?: boolean
 }
 
-const { frontmatter, readingTime } = Astro.props
+const { frontmatter, readingTime, showTimelineLink = false } = Astro.props
 const formattedDate = new Date(frontmatter.date).toLocaleDateString('en-US', {
   year: 'numeric',
   month: 'long',
@@ -27,36 +29,94 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href
   canonicalUrl={canonicalUrl}
   ogType="article"
 >
-  <main class="max-w-[65ch] mx-auto px-8 max-sm:px-4 py-16">
-    <article>
-      <header class="mb-8">
-        <h1 class="font-heading text-4xl font-semibold text-text-primary leading-tight tracking-tight mb-3">
-          {frontmatter.title}
-        </h1>
-        <div class="flex items-center gap-2 text-sm text-text-tertiary tracking-wide">
-          <time datetime={frontmatter.date}>{formattedDate}</time>
-          <span aria-hidden="true">&middot;</span>
-          <span>{readingTime}</span>
+  <main class="max-w-[65ch] xl:max-w-5xl mx-auto px-8 max-sm:px-4 py-16">
+    <div class="xl:flex xl:gap-12">
+      <article class="min-w-0 flex-1 max-w-[65ch]">
+        <header class="mb-8">
+          <h1 class="font-heading text-4xl font-semibold text-text-primary leading-tight tracking-tight mb-3">
+            {frontmatter.title}
+          </h1>
+          <div class="flex items-center gap-2 text-sm text-text-tertiary tracking-wide">
+            <time datetime={frontmatter.date}>{formattedDate}</time>
+            <span aria-hidden="true">&middot;</span>
+            <span>{readingTime}</span>
+            {showTimelineLink && (
+              <>
+                <span aria-hidden="true">&middot;</span>
+                <a
+                  href="https://illulachy.me"
+                  class="text-interactive-default hover:text-interactive-hover transition-colors duration-150"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  See on timeline &#x2197;
+                </a>
+              </>
+            )}
+          </div>
+        </header>
+        <div class="prose max-w-none
+          prose-headings:font-heading prose-headings:text-text-primary prose-headings:tracking-tight
+          prose-p:text-text-secondary prose-p:leading-normal
+          prose-a:text-interactive-default prose-a:no-underline hover:prose-a:text-interactive-hover
+          prose-strong:text-text-primary
+          prose-code:text-text-primary
+          prose-pre:bg-surface-container-low prose-pre:rounded-md
+          prose-blockquote:border-border-subtle prose-blockquote:text-text-secondary
+          prose-li:text-text-secondary
+          prose-hr:border-border-ghost
+        ">
+          <slot />
         </div>
-      </header>
-      <div class="prose max-w-none
-        prose-headings:font-heading prose-headings:text-text-primary prose-headings:tracking-tight
-        prose-p:text-text-secondary prose-p:leading-normal
-        prose-a:text-interactive-default prose-a:no-underline hover:prose-a:text-interactive-hover
-        prose-strong:text-text-primary
-        prose-code:text-text-primary
-        prose-pre:bg-surface-container-low prose-pre:rounded-md
-        prose-blockquote:border-border-subtle prose-blockquote:text-text-secondary
-        prose-li:text-text-secondary
-        prose-hr:border-border-ghost
-      ">
-        <slot />
-      </div>
-      <footer class="mt-16 pt-8">
-        <a href="/" class="text-interactive-default hover:text-interactive-hover text-sm tracking-wide transition-colors duration-150">
-          &larr; Browse all posts
-        </a>
-      </footer>
-    </article>
+        <footer class="mt-16 pt-8 flex items-center justify-between">
+          <a href="/" class="text-interactive-default hover:text-interactive-hover text-sm tracking-wide transition-colors duration-150">
+            &larr; Browse all posts
+          </a>
+          {showTimelineLink && (
+            <a
+              href="https://illulachy.me"
+              class="text-interactive-default hover:text-interactive-hover transition-colors duration-150 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              See on timeline &#x2197;
+            </a>
+          )}
+        </footer>
+      </article>
+      <TableOfContents />
+    </div>
+
+    <script>
+      function initCopyButtons() {
+        const copySvg = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`
+        const checkSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`
+
+        const preElements = document.querySelectorAll('pre')
+        preElements.forEach((pre) => {
+          const code = pre.querySelector('code')
+          if (!code) return
+
+          const btn = document.createElement('button')
+          btn.innerHTML = copySvg
+          btn.className =
+            'copy-btn absolute top-2 right-2 p-1.5 rounded opacity-0 transition-opacity duration-150 bg-surface-container-high text-text-tertiary hover:text-text-primary cursor-pointer z-10'
+          btn.setAttribute('aria-label', 'Copy code')
+
+          pre.style.position = 'relative'
+          pre.appendChild(btn)
+
+          btn.addEventListener('click', async () => {
+            await navigator.clipboard.writeText(code.innerText)
+            btn.innerHTML = checkSvg
+            setTimeout(() => {
+              btn.innerHTML = copySvg
+            }, 2000)
+          })
+        })
+      }
+
+      initCopyButtons()
+    </script>
   </main>
 </BaseLayout>

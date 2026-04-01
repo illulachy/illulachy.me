@@ -44,9 +44,9 @@ Requirements for milestone v1.1: Turborepo + Blog Site. Each maps to roadmap pha
 ### Search & Extras
 
 - [x] **SRCH-01**: User can search blog posts via Pagefind (static build-time index, WASM query)
-- [ ] **SRCH-02**: Code blocks have a copy-to-clipboard button
-- [ ] **SRCH-03**: Long posts display a table of contents generated from headings
-- [ ] **SRCH-04**: Each blog post links back to its position on the canvas timeline ("See on timeline")
+- [x] **SRCH-02**: Code blocks have a copy-to-clipboard button
+- [x] **SRCH-03**: Long posts display a table of contents generated from headings
+- [x] **SRCH-04**: Each blog post links back to its position on the canvas timeline ("See on timeline")
 
 ## v1 Requirements (Previous Milestone — Complete)
 
@@ -167,9 +167,9 @@ Requirements for milestone v1.1: Turborepo + Blog Site. Each maps to roadmap pha
 | SEO-03 | Phase 9 | Complete |
 | SEO-04 | Phase 9 | Complete |
 | SRCH-01 | Phase 10 | Complete |
-| SRCH-02 | Phase 10 | Pending |
-| SRCH-03 | Phase 10 | Pending |
-| SRCH-04 | Phase 10 | Pending |
+| SRCH-02 | Phase 10 | Complete |
+| SRCH-03 | Phase 10 | Complete |
+| SRCH-04 | Phase 10 | Complete |
 
 **Coverage:**
 - v1.1 requirements: 23 total

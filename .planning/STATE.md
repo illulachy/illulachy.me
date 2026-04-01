@@ -57,6 +57,7 @@ Progress: [█████████░] 90% (v1.1 milestone — phases 07-09 
 | Phase 09-discovery-and-seo P01 | 3min | 3 tasks | 10 files |
 | Phase 09-discovery-and-seo P02 | 2min | 2 tasks | 5 files |
 | Phase 10-search-and-extras P01 | 5min | 2 tasks | 4 files |
+| Phase 10-search-and-extras P02 | 8m | 2 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -88,6 +89,8 @@ Progress: [█████████░] 90% (v1.1 milestone — phases 07-09 
 - [Phase 10-search-and-extras]: postbuild script in package.json (not Vite plugin) — simplest pagefind binary integration via npm lifecycle
 - [Phase 10-search-and-extras]: debouncedSearch() over raw search() — Pagefind built-in debounce prevents excessive WASM queries
 - [Phase 10-search-and-extras]: Custom SearchBar UI with Stitch tokens only — no pagefind-ui.css or pagefind-ui.js (D-02 compliance)
+- [Phase 10-search-and-extras]: rehype-slug inserted between remarkRehype and rehypeShiki for hast tree IDs
+- [Phase 10-search-and-extras]: hasTimelineEntry uses url.split('/').pop() === slug (exact match, not endsWith) to prevent false positives
 
 ### Pending Todos
 
