@@ -1,0 +1,71 @@
+---
+// SearchBar — Pagefind-powered full-text search with custom Stitch-styled UI
+// Uses Pagefind JS API (not default pagefind-ui.css / pagefind-ui.js)
+---
+
+<div class="search-container bg-surface-container rounded-md px-4 py-3 mb-12">
+  <input
+    id="search-input"
+    type="search"
+    placeholder="Search posts..."
+    class="w-full bg-transparent text-text-primary placeholder:text-text-tertiary outline-none font-heading text-base"
+    aria-label="Search posts"
+    autocomplete="off"
+  />
+  <div
+    id="search-results"
+    class="mt-4 flex flex-col gap-3 empty:mt-0"
+    aria-live="polite"
+  ></div>
+</div>
+
+<script>
+  async function initSearch() {
+    // Gracefully degrade in dev mode — pagefind.js only exists after astro build
+    const pagefind = await import('/pagefind/pagefind.js').catch(() => null)
+    if (!pagefind) return
+
+    const input = document.getElementById('search-input') as HTMLInputElement
+    const results = document.getElementById('search-results') as HTMLDivElement
+
+    input.addEventListener('input', async () => {
+      const query = input.value.trim()
+
+      if (!query) {
+        results.innerHTML = ''
+        return
+      }
+
+      // debouncedSearch is Pagefind's built-in debounced search — preferred over raw search()
+      const search = await pagefind.debouncedSearch(query)
+      if (!search) return
+
+      const loaded = await Promise.all(
+        search.results.slice(0, 8).map((r: any) => r.data())
+      )
+
+      results.innerHTML = ''
+      for (const r of loaded) {
+        const anchor = document.createElement('a')
+        anchor.href = r.url
+        anchor.className =
+          'block rounded-md px-3 py-2 -mx-1 hover:bg-surface-container-high transition-colors duration-150'
+
+        const title = document.createElement('div')
+        title.className = 'font-heading font-semibold text-text-primary'
+        title.innerHTML = r.meta?.title ?? ''
+
+        // r.excerpt already wraps matched terms in <mark> tags for browser highlight styling
+        const excerpt = document.createElement('div')
+        excerpt.className = 'text-sm text-text-secondary mt-1 line-clamp-2'
+        excerpt.innerHTML = r.excerpt
+
+        anchor.appendChild(title)
+        anchor.appendChild(excerpt)
+        results.appendChild(anchor)
+      }
+    })
+  }
+
+  initSearch()
+</script>

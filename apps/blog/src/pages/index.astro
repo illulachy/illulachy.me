@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
 import PostCard from '../components/PostCard.astro'
+import SearchBar from '../components/SearchBar.astro'
 import { calcReadingTime } from '../lib/reading-time'
 
 const postModules = import.meta.glob(
@@ -33,6 +34,8 @@ const posts = Object.entries(postModules)
     <h1 class="font-display text-5xl font-semibold text-text-primary leading-tight tracking-tighter mb-12">
       Writing
     </h1>
+
+    <SearchBar />
 
     {posts.length === 0 ? (
       <div class="text-center py-16">

@@ -191,10 +191,10 @@ Plans:
   2. User can click the copy button on any code block to copy its contents to clipboard
   3. Long posts display a table of contents generated from headings, each entry jumping to the correct section
   4. Each blog post shows a "See on timeline" link that navigates to that post's position on the canvas portfolio
-**Plans:** 3 plans
+**Plans:** 1/3 plans executed
 
 Plans:
-- [ ] 10-01-PLAN.md — Pagefind search: install pagefind, postbuild script, custom SearchBar component on blog index (SRCH-01)
+- [x] 10-01-PLAN.md — Pagefind search: install pagefind, postbuild script, custom SearchBar component on blog index (SRCH-01)
 - [ ] 10-02-PLAN.md — Post enhancements: rehype-slug, copy-to-clipboard button, sticky ToC sidebar, canvas backlink with timeline matching (SRCH-02, SRCH-03, SRCH-04)
 - [ ] 10-03-PLAN.md — Build verification + human checkpoint for all Phase 10 features (SRCH-01, SRCH-02, SRCH-03, SRCH-04)
 
@@ -213,7 +213,7 @@ Plans:
 | 7. Monorepo Scaffold | v1.1 | 2/2 | Complete   | 2026-03-29 |
 | 8. Blog Foundation | v1.1 | 2/3 | In Progress|  |
 | 9. Discovery and SEO | v1.1 | 1/2 | In Progress|  |
-| 10. Search and Extras | v1.1 | 0/3 | Planned | - |
+| 10. Search and Extras | v1.1 | 1/3 | In Progress|  |
 
 ## Coverage
 
