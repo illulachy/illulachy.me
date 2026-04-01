@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback, useEffect, useMemo } from 'react'
-import { Stage, Layer, Line } from 'react-konva'
+import { Stage, Layer, Line, Circle, Text } from 'react-konva'
 import type Konva from 'konva'
 import type { KonvaEventObject } from 'konva/lib/Node'
 import { AnimatePresence, motion } from 'motion/react'
@@ -22,11 +22,19 @@ import { ZOOM_MIN, ZOOM_MAX } from '@/types/camera'
 import type { ContentNode } from '@/types/content'
 
 // Timeline visual constants
-const AXIS_COLOR = 'rgba(255, 255, 255, 0.15)'
-const CONNECTOR_COLOR = 'rgba(255, 255, 255, 0.12)'
+const AXIS_COLOR = '#E0AFFFFF'
+const CONNECTOR_COLOR = '#12121212'
 const HUB_HALF_WIDTH = 440  // Half of 880px hub width
 const NODE_HALF_HEIGHT = 100 // Half of 200px node height
 const AXIS_LEFT_EXTENT = -10000
+// Zoom threshold at which date labels fade in (0 = hidden, 1 = fully visible)
+const DATE_LABEL_ZOOM_START = 0.5
+const DATE_LABEL_ZOOM_END = 0.9
+
+function formatNodeDate(iso: string): string {
+  const d = new Date(iso)
+  return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+}
 
 // Node component mapping
 const nodeComponents: Record<string, React.ComponentType<any>> = {
@@ -40,6 +48,7 @@ export function Canvas() {
   const [isReady, setIsReady] = useState(false)
   const stageRef = useRef<Konva.Stage | null>(null)
   const [modalNode, setModalNode] = useState<ContentNode | null>(null)
+  const [zoom, setZoom] = useState(1)
   
   // Data fetching hooks
   const { data: timelineData, isLoading: timelineLoading } = useTimelineData()
@@ -84,7 +93,8 @@ export function Canvas() {
       x: pointer.x - mousePointTo.x * clampedScale,
       y: pointer.y - mousePointTo.y * clampedScale,
     })
-    
+    setZoom(clampedScale)
+
     // Trigger custom zoom event for viewport transform hook
     stage.fire('zoom')
   }, [])
@@ -128,7 +138,7 @@ export function Canvas() {
     const stage = stageRef.current
     if (!stage) return
     const viewport = getViewportDimensions()
-    const zoom = calculateInitialZoom(viewport)
+    const initialZoom = calculateInitialZoom(viewport)
 
     // Center camera on hub (which is at world position 0, 0)
     // Konva position is the offset, so to center:
@@ -136,9 +146,10 @@ export function Canvas() {
       x: viewport.width / 2,
       y: viewport.height / 2,
     })
-    stage.scale({ x: zoom, y: zoom })
+    stage.scale({ x: initialZoom, y: initialZoom })
+    setZoom(initialZoom)
     stage.batchDraw()
-  }, [])
+  }, [setZoom])
   
   // Update loading condition to include data loading
   const isFullyLoaded = isReady && !timelineLoading && !aboutLoading
@@ -188,19 +199,49 @@ export function Canvas() {
               stroke={AXIS_COLOR}
               strokeWidth={1}
               strokeScaleEnabled={false}
+              shadowBlur={12}
+              shadowColor={AXIS_COLOR}
             />
 
-            {/* Connector lines — from each node's nearest edge to y=0 */}
+            {/* Connector lines + axis dots + date labels */}
             {positionedNodes.map(({ node, x, y }) => {
               const edgeY = y > 0 ? y - NODE_HALF_HEIGHT : y + NODE_HALF_HEIGHT
+              const labelOpacity = Math.max(0, Math.min(1,
+                (zoom - DATE_LABEL_ZOOM_START) / (DATE_LABEL_ZOOM_END - DATE_LABEL_ZOOM_START)
+              ))
+              const fontSize = 11 / zoom
+              // Place label below axis for nodes above, above axis for nodes below
+              const labelY = y >= 0 ? 6 / zoom : -(6 / zoom) - fontSize
               return (
-                <Line
-                  key={`connector-${node.id}`}
-                  points={[x, edgeY, x, 0]}
-                  stroke={CONNECTOR_COLOR}
-                  strokeWidth={1}
-                  strokeScaleEnabled={false}
-                />
+                <>
+                  <Line
+                    key={`connector-${node.id}`}
+                    points={[x, edgeY, x, 0]}
+                    stroke={CONNECTOR_COLOR}
+                    strokeWidth={1}
+                    strokeScaleEnabled={false}
+                  />
+                  <Circle
+                    key={`dot-${node.id}`}
+                    x={x}
+                    y={0}
+                    radius={3}
+                    fill={AXIS_COLOR}
+                    strokeScaleEnabled={false}
+                  />
+                  <Text
+                    key={`label-${node.id}`}
+                    x={x}
+                    y={labelY}
+                    text={formatNodeDate(node.date)}
+                    fontSize={fontSize}
+                    fontFamily="'Inter', sans-serif"
+                    fill={AXIS_COLOR}
+                    opacity={labelOpacity}
+                    offsetX={fontSize * 1.8} // approximate half-width centering
+                    listening={false}
+                  />
+                </>
               )
             })}
 

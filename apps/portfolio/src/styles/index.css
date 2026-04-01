@@ -8,10 +8,10 @@
 
   /* Colors - Canvas Light Mode */
   --color-canvas-bg-light: #FAFAFA;
-  --color-canvas-grid-line: rgba(0, 0, 0, 0.04);
-  --color-canvas-grid-line-strong: rgba(0, 0, 0, 0.08);
-  --canvas-grid-size-sm: 20px;
-  --canvas-grid-size-lg: 100px;
+  --color-canvas-grid-line: rgba(0, 0, 0, 0.2);
+  --color-canvas-grid-line-strong: rgba(0, 0, 0, 0.4);
+  --canvas-grid-size-sm: 16px;
+  --canvas-grid-size-lg: 32px;
 
   /* Colors - Surface hierarchy */
   --color-surface-dim: #0A0A0A;
@@ -180,95 +180,95 @@
   --canvas-bg: #FAFAFA;
 
   /* Surface hierarchy (light — darker = elevated) */
-  --surface-dim:                #FFFFFF;
-  --surface-default:            #FAFAFA;
-  --surface-container-lowest:   #F5F5F5;
-  --surface-container-low:      #F0F0F0;
-  --surface-container:          #EBEBEB;
-  --surface-container-high:     #E5E5E5;
-  --surface-container-highest:  #E0E0E0;
+  --surface-dim: #FFFFFF;
+  --surface-default: #FAFAFA;
+  --surface-container-lowest: #F5F5F5;
+  --surface-container-low: #F0F0F0;
+  --surface-container: #EBEBEB;
+  --surface-container-high: #E5E5E5;
+  --surface-container-highest: #E0E0E0;
 
   /* Glassmorphism */
-  --glass-bg:     rgba(255, 255, 255, 0.8);
+  --glass-bg: rgba(255, 255, 255, 0.8);
   --glass-border: rgba(0, 0, 0, 0.1);
-  --glass-blur:   20px;
+  --glass-blur: 20px;
   --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
 
   /* Text */
-  --text-primary:    #09090B;
-  --text-secondary:  #52525B;
-  --text-tertiary:   #71717A;
+  --text-primary: #09090B;
+  --text-secondary: #52525B;
+  --text-tertiary: #71717A;
   --text-quaternary: #A1A1AA;
-  --text-inverse:    #FAFAFA;
+  --text-inverse: #FAFAFA;
 
   /* Borders */
-  --border-ghost:   rgba(0, 0, 0, 0.06);
-  --border-subtle:  rgba(0, 0, 0, 0.1);
+  --border-ghost: rgba(0, 0, 0, 0.06);
+  --border-subtle: rgba(0, 0, 0, 0.1);
   --border-default: rgba(0, 0, 0, 0.15);
-  --border-strong:  rgba(0, 0, 0, 0.2);
+  --border-strong: rgba(0, 0, 0, 0.2);
 
   /* Interactive — mauve palette */
-  --interactive-default:    #E0AFFF;
-  --interactive-hover:      #EAC7FF;
-  --interactive-active:     #D197FF;
-  --interactive-disabled:   #B380CC;
-  --interactive-bg-subtle:  rgba(224, 175, 255, 0.1);
-  --interactive-bg-medium:  rgba(224, 175, 255, 0.2);
+  --interactive-default: #E0AFFF;
+  --interactive-hover: #EAC7FF;
+  --interactive-active: #D197FF;
+  --interactive-disabled: #B380CC;
+  --interactive-bg-subtle: rgba(224, 175, 255, 0.1);
+  --interactive-bg-medium: rgba(224, 175, 255, 0.2);
 
   /* Accent */
-  --accent-mauve:     #8B5CF6;
+  --accent-mauve: #8B5CF6;
   --accent-mauve-dim: rgba(139, 92, 246, 0.15);
 
   /* Shadows */
-  --shadow-xs:  0 1px 2px rgba(0, 0, 0, 0.06);
-  --shadow-sm:  0 2px 8px rgba(0, 0, 0, 0.08);
-  --shadow-md:  0 4px 16px rgba(0, 0, 0, 0.1);
-  --shadow-lg:  0 8px 24px rgba(0, 0, 0, 0.15);
-  --shadow-xl:  0 12px 40px rgba(0, 0, 0, 0.2);
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+  --shadow-xl: 0 12px 40px rgba(0, 0, 0, 0.2);
   --shadow-2xl: 0 24px 64px rgba(0, 0, 0, 0.3);
 
   /* Typography */
   --font-display: 'Noto Serif', Georgia, serif;
   --font-heading: 'Noto Serif', Georgia, serif;
-  --font-body:    'Space Grotesk', 'Inter', system-ui, sans-serif;
-  --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
+  --font-body: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
-  --font-weight-regular:  400;
-  --font-weight-medium:   500;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
   --font-weight-semibold: 600;
-  --font-weight-bold:     700;
+  --font-weight-bold: 700;
 
-  --text-xs:   0.75rem;
-  --text-sm:   0.875rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
   --text-base: 1rem;
-  --text-lg:   1.125rem;
-  --text-xl:   1.25rem;
-  --text-2xl:  1.5rem;
-  --text-3xl:  1.875rem;
-  --text-4xl:  2.25rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
 
-  --leading-tight:   1.25;
-  --leading-snug:    1.375;
-  --leading-normal:  1.5;
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
   --leading-relaxed: 1.625;
 
   /* Spacing */
-  --spacing-1:  0.25rem;
-  --spacing-2:  0.5rem;
-  --spacing-3:  0.75rem;
-  --spacing-4:  1rem;
-  --spacing-6:  1.5rem;
-  --spacing-8:  2rem;
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
   --spacing-12: 3rem;
 
   /* Radius */
-  --radius-sm:      0.125rem;
+  --radius-sm: 0.125rem;
   --radius-default: 0.25rem;
-  --radius-md:      0.375rem;
-  --radius-lg:      0.5rem;
-  --radius-xl:      0.75rem;
-  --radius-2xl:     1rem;
-  --radius-full:    9999px;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-full: 9999px;
 
   /* Motion */
   --motion-hover: 150ms cubic-bezier(0, 0, 0.2, 1);
@@ -286,17 +286,19 @@
   /* Canvas light grid background */
   .canvas-grid-light {
     background-color: var(--canvas-bg);
-    background-image:
-      linear-gradient(var(--color-canvas-grid-line-strong) 1px, transparent 1px),
-      linear-gradient(90deg, var(--color-canvas-grid-line-strong) 1px, transparent 1px),
-      linear-gradient(var(--color-canvas-grid-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--color-canvas-grid-line) 1px, transparent 1px);
+    background-image: radial-gradient(var(--color-canvas-grid-line) 1px, transparent 1px);
     background-size:
       var(--canvas-grid-size-lg) var(--canvas-grid-size-lg),
       var(--canvas-grid-size-lg) var(--canvas-grid-size-lg),
       var(--canvas-grid-size-sm) var(--canvas-grid-size-sm),
       var(--canvas-grid-size-sm) var(--canvas-grid-size-sm);
     background-position: center center;
+    -webkit-mask-image: radial-gradient(ellipse 70% 70% at 60% 50%,
+        var(--color-canvas-bg-light) 50%,
+        transparent 100%);
+    mask-image: radial-gradient(ellipse 70% 70% at 60% 50%,
+        var(--color-canvas-bg-light) 70%,
+        transparent 100%);
   }
 }
 

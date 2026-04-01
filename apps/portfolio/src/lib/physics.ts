@@ -13,8 +13,8 @@ export type { PhysicsState, KeyboardInput, PhysicsConfig }
  * Physics configuration constants
  */
 export const PHYSICS_CONSTANTS: PhysicsConfig = {
-  ACCELERATION: 800,      // pixels/second²
-  MAX_VELOCITY: 600,      // pixels/second
+  ACCELERATION: 1600,      // pixels/second²
+  MAX_VELOCITY: 1200,      // pixels/second
   FRICTION: 0.92,         // per second decay (0-1)
   ROTATION_SPEED: 8,      // radians/second
 }
