@@ -19,7 +19,7 @@ export default defineConfig({
           if (id === '/pagefind/pagefind.js') return '\0pagefind-stub'
         },
         load(id: string) {
-          if (id === '\0pagefind-stub') return 'export default null'
+          if (id === '\0pagefind-stub') return 'throw new Error("Pagefind not available in dev mode")'
         },
       },
     ],
