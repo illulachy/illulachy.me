@@ -6,12 +6,14 @@ import remarkGfm from 'remark-gfm'
 import remarkRehype from 'remark-rehype'
 import rehypeStringify from 'rehype-stringify'
 import rehypeShiki from '@shikijs/rehype'
+import rehypeSlug from 'rehype-slug'
 // @ts-ignore -- JSON theme objects are compatible with Shiki BundledTheme shape
 import illuDark from '../shiki/illu-dark.json'
 // @ts-ignore
 import illuLight from '../shiki/illu-light.json'
 import PostLayout from '../layouts/PostLayout.astro'
 import { calcReadingTime } from '../lib/reading-time'
+import { hasTimelineEntry } from '../lib/timeline-match'
 
 export async function getStaticPaths() {
   const rawFiles = import.meta.glob(
@@ -32,6 +34,7 @@ const processor = unified()
   .use(remarkParse)
   .use(remarkGfm)
   .use(remarkRehype, { allowDangerousHtml: true })
+  .use(rehypeSlug)
   .use(rehypeShiki, {
     // D-17: Custom Shiki themes from Stitch palette (illu-dark / illu-light)
     themes: {
@@ -42,8 +45,15 @@ const processor = unified()
   .use(rehypeStringify, { allowDangerousHtml: true })
 
 const html = String(await processor.process(body))
+
+const timelineFiles = import.meta.glob(
+  '../../../../packages/content/content/[0-9][0-9][0-9][0-9]/**/*.md',
+  { eager: true }
+)
+const slug = Astro.params.slug!
+const showTimelineLink = hasTimelineEntry(slug, timelineFiles)
 ---
 
-<PostLayout frontmatter={frontmatter as any} readingTime={readingTime}>
+<PostLayout frontmatter={frontmatter as any} readingTime={readingTime} showTimelineLink={showTimelineLink}>
   <Fragment set:html={html} />
 </PostLayout>
