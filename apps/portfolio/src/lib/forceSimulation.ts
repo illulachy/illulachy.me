@@ -49,9 +49,9 @@ export function simulateLayout(
   }))
   
   // 2. Create force simulation with hub exclusion
-  const HUB_WIDTH = 640 // Hub shape width from Phase 3
+  const HUB_WIDTH = 880 // Hub shape width
   const HUB_BUFFER = 300 // Additional spacing beyond hub edge
-  const HUB_EXCLUSION = -(HUB_WIDTH / 2 + HUB_BUFFER) // -620px from center
+  const HUB_EXCLUSION = -(HUB_WIDTH / 2 + HUB_BUFFER) // -740px from center
   
   const simulation = forceSimulation(simNodes)
     .force('collide', forceCollide<SimNode>().radius(COLLISION_RADIUS))
@@ -71,12 +71,19 @@ export function simulateLayout(
   }
   
   // 4. Extract final positions and map back to original nodes
+  // Clamp Y to ensure no node visually overlaps the timeline axis at y=0
+  const MIN_AXIS_CLEARANCE = SHAPE_HEIGHT / 2 + 60 // 160px: half node height + buffer
+
   return simNodes.map(simNode => {
     const originalNode = nodes.find(n => n.id === simNode.id)!
+    let y = simNode.y!
+    if (y > -MIN_AXIS_CLEARANCE && y < MIN_AXIS_CLEARANCE) {
+      y = y >= 0 ? MIN_AXIS_CLEARANCE : -MIN_AXIS_CLEARANCE
+    }
     return {
       node: originalNode,
       x: simNode.x!,
-      y: simNode.y!
+      y,
     }
   })
 }

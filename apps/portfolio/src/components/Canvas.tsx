@@ -183,12 +183,14 @@ export function Canvas() {
             {/* Hub node */}
             {aboutData && (
               <HubNode
-                x={HUB_POSITION.x - 320}
-                y={HUB_POSITION.y - 180}
+                x={HUB_POSITION.x - 440}
+                y={HUB_POSITION.y - 240}
                 name={aboutData.name}
                 title={aboutData.title}
                 bio={aboutData.bio}
                 avatar={aboutData.avatar}
+                email={aboutData.email}
+                lastUpdated={timelineData?.lastUpdated}
                 social={aboutData.social}
               />
             )}
