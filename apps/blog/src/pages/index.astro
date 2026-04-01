@@ -1,28 +1,30 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
 import PostCard from '../components/PostCard.astro'
+import SearchBar from '../components/SearchBar.astro'
 import { calcReadingTime } from '../lib/reading-time'
 
 const postModules = import.meta.glob(
-  '../../../../packages/content/content/posts/**/*.md',
+  '../../../../packages/content/content/[0-9][0-9][0-9][0-9]/**/*.md',
   { eager: true }
 )
 
-interface PostFrontmatter {
-  title: string
-  date: string
-  excerpt: string
-  tags: string[]
-  category: string
-}
-
 const posts = Object.entries(postModules)
-  .map(([path, mod]: [string, any]) => ({
-    slug: path.split('/').pop()!.replace('.md', ''),
-    frontmatter: mod.frontmatter as PostFrontmatter,
-    readingTime: calcReadingTime(mod.rawContent?.() ?? ''),
-  }))
-  .filter(post => post.frontmatter?.title)
+  .filter(([_, mod]: [string, any]) => mod.frontmatter?.type === 'blog' && !mod.frontmatter?.draft)
+  .map(([_, mod]: [string, any]) => {
+    const fm = mod.frontmatter
+    return {
+      slug: fm.url?.split('/').pop() ?? '',
+      frontmatter: {
+        title: fm.title,
+        date: fm.date,
+        excerpt: fm.excerpt ?? fm.description ?? '',
+        category: fm.category ?? '',
+      },
+      readingTime: calcReadingTime(mod.rawContent?.() ?? ''),
+    }
+  })
+  .filter(post => post.frontmatter.title && post.slug)
   .sort((a, b) =>
     new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime()
   )
@@ -33,6 +35,8 @@ const posts = Object.entries(postModules)
     <h1 class="font-display text-5xl font-semibold text-text-primary leading-tight tracking-tighter mb-12">
       Writing
     </h1>
+
+    <SearchBar />
 
     {posts.length === 0 ? (
       <div class="text-center py-16">

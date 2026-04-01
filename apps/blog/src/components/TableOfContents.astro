@@ -1,0 +1,64 @@
+---
+// TableOfContents: Sticky sidebar with h2/h3 entries and IntersectionObserver active highlight
+---
+
+<aside
+  id="toc-sidebar"
+  class="hidden xl:block sticky top-24 w-56 shrink-0 self-start"
+>
+  <p class="text-xs font-semibold text-text-tertiary uppercase tracking-widest mb-3">
+    On this page
+  </p>
+  <nav id="toc-nav" aria-label="Table of contents"></nav>
+</aside>
+
+<script>
+  function initToc() {
+    const article = document.querySelector('article .prose') as HTMLElement | null
+    const tocNav = document.querySelector('#toc-nav') as HTMLElement | null
+    const tocSidebar = document.querySelector('#toc-sidebar') as HTMLElement | null
+
+    if (!article || !tocNav || !tocSidebar) return
+
+    const headings = Array.from(article.querySelectorAll('h2, h3')) as HTMLElement[]
+
+    if (headings.length < 2) {
+      tocSidebar.remove()
+      return
+    }
+
+    tocNav.innerHTML = headings
+      .map((h) => {
+        const indent = h.tagName === 'H3' ? ' ml-3' : ''
+        return `<a
+          href="#${h.id}"
+          data-toc-link="${h.id}"
+          class="block text-sm text-text-tertiary hover:text-text-primary transition-colors duration-150 py-1 leading-snug toc-link${indent}"
+        >${h.textContent}</a>`
+      })
+      .join('')
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            document.querySelectorAll('.toc-link').forEach((link) => {
+              link.classList.remove('text-interactive-default', 'font-medium')
+            })
+            const activeLink = tocNav.querySelector(
+              `[data-toc-link="${entry.target.id}"]`
+            )
+            if (activeLink) {
+              activeLink.classList.add('text-interactive-default', 'font-medium')
+            }
+          }
+        })
+      },
+      { rootMargin: '-10% 0% -80% 0%' }
+    )
+
+    headings.forEach((h) => observer.observe(h))
+  }
+
+  initToc()
+</script>

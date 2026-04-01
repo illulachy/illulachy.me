@@ -28,7 +28,7 @@
 - [x] **Phase 7: Monorepo Scaffold** - Turborepo + pnpm monorepo with portfolio migrated and shared content package wired (completed 2026-03-29)
 - [ ] **Phase 8: Blog Foundation** - Readable Astro blog with post list, individual posts, syntax highlighting, and dark mode
 - [ ] **Phase 9: Discovery and SEO** - Categories, tags, RSS, sitemap, OG meta tags, and navigation
-- [ ] **Phase 10: Search and Extras** - Pagefind search, copy-code button, table of contents, and canvas backlink
+- [x] **Phase 10: Search and Extras** - Pagefind search, copy-code button, table of contents, and canvas backlink (completed 2026-04-01)
 
 ## Phase Details
 
@@ -191,7 +191,13 @@ Plans:
   2. User can click the copy button on any code block to copy its contents to clipboard
   3. Long posts display a table of contents generated from headings, each entry jumping to the correct section
   4. Each blog post shows a "See on timeline" link that navigates to that post's position on the canvas portfolio
-**Plans:** TBD
+**Plans:** 3/3 plans complete
+
+Plans:
+- [x] 10-01-PLAN.md — Pagefind search: install pagefind, postbuild script, custom SearchBar component on blog index (SRCH-01)
+- [x] 10-02-PLAN.md — Post enhancements: rehype-slug, copy-to-clipboard button, sticky ToC sidebar, canvas backlink with timeline matching (SRCH-02, SRCH-03, SRCH-04)
+- [x] 10-03-PLAN.md — Build verification + human checkpoint for all Phase 10 features (SRCH-01, SRCH-02, SRCH-03, SRCH-04)
+
 **UI hint**: yes
 
 ## Progress
@@ -207,7 +213,7 @@ Plans:
 | 7. Monorepo Scaffold | v1.1 | 2/2 | Complete   | 2026-03-29 |
 | 8. Blog Foundation | v1.1 | 2/3 | In Progress|  |
 | 9. Discovery and SEO | v1.1 | 1/2 | In Progress|  |
-| 10. Search and Extras | v1.1 | 0/? | Not started | - |
+| 10. Search and Extras | v1.1 | 3/3 | Complete   | 2026-04-01 |
 
 ## Coverage
 
@@ -217,4 +223,4 @@ Plans:
 
 ---
 *Roadmap created: 2025-01-19*
-*Last updated: 2026-03-30 after Phase 9 planning (2 plans created)*
+*Last updated: 2026-04-01 after Phase 10 planning (3 plans created)*

@@ -78,6 +78,9 @@
   color: var(--color-text-primary);
 }
 
+/* Copy button on code blocks (D-04: hover-to-reveal, D-06: top-right) */
+pre:hover .copy-btn { opacity: 1; }
+
 /* Antialiasing */
 body {
   -webkit-font-smoothing: antialiased;

@@ -3,20 +3,20 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Turborepo + Blog Site
 status: verifying
-last_updated: "2026-03-30T20:00:00.000Z"
-last_activity: 2026-03-30
+last_updated: "2026-04-01T04:05:04.259Z"
+last_activity: 2026-04-01
 progress:
   total_phases: 10
-  completed_phases: 9
-  total_plans: 17
-  completed_plans: 17
+  completed_phases: 10
+  total_plans: 20
+  completed_plans: 20
   percent: 90
 ---
 
 # Project State: illulachy.me
 
 **Last updated:** 2026-03-30
-**Status:** Phase 09 complete — verified
+**Status:** Phase complete — ready for verification
 
 ## Project Reference
 
@@ -29,8 +29,8 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 
 Phase: 09 (discovery-and-seo) — COMPLETE
 Plan: 2 of 2
-Status: Verified — all 21 tests passing, build succeeds
-Last activity: 2026-03-30
+Status: Phase complete — ready for verification
+Last activity: 2026-04-01
 
 Progress: [█████████░] 90% (v1.1 milestone — phases 07-09 complete)
 
@@ -56,6 +56,9 @@ Progress: [█████████░] 90% (v1.1 milestone — phases 07-09 
 | Phase 08-blog-foundation P03 | 8m | 2 tasks | 5 files |
 | Phase 09-discovery-and-seo P01 | 3min | 3 tasks | 10 files |
 | Phase 09-discovery-and-seo P02 | 2min | 2 tasks | 5 files |
+| Phase 10-search-and-extras P01 | 5min | 2 tasks | 4 files |
+| Phase 10-search-and-extras P02 | 8m | 2 tasks | 9 files |
+| Phase 10-search-and-extras P03 | 2min | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -84,6 +87,12 @@ Progress: [█████████░] 90% (v1.1 milestone — phases 07-09 
 - [Phase 09-discovery-and-seo]: PostCard outer anchor removed — only title+excerpt is the post link to avoid nested anchors — Nested <a> tags are invalid HTML and break category pill click behavior
 - [Phase 09-discovery-and-seo]: 404.astro is a standalone HTML shell with no BaseLayout — ensures nav never appears on 404 — Per D-21: 404 must not show nav; standalone page is safer than hideNav prop risk
 - [Phase 09-discovery-and-seo]: 5-level glob path for taxonomy pages nested in subdirs — category/tag pages at src/pages/category/ and src/pages/tag/ require one extra ../ to reach packages/content vs index.astro
+- [Phase 10-search-and-extras]: postbuild script in package.json (not Vite plugin) — simplest pagefind binary integration via npm lifecycle
+- [Phase 10-search-and-extras]: debouncedSearch() over raw search() — Pagefind built-in debounce prevents excessive WASM queries
+- [Phase 10-search-and-extras]: Custom SearchBar UI with Stitch tokens only — no pagefind-ui.css or pagefind-ui.js (D-02 compliance)
+- [Phase 10-search-and-extras]: rehype-slug inserted between remarkRehype and rehypeShiki for hast tree IDs
+- [Phase 10-search-and-extras]: hasTimelineEntry uses url.split('/').pop() === slug (exact match, not endsWith) to prevent false positives
+- [Phase 10-search-and-extras]: Externalize /pagefind/pagefind.js in Vite rollupOptions.external — Pagefind JS is generated post-build; Rollup errors (not warns) when it cannot resolve it at build time
 
 ### Pending Todos
 
@@ -96,7 +105,7 @@ None yet.
 
 ## Session Continuity
 
-**Last session:** 2026-03-30T16:21:14.976Z
+**Last session:** 2026-04-01T04:05:04.256Z
 **Completed:** Phase 7 (Monorepo Scaffold) — planned, executed, and verified
 **Next:** Phase 8 — Blog Features (discuss → plan → execute)
 **Resume file:** None

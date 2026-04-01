@@ -6,6 +6,7 @@ import remarkGfm from 'remark-gfm'
 import remarkRehype from 'remark-rehype'
 import rehypeStringify from 'rehype-stringify'
 import rehypeShiki from '@shikijs/rehype'
+import rehypeSlug from 'rehype-slug'
 // @ts-ignore -- JSON theme objects are compatible with Shiki BundledTheme shape
 import illuDark from '../shiki/illu-dark.json'
 // @ts-ignore
@@ -15,13 +16,19 @@ import { calcReadingTime } from '../lib/reading-time'
 
 export async function getStaticPaths() {
   const rawFiles = import.meta.glob(
-    '../../../../packages/content/content/posts/**/*.md',
+    '../../../../packages/content/content/[0-9][0-9][0-9][0-9]/**/*.md',
     { eager: true, query: '?raw', import: 'default' }
   )
-  return Object.entries(rawFiles).map(([path, raw]) => ({
-    params: { slug: path.split('/').pop()!.replace('.md', '') },
-    props: { raw: raw as string },
-  }))
+  return Object.entries(rawFiles)
+    .filter(([_, raw]) => {
+      const fm = matter(raw as string).data
+      return fm.type === 'blog' && !fm.draft
+    })
+    .map(([path, raw]) => {
+      const fm = matter(raw as string).data
+      const slug = fm.url?.split('/').pop() ?? path.split('/').pop()!.replace('.md', '')
+      return { params: { slug }, props: { raw: raw as string } }
+    })
 }
 
 const { raw } = Astro.props
@@ -32,6 +39,7 @@ const processor = unified()
   .use(remarkParse)
   .use(remarkGfm)
   .use(remarkRehype, { allowDangerousHtml: true })
+  .use(rehypeSlug)
   .use(rehypeShiki, {
     // D-17: Custom Shiki themes from Stitch palette (illu-dark / illu-light)
     themes: {
@@ -42,8 +50,9 @@ const processor = unified()
   .use(rehypeStringify, { allowDangerousHtml: true })
 
 const html = String(await processor.process(body))
+
 ---
 
-<PostLayout frontmatter={frontmatter as any} readingTime={readingTime}>
+<PostLayout frontmatter={frontmatter as any} readingTime={readingTime} showTimelineLink={true}>
   <Fragment set:html={html} />
 </PostLayout>
