@@ -15,6 +15,7 @@ export default defineConfig({
       {
         // Stub /pagefind/pagefind.js during dev — file only exists after astro build
         name: 'pagefind-dev-stub',
+        apply: 'serve',
         resolveId(id: string) {
           if (id === '/pagefind/pagefind.js') return '\0pagefind-stub'
         },
