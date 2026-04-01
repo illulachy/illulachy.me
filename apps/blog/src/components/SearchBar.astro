@@ -22,7 +22,7 @@
 <script>
   async function initSearch() {
     // Gracefully degrade in dev mode — pagefind.js only exists after astro build
-    const pagefind = await import(/* @vite-ignore */ '/pagefind/pagefind.js').catch(() => null)
+    const pagefind = await import('/pagefind/pagefind.js').catch(() => null)
     if (!pagefind) return
 
     const input = document.getElementById('search-input') as HTMLInputElement
