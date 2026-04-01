@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Turborepo + Blog Site
 status: verifying
-last_updated: "2026-04-01T03:58:57.131Z"
+last_updated: "2026-04-01T04:05:04.259Z"
 last_activity: 2026-04-01
 progress:
   total_phases: 10
-  completed_phases: 9
+  completed_phases: 10
   total_plans: 20
-  completed_plans: 18
+  completed_plans: 20
   percent: 90
 ---
 
@@ -58,6 +58,7 @@ Progress: [█████████░] 90% (v1.1 milestone — phases 07-09 
 | Phase 09-discovery-and-seo P02 | 2min | 2 tasks | 5 files |
 | Phase 10-search-and-extras P01 | 5min | 2 tasks | 4 files |
 | Phase 10-search-and-extras P02 | 8m | 2 tasks | 9 files |
+| Phase 10-search-and-extras P03 | 2min | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -91,6 +92,7 @@ Progress: [█████████░] 90% (v1.1 milestone — phases 07-09 
 - [Phase 10-search-and-extras]: Custom SearchBar UI with Stitch tokens only — no pagefind-ui.css or pagefind-ui.js (D-02 compliance)
 - [Phase 10-search-and-extras]: rehype-slug inserted between remarkRehype and rehypeShiki for hast tree IDs
 - [Phase 10-search-and-extras]: hasTimelineEntry uses url.split('/').pop() === slug (exact match, not endsWith) to prevent false positives
+- [Phase 10-search-and-extras]: Externalize /pagefind/pagefind.js in Vite rollupOptions.external — Pagefind JS is generated post-build; Rollup errors (not warns) when it cannot resolve it at build time
 
 ### Pending Todos
 
@@ -103,7 +105,7 @@ None yet.
 
 ## Session Continuity
 
-**Last session:** 2026-04-01T03:58:57.127Z
+**Last session:** 2026-04-01T04:05:04.256Z
 **Completed:** Phase 7 (Monorepo Scaffold) — planned, executed, and verified
 **Next:** Phase 8 — Blog Features (discuss → plan → execute)
 **Resume file:** None
