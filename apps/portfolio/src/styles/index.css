@@ -284,7 +284,7 @@
   }
 
   /* Canvas light grid background */
-  .canvas-grid-light {
+  /* .canvas-grid-light {
     background-color: var(--canvas-bg);
     background-image: radial-gradient(var(--color-canvas-grid-line) 1px, transparent 1px);
     background-size:
@@ -299,7 +299,13 @@
     mask-image: radial-gradient(ellipse 70% 70% at 60% 50%,
         var(--color-canvas-bg-light) 70%,
         transparent 100%);
-  }
+  } */
+}
+
+/* Game mode: force-hide cursor even over nodes with inline cursor:pointer */
+body.game-mode,
+body.game-mode * {
+  cursor: none !important;
 }
 
 /* Base Styles */

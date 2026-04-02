@@ -13,6 +13,7 @@ interface ProjectNodeProps {
   description?: string
   tech?: string
   institution?: string
+  isActive?: boolean
 }
 
 /**
@@ -20,7 +21,7 @@ interface ProjectNodeProps {
  * Code/app project content node with code editor aesthetic
  * Size: 280x200px (uniform timeline node size)
  */
-export function ProjectNode({ x, y, title, url, thumbnail, tech }: ProjectNodeProps) {
+export function ProjectNode({ x, y, title, url, thumbnail, tech, isActive }: ProjectNodeProps) {
   const [isHovered, setIsHovered] = useState(false)
   const [imageLoaded, setImageLoaded] = useState(false)
   
@@ -38,11 +39,15 @@ export function ProjectNode({ x, y, title, url, thumbnail, tech }: ProjectNodePr
             pointerEvents: 'all',
             background: 'var(--surface-container-low)',
             backdropFilter: 'blur(var(--glass-blur))',
-            border: isHovered 
+            border: isActive
+              ? '1px solid var(--interactive-default)'
+              : isHovered
               ? '1px solid var(--interactive-hover)'
               : '1px solid var(--border-subtle)',
             borderRadius: 'var(--radius-xl)',
-            boxShadow: isHovered ? 'var(--shadow-lg)' : 'var(--shadow-md)',
+            boxShadow: isActive
+              ? '0 0 0 2px var(--interactive-default), var(--shadow-lg)'
+              : isHovered ? 'var(--shadow-lg)' : 'var(--shadow-md)',
             overflow: 'hidden',
             cursor: 'pointer',
             transform: isHovered ? 'scale(1.02)' : 'scale(1)',

@@ -12,6 +12,7 @@ interface MilestoneNodeProps {
   description?: string
   thumbnail?: string
   tech?: string
+  isActive?: boolean
 }
 
 /**
@@ -20,7 +21,7 @@ interface MilestoneNodeProps {
  * Size: 280x200px (uniform timeline node size)
  * Click behavior: Dispatches custom event to show modal
  */
-export function MilestoneNode({ x, y, id, title, date, institution }: MilestoneNodeProps) {
+export function MilestoneNode({ x, y, id, title, date, institution, isActive }: MilestoneNodeProps) {
   const [isHovered, setIsHovered] = useState(false)
   
   const handleClick = () => {
@@ -49,11 +50,15 @@ export function MilestoneNode({ x, y, id, title, date, institution }: MilestoneN
             pointerEvents: 'all',
             background: 'var(--glass-bg)',
             backdropFilter: 'blur(var(--glass-blur))',
-            border: isHovered 
+            border: isActive
+              ? '1px solid var(--interactive-default)'
+              : isHovered
               ? '1px solid var(--interactive-hover)'
               : '1px solid var(--border-subtle)',
             borderRadius: 'var(--radius-xl)',
-            boxShadow: isHovered ? 'var(--shadow-lg)' : 'var(--shadow-md)',
+            boxShadow: isActive
+              ? '0 0 0 2px var(--interactive-default), var(--shadow-lg)'
+              : isHovered ? 'var(--shadow-lg)' : 'var(--shadow-md)',
             overflow: 'hidden',
             cursor: 'pointer',
             transform: isHovered ? 'scale(1.02)' : 'scale(1)',
