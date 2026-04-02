@@ -1,9 +1,10 @@
 import { useState, useRef, useCallback, useEffect, useMemo } from 'react'
 import { Stage, Layer, Line, Circle, Text } from 'react-konva'
 import type Konva from 'konva'
-import type { KonvaEventObject } from 'konva/lib/Node'
+
 import { AnimatePresence, motion } from 'motion/react'
 import { CanvasLoader } from './CanvasLoader'
+import Antigravity from './Antigravity'
 // import { CanvasControls } from './CanvasControls'
 // import { CanvasFogOverlay } from './CanvasFogOverlay'
 import { MilestoneModal } from './MilestoneModal'
@@ -28,8 +29,8 @@ const HUB_HALF_WIDTH = 440  // Half of 880px hub width
 const NODE_HALF_HEIGHT = 100 // Half of 200px node height
 const AXIS_LEFT_EXTENT = -10000
 // Zoom threshold at which date labels fade in (0 = hidden, 1 = fully visible)
-const DATE_LABEL_ZOOM_START = 0.7
-const DATE_LABEL_ZOOM_END = 0.9
+const DATE_LABEL_ZOOM_START = 2
+const DATE_LABEL_ZOOM_END = 3
 
 function formatNodeDate(iso: string): string {
   const d = new Date(iso)
@@ -49,6 +50,7 @@ export function Canvas() {
   const stageRef = useRef<Konva.Stage | null>(null)
   const [modalNode, setModalNode] = useState<ContentNode | null>(null)
   const [zoom, setZoom] = useState(1)
+  const [activeNodeId, setActiveNodeId] = useState<string | null>(null)
   
   // Data fetching hooks
   const { data: timelineData, isLoading: timelineLoading } = useTimelineData()
@@ -68,35 +70,94 @@ export function Canvas() {
   // const { visible } = useControlsVisibility()
   useCameraState(stageRef.current)
   useArrowKeyNavigation(stageRef.current, !isGameMode) // Disable when game mode active
-  
-  // Handle zoom with wheel
-  const handleWheel = useCallback((e: KonvaEventObject<WheelEvent>) => {
-    e.evt.preventDefault()
-    const stage = stageRef.current
-    if (!stage) return
-    
-    const scaleBy = 1.01
-    const oldScale = stage.scaleX()
-    const pointer = stage.getPointerPosition()
-    if (!pointer) return
-    
-    const mousePointTo = {
-      x: (pointer.x - stage.x()) / oldScale,
-      y: (pointer.y - stage.y()) / oldScale,
-    }
-    
-    const newScale = e.evt.deltaY < 0 ? oldScale * scaleBy : oldScale / scaleBy
-    const clampedScale = Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, newScale))
-    
-    stage.scale({ x: clampedScale, y: clampedScale })
-    stage.position({
-      x: pointer.x - mousePointTo.x * clampedScale,
-      y: pointer.y - mousePointTo.y * clampedScale,
-    })
-    setZoom(clampedScale)
 
-    // Trigger custom zoom event for viewport transform hook
-    stage.fire('zoom')
+  // Hide system cursor in game mode — class uses !important to beat inline cursor:pointer on nodes
+  useEffect(() => {
+    document.body.classList.toggle('game-mode', isGameMode)
+    return () => { document.body.classList.remove('game-mode') }
+  }, [isGameMode])
+
+  // Detect nearest node within hit radius when spaceship moves
+  const HIT_RADIUS = 160
+  useEffect(() => {
+    if (!isGameMode || !stageRef.current) { setActiveNodeId(null); return }
+    const stage = stageRef.current
+    const scale = stage.scaleX()
+    const worldX = (cursorState.x - stage.x()) / scale
+    const worldY = (cursorState.y - stage.y()) / scale
+
+    let nearest: string | null = null
+    let minDist = HIT_RADIUS
+    for (const { node, x, y } of positionedNodes) {
+      const dist = Math.hypot(x - worldX, y - worldY)
+      if (dist < minDist) { minDist = dist; nearest = node.id }
+    }
+    setActiveNodeId(nearest)
+  }, [cursorState, isGameMode, positionedNodes])
+
+  // Enter key triggers the active node's action
+  useEffect(() => {
+    const onEnter = (e: KeyboardEvent) => {
+      if (!isGameMode || e.key !== 'Enter' || !activeNodeId) return
+      const hit = positionedNodes.find(({ node }) => node.id === activeNodeId)
+      if (!hit) return
+      if (hit.node.type === 'milestone') {
+        window.dispatchEvent(new CustomEvent('openMilestoneModal', { detail: { nodeId: hit.node.id } }))
+      } else if (hit.node.url) {
+        window.open(hit.node.url, '_blank', 'noopener,noreferrer')
+      }
+    }
+    window.addEventListener('keydown', onEnter)
+    return () => window.removeEventListener('keydown', onEnter)
+  }, [isGameMode, activeNodeId, positionedNodes])
+  
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  // Native wheel handler — attached to the container div so it fires
+  // regardless of which Konva shape is under the cursor
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault()
+      const stage = stageRef.current
+      if (!stage) return
+
+      if (e.metaKey) {
+        // Cmd + scroll → zoom toward pointer
+        const scaleBy = 1.01
+        const oldScale = stage.scaleX()
+        const pointer = stage.getPointerPosition()
+        if (!pointer) return
+
+        const mousePointTo = {
+          x: (pointer.x - stage.x()) / oldScale,
+          y: (pointer.y - stage.y()) / oldScale,
+        }
+
+        const newScale = e.deltaY < 0 ? oldScale * scaleBy : oldScale / scaleBy
+        const clampedScale = Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, newScale))
+
+        stage.scale({ x: clampedScale, y: clampedScale })
+        stage.position({
+          x: pointer.x - mousePointTo.x * clampedScale,
+          y: pointer.y - mousePointTo.y * clampedScale,
+        })
+        setZoom(clampedScale)
+        stage.fire('zoom')
+      } else {
+        // Trackpad two-finger scroll → pan
+        stage.position({
+          x: stage.x() - e.deltaX,
+          y: stage.y() - e.deltaY,
+        })
+        stage.fire('dragmove')
+      }
+    }
+
+    el.addEventListener('wheel', onWheel, { passive: false })
+    return () => el.removeEventListener('wheel', onWheel)
   }, [])
   
   // Handle drag end for camera state persistence
@@ -175,7 +236,23 @@ export function Canvas() {
           </motion.div>
         )}
       </AnimatePresence>
-      <div 
+      {/* Antigravity background — purely decorative */}
+      <div className="fixed inset-0">
+        <Antigravity
+          count={200}
+          color="#E0AFFF"
+          particleSize={0.6}
+          magnetRadius={8}
+          ringRadius={12}
+          waveSpeed={0.4}
+          waveAmplitude={0.8}
+          fieldStrength={12}
+          autoAnimate
+        />
+      </div>
+
+      <div
+        ref={containerRef}
         className="fixed inset-0 canvas-grid-light"
         style={{
           opacity: isFullyLoaded ? 1 : 0,
@@ -189,7 +266,6 @@ export function Canvas() {
           width={window.innerWidth}
           height={window.innerHeight}
           draggable
-          onWheel={handleWheel}
           onDragEnd={handleDragEnd}
         >
           <Layer>
@@ -269,6 +345,7 @@ export function Canvas() {
                   key={node.id}
                   x={x - 140}
                   y={y - 100}
+                  isActive={isGameMode && node.id === activeNodeId}
                   {...node}
                 />
               )

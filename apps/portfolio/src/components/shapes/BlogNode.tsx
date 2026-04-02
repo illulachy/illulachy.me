@@ -13,6 +13,7 @@ interface BlogNodeProps {
   thumbnail?: string
   tech?: string
   institution?: string
+  isActive?: boolean
 }
 
 /**
@@ -20,7 +21,7 @@ interface BlogNodeProps {
  * Blog/note content node with document aesthetic
  * Size: 280x200px (uniform timeline node size)
  */
-export function BlogNode({ x, y, title, url, date, description }: BlogNodeProps) {
+export function BlogNode({ x, y, title, url, date, description, isActive }: BlogNodeProps) {
   const [isHovered, setIsHovered] = useState(false)
   
   const handleClick = () => {
@@ -44,11 +45,15 @@ export function BlogNode({ x, y, title, url, date, description }: BlogNodeProps)
             pointerEvents: 'all',
             background: 'var(--glass-bg)',
             backdropFilter: 'blur(var(--glass-blur))',
-            border: isHovered 
+            border: isActive
+              ? '1px solid var(--interactive-default)'
+              : isHovered
               ? '1px solid var(--interactive-hover)'
               : '1px solid var(--border-subtle)',
             borderRadius: 'var(--radius-xl)',
-            boxShadow: isHovered ? 'var(--shadow-lg)' : 'var(--shadow-md)',
+            boxShadow: isActive
+              ? '0 0 0 2px var(--interactive-default), var(--shadow-lg)'
+              : isHovered ? 'var(--shadow-lg)' : 'var(--shadow-md)',
             overflow: 'hidden',
             cursor: 'pointer',
             transform: isHovered ? 'scale(1.02)' : 'scale(1)',
