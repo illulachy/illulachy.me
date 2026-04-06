@@ -1,99 +1,65 @@
 {
   "nodes": [
     {
+      "id": "started-university",
+      "type": "milestone",
+      "title": "Started University — First Step Into Programming",
+      "date": "2017-08-01T00:00:00.000Z",
+      "description": "Began university studies and took the first step into the programming world",
+      "institution": "University"
+    },
+    {
+      "id": "ambient-space",
+      "type": "project",
+      "title": "Ambient Space — Mix Ambient Sounds for Focus & Productivity",
+      "date": "2018-04-01T00:00:00.000Z",
+      "url": "https://github.com/thuyhoang-hvtt/ambient-space",
+      "description": "A web application that lets users mix ambient sounds like fire, stream, wind, and forest to create the perfect focus environment and boost productivity",
+      "tech": "ReactJS"
+    },
+    {
+      "id": "gps-tracking",
+      "type": "project",
+      "title": "GPS Tracking — Real-Time IoT Location System",
+      "date": "2019-06-01T00:00:00.000Z",
+      "url": "https://github.com/thuyhoang-hvtt/gps-tracking",
+      "description": "A real-time GPS tracking system using MQTT protocol for IoT devices, enabling live location monitoring",
+      "tech": "Flutter, MQTT, IoT"
+    },
+    {
+      "id": "first-ai-engineer-job",
+      "type": "milestone",
+      "title": "First AI Engineer Job",
+      "date": "2020-03-01T00:00:00.000Z",
+      "description": "Built CNN models for defect detection on chip boards using PyTorch and TensorFlow",
+      "institution": "AI Tech Company",
+      "tech": "PyTorch, TensorFlow, CNN"
+    },
+    {
+      "id": "joined-kms-technology",
+      "type": "milestone",
+      "title": "Joined KMS Technology",
+      "date": "2020-12-01T00:00:00.000Z",
+      "description": "Started as Software Engineer at KMS Technology",
+      "institution": "KMS Technology"
+    },
+    {
+      "id": "toolazy-to-read",
+      "type": "project",
+      "title": "TooLazyToRead — Turn Any Web Novel Into an Audiobook in Seconds",
+      "date": "2021-01-01T00:00:00.000Z",
+      "url": "https://github.com/illulachy/toolazy-to-read",
+      "description": "Realtime text-to-speech app that converts popular web novel sites into audiobooks, so you can listen instead of read",
+      "tech": "ElectronJS, Text-to-Speech API"
+    },
+    {
       "id": "graduated-university",
       "type": "milestone",
       "title": "Graduated from University",
-      "date": "2020-05-01T00:00:00.000Z",
-      "description": "Bachelor of Science in Computer Science",
-      "institution": "University of Technology"
-    },
-    {
-      "id": "first-project",
-      "type": "milestone",
-      "title": "First Professional Project",
-      "date": "2021-09-01T00:00:00.000Z",
-      "description": "Joined as junior developer",
-      "institution": "Tech Startup Inc"
-    },
-    {
-      "id": "learning-react",
-      "type": "project",
-      "title": "React Learning Projects",
-      "date": "2022-03-01T00:00:00.000Z",
-      "url": "https://github.com/illulachy/react-experiments",
-      "description": "Collection of React practice projects",
-      "tech": "React, JavaScript"
-    },
-    {
-      "id": "portfolio-redesign",
-      "type": "project",
-      "title": "Portfolio Site Redesign",
-      "date": "2022-06-01T00:00:00.000Z",
-      "url": "https://illulachy.me",
-      "description": "Complete redesign with modern stack",
-      "tech": "React, TypeScript, Tailwind"
-    },
-    {
-      "id": "tldraw-discovery",
-      "type": "blog",
-      "title": "Discovering tldraw — An Infinite Canvas Library",
-      "date": "2023-11-03T00:00:00.000Z",
-      "url": "https://writing.illulachy.me/tldraw-discovery",
-      "description": "First impressions of tldraw for creative tools"
-    },
-    {
-      "id": "first-youtube-video",
-      "type": "youtube",
-      "title": "My First YouTube Video",
-      "date": "2023-12-10T00:00:00.000Z",
-      "url": "https://youtube.com/watch?v=example1",
-      "thumbnail": "https://img.youtube.com/vi/example1/maxresdefault.jpg",
-      "description": "Starting my YouTube journey"
-    },
-    {
-      "id": "building-in-public",
-      "type": "youtube",
-      "title": "Building in Public - Why I Share Everything",
-      "date": "2023-12-25T00:00:00.000Z",
-      "url": "https://youtube.com/watch?v=example2",
-      "thumbnail": "https://img.youtube.com/vi/example2/maxresdefault.jpg",
-      "description": "My philosophy on transparent development"
-    },
-    {
-      "id": "year-in-review",
-      "type": "blog",
-      "title": "2023 Year in Review",
-      "date": "2024-01-01T00:00:00.000Z",
-      "url": "https://writing.illulachy.me/2023-review",
-      "description": "Reflecting on a year of building and learning"
-    },
-    {
-      "id": "deep-dive-typescript",
-      "type": "blog",
-      "title": "Deep Dive into TypeScript Generics",
-      "date": "2024-01-15T00:00:00.000Z",
-      "url": "https://writing.illulachy.me/typescript-generics",
-      "description": "Advanced TypeScript patterns explained"
-    },
-    {
-      "id": "illulachy-launch",
-      "type": "project",
-      "title": "illulachy.me Launch",
-      "date": "2024-02-01T00:00:00.000Z",
-      "url": "https://illulachy.me",
-      "description": "Infinite canvas portfolio site",
-      "tech": "React, tldraw, Vite, TypeScript"
-    },
-    {
-      "id": "canvas-timeline-idea",
-      "type": "youtube",
-      "title": "Building an Infinite Canvas Portfolio",
-      "date": "2024-03-15T00:00:00.000Z",
-      "url": "https://youtube.com/watch?v=example3",
-      "thumbnail": "https://img.youtube.com/vi/example3/maxresdefault.jpg",
-      "description": "The idea behind this portfolio site"
+      "date": "2021-04-01T00:00:00.000Z",
+      "description": "Graduated from university",
+      "institution": "University"
     }
   ],
-  "lastUpdated": "2026-04-06T03:54:49.387Z"
+  "lastUpdated": "2026-04-06T12:01:37+07:00"
 }

@@ -6,6 +6,7 @@ import { readFile, writeFile, mkdir } from 'fs/promises'
 import { basename } from 'path'
 import { fileURLToPath } from 'url'
 import path from 'path'
+import { execSync } from 'child_process'
 import type { ContentNode, TimelineData } from '../src/types/content.js'
 import { aboutSchema, type AboutData } from '../src/types/about.js'
 
@@ -164,13 +165,20 @@ async function main() {
       }
     }
 
+    // Filter out nodes before Jan 2017
+    const JAN_2017 = new Date('2017-01-01').getTime()
+    const filteredNodes = nodes.filter(n => new Date(n.date).getTime() >= JAN_2017)
+
     // Sort by date (chronological, oldest first)
-    nodes.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+    filteredNodes.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+
+    // Get last git commit date
+    const lastCommitDate = execSync('git log -1 --format=%cI').toString().trim()
 
     // Build timeline data
     const timelineData: TimelineData = {
-      nodes,
-      lastUpdated: new Date().toISOString(),
+      nodes: filteredNodes,
+      lastUpdated: lastCommitDate,
     }
 
     // Ensure output directory exists
