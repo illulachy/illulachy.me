@@ -89,7 +89,7 @@ export function HubNode({ x, y, name, title, bio, avatar, email, lastUpdated, so
                     inset: 0,
                     opacity: isHovered ? 0 : 1,
                     transition: 'opacity var(--motion-hover)',
-                    zIndex: 1,
+                    zIndex: 2,
                   }}
                 >
                   <AsciiArt
@@ -119,9 +119,9 @@ export function HubNode({ x, y, name, title, bio, avatar, email, lastUpdated, so
                     objectFit: 'cover',
                     objectPosition: 'center top',
                     display: 'block',
-                    opacity: isHovered ? 1 : 0,
-                    transition: 'opacity var(--motion-avatar)',
-                    zIndex: 2,
+                    // opacity: isHovered ? 1 : 0,
+                    // transition: 'opacity var(--motion-avatar)',
+                    zIndex: 1,
                   }}
                   onError={(e) => { e.currentTarget.style.display = 'none' }}
                 />
