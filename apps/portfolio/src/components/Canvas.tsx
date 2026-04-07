@@ -19,6 +19,7 @@ import { useTimelineData } from '@/hooks/useTimelineData'
 import { useAboutData } from '@/hooks/useAboutData'
 import { calculateInitialZoom, getViewportDimensions } from '@/lib/cameraUtils'
 import { positionTimelineNodes, HUB_POSITION } from '@/lib/positionNodes'
+import { getYearPositions } from '@/lib/dateUtils'
 import { ZOOM_MIN, ZOOM_MAX } from '@/types/camera'
 import type { ContentNode } from '@/types/content'
 
@@ -27,10 +28,16 @@ const AXIS_COLOR = '#E0AFFFFF'
 const CONNECTOR_COLOR = '#12121212'
 const HUB_HALF_WIDTH = 440  // Half of 880px hub width
 const NODE_HALF_HEIGHT = 100 // Half of 200px node height
-const AXIS_LEFT_EXTENT = -10000
+const TIMELINE_START_DATE = new Date('2017-01-01T00:00:00Z')
+const PX_PER_DAY = 2
+const MIN_OFFSET = 800
 // Zoom threshold at which date labels fade in (0 = hidden, 1 = fully visible)
 const DATE_LABEL_ZOOM_START = 2
 const DATE_LABEL_ZOOM_END = 3
+// Year label visibility - fades out as you zoom in (opposite of date labels)
+const YEAR_LABEL_ZOOM_START = 1.0
+const YEAR_LABEL_ZOOM_END = 2.0
+const TICK_HEIGHT = 8
 
 function formatNodeDate(iso: string): string {
   const d = new Date(iso)
@@ -269,15 +276,56 @@ export function Canvas() {
           onDragEnd={handleDragEnd}
         >
           <Layer>
-            {/* Timeline axis — horizontal line at y=0, extends left from hub */}
-            <Line
-              points={[AXIS_LEFT_EXTENT, 0, HUB_POSITION.x - HUB_HALF_WIDTH, 0]}
-              stroke={AXIS_COLOR}
-              strokeWidth={1}
-              strokeScaleEnabled={false}
-              shadowBlur={12}
-              shadowColor={AXIS_COLOR}
-            />
+            {/* Timeline axis — horizontal line at y=0, extends left from hub to Jan 2017 */}
+            {timelineData && timelineData.nodes.length > 0 && (() => {
+              const timestamps = timelineData.nodes.map(n => new Date(n.date).getTime())
+              const newestDate = new Date(Math.max(...timestamps))
+              const startDate = TIMELINE_START_DATE
+              const daysBeforeNewest = (newestDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
+              const axisLeft = -(daysBeforeNewest * PX_PER_DAY + MIN_OFFSET)
+              return (
+                <Line
+                  points={[axisLeft, 0, HUB_POSITION.x - HUB_HALF_WIDTH, 0]}
+                  stroke={AXIS_COLOR}
+                  strokeWidth={1}
+                  strokeScaleEnabled={false}
+                  shadowBlur={12}
+                  shadowColor={AXIS_COLOR}
+                />
+              )
+            })()}
+
+            {/* Year labels with tick marks above axis */}
+            {timelineData && positionedNodes.length > 0 && (() => {
+              const yearPositions = getYearPositions(positionedNodes.map(p => p.node))
+              return yearPositions.map(({ year, x }) => {
+                const opacity = Math.max(0, Math.min(1,
+                  1 - (zoom - YEAR_LABEL_ZOOM_START) / (YEAR_LABEL_ZOOM_END - YEAR_LABEL_ZOOM_START)
+                ))
+                const fontSize = 11 / zoom
+                return (
+                  <group key={`year-${year}`}>
+                    <Line
+                      points={[x, 0, x, -TICK_HEIGHT / zoom]}
+                      stroke={AXIS_COLOR}
+                      strokeWidth={1}
+                      strokeScaleEnabled={false}
+                    />
+                    <Text
+                      x={x}
+                      y={-(TICK_HEIGHT / zoom) - (fontSize * 1.2)}
+                      text={String(year)}
+                      fontSize={fontSize}
+                      fontFamily="'Inter', sans-serif"
+                      fill={AXIS_COLOR}
+                      opacity={opacity}
+                      offsetX={fontSize}
+                      listening={false}
+                    />
+                  </group>
+                )
+              })
+            })()}
 
             {/* Connector lines + axis dots + date labels */}
             {positionedNodes.map(({ node, x, y }) => {
