@@ -1,0 +1,11 @@
+# dotword landing page — clean URL without trailing slash
+/dotword    /dotword/index.html   200
+
+# ambientspace landing page — clean URL without trailing slash
+/ambientspace    /ambientspace/index.html   200
+
+# tltr landing page — clean URL without trailing slash
+/tltr    /tltr/index.html   200
+
+# SPA fallback for React router
+/*          /index.html           200

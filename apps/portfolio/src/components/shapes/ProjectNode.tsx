@@ -78,13 +78,14 @@ export function ProjectNode({ x, y, title, url, thumbnail, tech, isActive }: Pro
           
           {/* Thumbnail or code aesthetic */}
           <div style={{
-            flex: 1,
+            height: '120px',
             width: '100%',
             position: 'relative',
             background: 'var(--surface-container)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            overflow: 'hidden',
           }}>
             {thumbnail ? (
               <>
@@ -103,6 +104,8 @@ export function ProjectNode({ x, y, title, url, thumbnail, tech, isActive }: Pro
                 <img
                   src={thumbnail}
                   alt={title}
+                  width="280"
+                  height="120"
                   style={{
                     width: '100%',
                     height: '100%',

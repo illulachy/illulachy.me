@@ -1,0 +1,11 @@
+{
+  "rewrites": [
+    { "source": "/dotword", "destination": "/dotword/index.html" },
+    { "source": "/dotword/(.*)", "destination": "/dotword/$1" },
+    { "source": "/ambientspace", "destination": "/ambientspace/index.html" },
+    { "source": "/ambientspace/(.*)", "destination": "/ambientspace/$1" },
+    { "source": "/tltr", "destination": "/tltr/index.html" },
+    { "source": "/tltr/(.*)", "destination": "/tltr/$1" },
+    { "source": "/((?!dotword|ambientspace|tltr).*)", "destination": "/index.html" }
+  ]
+}

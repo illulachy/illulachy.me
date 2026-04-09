@@ -3,7 +3,7 @@
     {
       "id": "started-university",
       "type": "milestone",
-      "title": "Started University — First Step Into Programming",
+      "title": "Started University",
       "date": "2017-08-01T00:00:00.000Z",
       "description": "Began university studies and took the first step into the programming world",
       "institution": "University"
@@ -14,6 +14,7 @@
       "title": "Ambient Space — Mix Ambient Sounds for Focus & Productivity",
       "date": "2018-04-01T00:00:00.000Z",
       "url": "https://github.com/thuyhoang-hvtt/ambient-space",
+      "thumbnail": "/ambientspace/og.png",
       "description": "A web application that lets users mix ambient sounds like fire, stream, wind, and forest to create the perfect focus environment and boost productivity",
       "tech": "ReactJS"
     },
@@ -46,9 +47,10 @@
     {
       "id": "toolazy-to-read",
       "type": "project",
-      "title": "TooLazyToRead — Turn Any Web Novel Into an Audiobook in Seconds",
+      "title": "TLTR; — Turn Any Web Novel Into an Audiobook in Seconds",
       "date": "2021-01-01T00:00:00.000Z",
       "url": "https://github.com/illulachy/toolazy-to-read",
+      "thumbnail": "/tltr/og.png",
       "description": "Realtime text-to-speech app that converts popular web novel sites into audiobooks, so you can listen instead of read",
       "tech": "ElectronJS, Text-to-Speech API"
     },
@@ -59,7 +61,17 @@
       "date": "2021-04-01T00:00:00.000Z",
       "description": "Graduated from university",
       "institution": "University"
+    },
+    {
+      "id": "dotword",
+      "type": "project",
+      "title": "dotWord — Daily Word & Wisdom in Your Pocket",
+      "date": "2022-09-01T00:00:00.000Z",
+      "url": "https://github.com/illulachy/dotword",
+      "thumbnail": "./dotword/og.png",
+      "description": "A mobile app that teaches you a new word every day with inspirational quotes, making vocabulary building a daily habit",
+      "tech": "React Native"
     }
   ],
-  "lastUpdated": "2026-04-06T12:01:37+07:00"
+  "lastUpdated": "2026-04-07T15:04:08+07:00"
 }

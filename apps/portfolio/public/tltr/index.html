@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>tltr;</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700;800;900&amp;family=Inter:wght@300;400;500;600&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#520c00",
+                        "on-background": "#2d2f2f",
+                        "on-secondary-fixed": "#403f3f",
+                        "on-secondary": "#f5f2f1",
+                        "on-tertiary-container": "#626262",
+                        "surface": "#f6f6f6",
+                        "surface-container": "#e7e8e8",
+                        "inverse-on-surface": "#9c9d9d",
+                        "surface-variant": "#dbdddd",
+                        "on-primary-container": "#584500",
+                        "outline": "#767777",
+                        "surface-container-low": "#f0f1f1",
+                        "tertiary-dim": "#4f5050",
+                        "inverse-primary": "#fdcc00",
+                        "primary": "#705900",
+                        "primary-dim": "#614d00",
+                        "primary-fixed": "#fdcc00",
+                        "on-primary-fixed-variant": "#634e00",
+                        "error": "#b02500",
+                        "secondary-dim": "#504f4f",
+                        "on-surface-variant": "#5a5c5c",
+                        "on-error": "#ffefec",
+                        "secondary-container": "#e5e2e1",
+                        "secondary-fixed": "#e5e2e1",
+                        "surface-tint": "#705900",
+                        "tertiary-fixed-dim": "#f2f0f0",
+                        "secondary-fixed-dim": "#d6d4d3",
+                        "on-tertiary": "#f4f2f2",
+                        "background": "#f6f6f6",
+                        "on-primary": "#fff2d4",
+                        "on-secondary-fixed-variant": "#5c5b5b",
+                        "surface-bright": "#f6f6f6",
+                        "surface-dim": "#d3d5d5",
+                        "secondary": "#5c5b5b",
+                        "on-tertiary-fixed-variant": "#6d6d6d",
+                        "on-surface": "#2d2f2f",
+                        "surface-container-high": "#e1e3e3",
+                        "outline-variant": "#acadad",
+                        "tertiary": "#5b5b5b",
+                        "primary-fixed-dim": "#ecbf00",
+                        "primary-container": "#fdcc00",
+                        "error-container": "#f95630",
+                        "on-secondary-container": "#525151",
+                        "surface-container-highest": "#dbdddd",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#413300",
+                        "tertiary-container": "#ffffff",
+                        "on-tertiary-fixed": "#505050",
+                        "error-dim": "#b92902",
+                        "tertiary-fixed": "#ffffff",
+                        "inverse-surface": "#0c0f0f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Lexend"],
+                        "body": ["Inter"],
+                        "label": ["Lexend"]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .stipple-bg {
+            background-image: radial-gradient(#1A1A1A 0.5px, transparent 0.5px);
+            background-size: 4px 4px
+        }
+
+        .sketchy-border {
+            border: 3px solid #1A1A1A;
+            border-radius: 2rem 1.5rem 2.5rem 1.8rem
+        }
+
+        .sketchy-btn-shadow:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 4px 4px 0 0 #1A1A1A
+        }
+
+        .grain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.03;
+            background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuBXD8dUoMbEsyuRrBFtUuJpL95ZVcuFS6JGodaLGUJyP5_2_MG7vBTS1oo9te1xdxBS_IDQZ2cJva6Bu3Zs7hQlW1IRwhGLx_OP47ddeCaTyZRTlSdI9-bBe2S_giTA0i9rs_E6wz1l58xjFMXMuGhT-w6XnFsejzbc_CKHZgKsfewauTDbWofMeJuPRklRaBfnqPxkgwjrXk2HXXUYR7XJjaPZaA0vDO0K7eE5S5GYf_JzajMAzr9B7vEYk8XhZx0cF4RQ-b6bPNBQ)
+        }
+
+        .motion-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-surface font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden">
+    <div class="grain-overlay"></div>
+    <!-- Navigation -->
+    <nav
+        class="fixed top-0 left-0 w-full z-50 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md shadow-[0_40px_40px_0_rgba(26,26,26,0.06)]">
+        <div class="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto">
+            <div class="flex items-center gap-2 group cursor-pointer">
+                <div
+                    class="w-10 h-10 bg-primary-container rounded-full flex items-center justify-center border-2 border-on-surface group-hover:rotate-12 transition-transform">
+                    <span class="material-symbols-outlined text-on-surface"
+                        style="font-variation-settings: 'FILL' 1;">menu_book</span>
+                </div>
+                <span
+                    class="text-2xl font-black text-zinc-900 dark:text-white tracking-tighter font-headline">tltr;</span>
+            </div>
+            <button
+                class="bg-primary-container text-on-surface px-6 py-2 rounded-full border-2 border-on-surface font-headline font-bold sketchy-btn-shadow transition-all">
+                Download
+            </button>
+        </div>
+    </nav>
+    <!-- Hero Section -->
+    <header class="relative pt-32 pb-20 md:pt-48 md:pb-32 px-8 overflow-hidden">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+            <div class="relative z-10 hero-content">
+                <div class="inline-block px-4 py-1 bg-primary-container border-2 border-on-surface mb-6 rotate-[-2deg]">
+                    <span class="font-label text-xs font-black tracking-widest uppercase">AUDIOBOOK MAGIC</span>
+                </div>
+                <h1
+                    class="font-headline text-5xl md:text-7xl font-extrabold text-on-surface leading-[1.1] mb-6 tracking-tight">
+                    Too Lazy to Read? <br /><span class="relative">Try listen!<span
+                            class="absolute bottom-1 left-0 w-full h-3 bg-primary-container/40 -z-10"></span></span>
+                </h1>
+                <p class="text-lg md:text-xl text-secondary max-w-lg mb-10 leading-relaxed">
+                    Turn any web novel into an audiobook instantly. Paste a URL, pick a voice, press play—then relax
+                    while your story comes alive.
+                </p>
+                <div class="flex flex-wrap gap-6">
+                    <button
+                        class="bg-primary-container text-on-surface px-8 py-4 rounded-full border-[3px] border-on-surface font-headline font-bold text-lg sketchy-btn-shadow transition-all flex items-center gap-2">
+                        Download Free
+                        <span class="material-symbols-outlined">download</span>
+                    </button>
+                </div>
+            </div>
+            <div class="relative">
+                <!-- Decorative Sketchy Elements -->
+                <div class="absolute -top-10 -right-10 w-32 h-32 stipple-bg opacity-20 rounded-full"></div>
+                <div
+                    class="absolute -bottom-10 -left-10 w-48 h-48 border-4 border-dashed border-primary-container rounded-full opacity-30">
+                </div>
+                <!-- Main Illustration -->
+                <div
+                    class="relative sketchy-border bg-white p-4 rotate-[1deg] hover:rotate-0 transition-transform duration-500 shadow-xl overflow-hidden hero-image">
+                    <img alt="Abstract Book and Soundwave"
+                        class="w-full aspect-[4/3] object-cover rounded-xl grayscale contrast-125 brightness-110"
+                        data-alt="A minimalist sketchy illustration showing an open antique book with soundwaves emerging from its pages like a golden portal, stipple textures, hand-drawn marigold accents"
+                        src="./hero.png" />
+                    <!-- <img alt="Abstract Book and Soundwave"
+                        class="w-full aspect-[4/3] object-cover rounded-xl grayscale contrast-125 brightness-110"
+                        data-alt="A minimalist sketchy illustration showing an open antique book with soundwaves emerging from its pages like a golden portal, stipple textures, hand-drawn marigold accents"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3ovS0XiNSP6txFfts05se4sbdny4pWISdRRU8dp0TcVgNd0GkB158Nl34FfAPX8JNMsIYJ93ppk9Wwun9NKhvDJJW0Wf7oUDNcW_PyfSnirXvUF3PiEOBdTs3IxZF-JpZE_Y9zEyYHxq6i-iH9ZjXAeUDWmo910VYBRRl155TU1kJvmY3u8QyqQT8cvmFfngScDdKLcLPgCUVM2UZmCu-6BOWVhhSm1zBmdGh7pUn-Vk4Fq7BVQRnbUfrZHSX2nluv-BPmPlaz_oP" /> -->
+                    <div class="absolute inset-0 bg-primary-container/10 mix-blend-multiply pointer-events-none"></div>
+                    <div
+                        class="absolute top-4 right-4 bg-primary-container border-2 border-on-surface px-4 py-2 font-headline font-bold text-sm rotate-12">
+                        NOW PLAYING: CHAPTER 42
+                    </div>
+                </div>
+                <!-- Hand drawn Arrow -->
+                <div class="absolute -bottom-12 -left-20 hidden lg:block">
+                    <svg class="text-on-surface rotate-[45deg]" fill="none" height="120" viewbox="0 0 120 120"
+                        width="120">
+                        <path d="M10 10C30 20 80 15 100 80M100 80L85 65M100 80L115 75" stroke="currentColor"
+                            stroke-linecap="round" stroke-linejoin="round" stroke-width="4"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Features Section -->
+    <section class="py-32 px-8 bg-surface-container-low relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+                <div>
+                    <h2 class="font-headline text-4xl md:text-5xl font-black text-on-surface mb-4">Reading? Overrated.
+                    </h2>
+                    <p class="text-secondary max-w-md font-medium">We've built the fastest path from written word to
+                        spoken story.</p>
+                </div>
+                <div class="hidden md:block">
+                    <div class="flex gap-4 items-center">
+                        <span class="text-xs font-black font-headline tracking-tighter uppercase opacity-40">SCROLL TO
+                            EXPLORE</span>
+                        <div class="w-12 h-[2px] bg-secondary opacity-20"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <!-- Feature 1 -->
+                <div class="group feature-card">
+                    <div class="relative w-20 h-20 mb-8">
+                        <div
+                            class="absolute inset-0 bg-primary-container rounded-full group-hover:scale-110 transition-transform duration-300">
+                        </div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-4xl text-on-surface"
+                                style="font-variation-settings: 'FILL' 1;">bolt</span>
+                        </div>
+                    </div>
+                    <h3 class="font-headline text-2xl font-bold text-on-surface mb-4">Instant TTS</h3>
+                    <p class="text-secondary leading-relaxed">
+                        Don't wait for processing. Our engine parses web content in milliseconds, letting you start
+                        listening the moment you click 'Go'.
+                    </p>
+                </div>
+                <!-- Feature 2 -->
+                <div class="group feature-card">
+                    <div class="relative w-20 h-20 mb-8">
+                        <div
+                            class="absolute inset-0 bg-primary-container rounded-full group-hover:scale-110 transition-transform duration-300">
+                        </div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-4xl text-on-surface"
+                                style="font-variation-settings: 'FILL' 1;">record_voice_over</span>
+                        </div>
+                    </div>
+                    <h3 class="font-headline text-2xl font-bold text-on-surface mb-4">12 Voice Options</h3>
+                    <p class="text-secondary leading-relaxed">
+                        From warm narration to dramatic storytelling voices. Find the perfect tone to match your genre,
+                        from LitRPG to Romance.
+                    </p>
+                </div>
+                <!-- Feature 3 -->
+                <div class="group feature-card">
+                    <div class="relative w-20 h-20 mb-8">
+                        <div
+                            class="absolute inset-0 bg-primary-container rounded-full group-hover:scale-110 transition-transform duration-300">
+                        </div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-4xl text-on-surface"
+                                style="font-variation-settings: 'FILL' 1;">download_for_offline</span>
+                        </div>
+                    </div>
+                    <h3 class="font-headline text-2xl font-bold text-on-surface mb-4">Export to MP3</h3>
+                    <p class="text-secondary leading-relaxed">
+                        Take your stories anywhere. One-click export allows you to save any web chapter as a
+                        high-quality MP3 for offline listening.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Bento Grid Section -->
+    <section class="py-32 px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-8 h-auto md:h-[600px]">
+                <div
+                    class="md:col-span-2 md:row-span-2 sketchy-border bg-white p-10 flex flex-col justify-between group overflow-hidden relative bento-item">
+                    <div
+                        class="absolute top-0 right-0 w-32 h-32 stipple-bg opacity-10 -translate-y-8 translate-x-8 rounded-full">
+                    </div>
+                    <div>
+                        <span
+                            class="font-label text-xs font-black px-3 py-1 border-2 border-on-surface inline-block mb-6">INTEGRATIONS</span>
+                        <h4 class="font-headline text-4xl font-black mb-6">Supported Everywhere.</h4>
+                        <p class="text-secondary text-lg">Direct integration with Royal Road, WebNovel, Wattpad, and
+                            Archive of Our Own. No more copying and pasting—just one click.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-4 mt-8">
+                        <div
+                            class="px-4 py-2 border-2 border-on-surface rounded-full font-bold text-sm bg-surface-container-low">
+                            Royal Road</div>
+                        <div
+                            class="px-4 py-2 border-2 border-on-surface rounded-full font-bold text-sm bg-surface-container-low">
+                            Wattpad</div>
+                        <div
+                            class="px-4 py-2 border-2 border-on-surface rounded-full font-bold text-sm bg-surface-container-low">
+                            AO3</div>
+                        <div
+                            class="px-4 py-2 border-2 border-on-surface rounded-full font-bold text-sm bg-surface-container-low">
+                            + 12 others</div>
+                    </div>
+                </div>
+                <div
+                    class="md:col-span-2 bg-primary-container sketchy-border p-10 flex items-center justify-between overflow-hidden relative bento-item">
+                    <div class="relative z-10">
+                        <h4 class="font-headline text-3xl font-black mb-2">Listen in the car</h4>
+                        <p class="text-on-primary-container font-medium">Seamless CarPlay &amp; Android Auto support.
+                        </p>
+                    </div>
+                    <span
+                        class="material-symbols-outlined text-8xl opacity-20 absolute -right-4 -bottom-4 rotate-12">directions_car</span>
+                </div>
+                <div
+                    class="bg-on-surface p-10 rounded-3xl flex flex-col justify-center items-center text-center group transition-all duration-300 bento-item">
+                    <span
+                        class="material-symbols-outlined text-primary-container text-5xl mb-4 group-hover:scale-110 transition-transform">star</span>
+                    <p class="text-surface font-headline font-bold text-2xl leading-none">4.9/5</p>
+                    <p class="text-surface/50 text-xs mt-2 uppercase tracking-widest">User Rating</p>
+                </div>
+                <div
+                    class="bg-surface-container sketchy-border border-dashed p-10 flex flex-col justify-center relative group overflow-hidden bento-item">
+                    <div class="absolute inset-0 stipple-bg opacity-5 group-hover:opacity-10 transition-opacity"></div>
+                    <h4 class="font-headline text-xl font-black mb-2">Open Source</h4>
+                    <p class="text-secondary text-sm">Auditable code, community driven, and forever free for the
+                        readers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer
+        class="w-full py-20 border-t-2 border-dashed border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 mt-20">
+        <div class="flex flex-col md:flex-row justify-between items-center px-12 max-w-7xl mx-auto gap-8">
+            <div class="flex flex-col items-center md:items-start gap-4">
+                <div class="flex items-center gap-2">
+                    <span
+                        class="text-xl font-black text-zinc-900 dark:text-white tracking-tighter font-headline">tltr;</span>
+                </div>
+                <p
+                    class="font-inter text-sm leading-relaxed text-zinc-500 dark:text-zinc-400 text-center md:text-left max-w-xs">
+                    © 2024 tltr;. Hand-crafted for readers. Audiobooks for everyone.
+                </p>
+            </div>
+            <div class="flex gap-12">
+                <div class="flex flex-col gap-3">
+                    <span
+                        class="font-headline font-bold text-on-surface text-sm uppercase tracking-widest opacity-40">Downloads</span>
+                    <a class="text-zinc-500 dark:text-zinc-400 font-medium hover:underline decoration-yellow-400 underline-offset-4 transition-all"
+                        href="#">Windows (x64)</a>
+                    <a class="text-zinc-500 dark:text-zinc-400 font-medium hover:underline decoration-yellow-400 underline-offset-4 transition-all"
+                        href="#">macOS (Apple Silicon)</a>
+                    <a class="text-zinc-500 dark:text-zinc-400 font-medium hover:underline decoration-yellow-400 underline-offset-4 transition-all"
+                        href="#">Linux (AppImage)</a>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <span
+                        class="font-headline font-bold text-on-surface text-sm uppercase tracking-widest opacity-40">Connect</span>
+                    <a class="text-zinc-500 dark:text-zinc-400 font-medium hover:underline decoration-yellow-400 underline-offset-4 transition-all"
+                        href="#">GitHub</a>
+                    <a class="text-zinc-500 dark:text-zinc-400 font-medium hover:underline decoration-yellow-400 underline-offset-4 transition-all"
+                        href="#">Twitter</a>
+                    <a class="text-zinc-500 dark:text-zinc-400 font-medium hover:underline decoration-yellow-400 underline-offset-4 transition-all"
+                        href="#">Discord</a>
+                </div>
+            </div>
+            <div class="flex flex-col items-center md:items-end gap-4">
+                <div class="flex gap-4">
+                    <a class="text-zinc-400 hover:text-primary transition-colors" href="#">
+                        <span class="material-symbols-outlined">code</span>
+                    </a>
+                    <a class="text-zinc-400 hover:text-primary transition-colors" href="#">
+                        <span class="material-symbols-outlined">description</span>
+                    </a>
+                    <a class="text-zinc-400 hover:text-primary transition-colors" href="#">
+                        <span class="material-symbols-outlined">security</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

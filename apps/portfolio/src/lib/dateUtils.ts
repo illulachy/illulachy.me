@@ -1,5 +1,7 @@
 import type { ContentNode } from '../types/content'
 
+export const TIMELINE_START = new Date('2017-01-01T00:00:00Z')
+
 export interface DateRange {
   oldest: Date
   newest: Date
@@ -30,8 +32,8 @@ export function getDateRange(nodes: ContentNode[]): DateRange {
  * Older dates map to more negative X values (further left from hub at x=0).
  * Uses variable density: 2px per day (can be adjusted based on testing).
  * 
- * The hub at x=0 represents the "present". All timeline nodes extend
- * left (negative X), with newest nodes closest to hub but still negative.
+ * The timeline starts from TIMELINE_START (Jan 2017). The hub at x=0
+ * represents the "present". All timeline nodes extend left (negative X).
  * 
  * @param nodes - Timeline content nodes
  * @returns Function that maps date string to X coordinate
@@ -47,4 +49,24 @@ export function createDateToXMapper(nodes: ContentNode[]): (date: string) => num
     const daysBeforeNewest = (newestTimestamp - timestamp) / (1000 * 60 * 60 * 24)
     return -(daysBeforeNewest * PX_PER_DAY + MIN_OFFSET)
   }
+}
+
+/**
+ * Get X positions for each year marker on the timeline
+ * 
+ * @param nodes - Timeline content nodes
+ * @returns Array of { year, x } for rendering year labels
+ */
+export function getYearPositions(nodes: ContentNode[]): { year: number; x: number }[] {
+  const range = getDateRange(nodes)
+  const startYear = TIMELINE_START.getUTCFullYear()
+  const endYear = range.newest.getUTCFullYear()
+  const dateToX = createDateToXMapper(nodes)
+  
+  const positions: { year: number; x: number }[] = []
+  for (let year = startYear; year <= endYear; year++) {
+    const jan1 = new Date(Date.UTC(year, 0, 1))
+    positions.push({ year, x: dateToX(jan1.toISOString()) })
+  }
+  return positions
 }
