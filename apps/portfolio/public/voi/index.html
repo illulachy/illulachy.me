@@ -1,0 +1,1747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Voi | Visualize Your Vocabulary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --lavender:       #e8e4ff;
+            --lavender-mid:   #d4cfff;
+            --lavender-deep:  #b8b0ff;
+            --navy:           #16172b;
+            --navy-card:      #1e2038;
+            --orange:         #ff8c42;
+            --orange-light:   #ffb28a;
+            --orange-pale:    #fff0e6;
+            --purple:         #7b6ef6;
+            --purple-light:   #a19ff9;
+            --purple-pale:    #f0eeff;
+            --green:          #7ec44c;
+            --green-pale:     #eeffd6;
+            --white:          #ffffff;
+            --text-dark:      #1a1b2e;
+            --text-mid:       #5b5b72;
+            --text-light:     #9898b0;
+            --card-shadow:    0 4px 24px rgba(100, 90, 200, 0.10);
+            --card-shadow-lg: 0 8px 40px rgba(100, 90, 200, 0.16);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--lavender);
+            color: var(--text-dark);
+            font-family: 'DM Sans', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* ─── NOISE TEXTURE OVERLAY ─── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ─── NAV ─── */
+        nav {
+            background: var(--navy);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 0 2rem;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .nav-logo {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            font-size: 1.6rem;
+            color: white;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-logo .dot {
+            width: 10px;
+            height: 10px;
+            background: var(--orange);
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.4); opacity: 0.7; }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: white; }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn-ghost {
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.7);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            transition: color 0.2s, background 0.2s;
+        }
+
+        .btn-ghost:hover { color: white; background: rgba(255,255,255,0.08); }
+
+        .btn-orange {
+            background: var(--orange);
+            color: white;
+            border: none;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: 0.55rem 1.4rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 4px 14px rgba(255, 140, 66, 0.4);
+        }
+
+        .btn-orange:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(255, 140, 66, 0.5);
+        }
+
+        /* ─── PAGE LAYOUT ─── */
+        main {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ─── HERO ─── */
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 2rem 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--orange-pale);
+            color: var(--orange);
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800;
+            font-size: 0.78rem;
+            letter-spacing: 0.06em;
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            margin-bottom: 1.4rem;
+            border: 1.5px solid var(--orange-light);
+        }
+
+        .hero-badge .badge-icon { font-size: 1rem; }
+
+        h1 {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            font-size: clamp(2.6rem, 5vw, 3.8rem);
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            color: var(--text-dark);
+            margin-bottom: 1.2rem;
+        }
+
+        h1 em {
+            font-style: italic;
+            color: var(--purple);
+        }
+
+        .hero-sub {
+            font-size: 1.1rem;
+            color: var(--text-mid);
+            line-height: 1.7;
+            max-width: 460px;
+            margin-bottom: 2.4rem;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--navy);
+            color: white;
+            border: none;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800;
+            font-size: 1rem;
+            padding: 0.85rem 2rem;
+            border-radius: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 6px 20px rgba(22, 23, 43, 0.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(22, 23, 43, 0.35);
+        }
+
+        .btn-primary .arrow {
+            width: 28px;
+            height: 28px;
+            background: var(--orange);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--text-dark);
+            border: 2px solid var(--lavender-mid);
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 0.85rem 1.8rem;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: border-color 0.2s, transform 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--purple-light);
+            transform: translateY(-2px);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .stat-num {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            font-size: 1.6rem;
+            color: var(--text-dark);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .stat-divider {
+            width: 1px;
+            background: var(--lavender-mid);
+            align-self: stretch;
+        }
+
+        /* ─── HERO DASHBOARD MOCK ─── */
+        .hero-visual {
+            position: relative;
+        }
+
+        .dashboard-mock {
+            background: var(--navy-card);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 24px 60px rgba(22, 23, 43, 0.4);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .dash-topbar {
+            background: var(--navy);
+            padding: 0.9rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .dash-topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dash-logo {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .dash-nav-pills {
+            display: flex;
+            gap: 0.3rem;
+        }
+
+        .dash-pill {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.5);
+            cursor: pointer;
+        }
+
+        .dash-pill.active {
+            background: rgba(255,255,255,0.12);
+            color: white;
+        }
+
+        .dash-user {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dash-avatar {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, var(--orange), var(--purple));
+            border-radius: 50%;
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dash-user-info { text-align: right; }
+
+        .dash-user-name {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .dash-user-sub {
+            font-size: 0.62rem;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .dash-body {
+            padding: 1rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: auto auto auto;
+            gap: 0.75rem;
+        }
+
+        /* Dashboard cards */
+        .dash-card {
+            border-radius: 16px;
+            padding: 1rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .dash-card-purple {
+            background: linear-gradient(135deg, var(--purple) 0%, #5448e8 100%);
+            color: white;
+            grid-column: span 1;
+        }
+
+        .dash-card-orange {
+            background: var(--navy);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .dash-card-white {
+            background: rgba(255,255,255,0.06);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .dash-card-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            opacity: 0.7;
+            margin-bottom: 0.4rem;
+        }
+
+        .dash-card-value {
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .dash-card-sub {
+            font-size: 0.65rem;
+            opacity: 0.6;
+            margin-top: 0.3rem;
+        }
+
+        .dash-progress-section {
+            grid-column: span 2;
+            background: rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 1rem;
+            border: 1px solid rgba(255,255,255,0.08);
+            color: white;
+        }
+
+        .dash-progress-title {
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dash-filter-pill {
+            background: var(--orange);
+            color: white;
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+        }
+
+        .dash-bars {
+            display: flex;
+            gap: 0.35rem;
+            align-items: flex-end;
+            height: 60px;
+        }
+
+        .dash-bar {
+            flex: 1;
+            background: rgba(255,255,255,0.12);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dash-bar-fill {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--orange);
+            border-radius: 4px 4px 0 0;
+            transition: height 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .dash-bar.active .dash-bar-fill { background: var(--purple-light); }
+
+        .dash-bar-labels {
+            display: flex;
+            gap: 0.35rem;
+            margin-top: 0.4rem;
+        }
+
+        .dash-bar-label {
+            flex: 1;
+            text-align: center;
+            font-size: 0.55rem;
+            opacity: 0.4;
+        }
+
+        .dash-word-card {
+            background: rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 1rem;
+            border: 1px solid rgba(255,255,255,0.08);
+            color: white;
+        }
+
+        .dash-word-big {
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 900;
+            font-style: italic;
+            margin-bottom: 0.3rem;
+        }
+
+        .dash-word-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            margin-top: 0.6rem;
+        }
+
+        .dash-tag {
+            background: rgba(255,255,255,0.1);
+            border-radius: 6px;
+            padding: 0.15rem 0.5rem;
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .dash-tag.accent { background: rgba(255, 178, 138, 0.2); color: var(--orange-light); }
+
+        .dash-streak {
+            grid-column: span 3;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 14px;
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .dash-streak-left {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .streak-icon {
+            font-size: 1.4rem;
+        }
+
+        .streak-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .streak-sub {
+            font-size: 0.6rem;
+            opacity: 0.5;
+        }
+
+        .dash-days {
+            display: flex;
+            gap: 0.3rem;
+        }
+
+        .day-dot {
+            width: 26px;
+            height: 26px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.58rem;
+            font-weight: 700;
+            background: rgba(255,255,255,0.06);
+            color: rgba(255,255,255,0.4);
+        }
+
+        .day-dot.done {
+            background: var(--orange);
+            color: white;
+        }
+
+        .day-dot.today {
+            background: var(--purple);
+            color: white;
+            box-shadow: 0 0 10px rgba(123, 110, 246, 0.5);
+        }
+
+        /* Float animation for dashboard */
+        .hero-visual .dashboard-mock {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(-1deg); }
+            50% { transform: translateY(-12px) rotate(0.5deg); }
+        }
+
+        /* Floating accent blobs */
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .blob-orange {
+            width: 200px;
+            height: 200px;
+            background: var(--orange-light);
+            top: -40px;
+            right: -40px;
+        }
+
+        .blob-purple {
+            width: 160px;
+            height: 160px;
+            background: var(--purple-light);
+            bottom: -20px;
+            left: -30px;
+        }
+
+        /* ─── SECTION WRAPPER ─── */
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--purple);
+            background: var(--purple-pale);
+            padding: 0.35rem 1rem;
+            border-radius: 100px;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            font-size: clamp(2rem, 3.5vw, 2.8rem);
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            color: var(--text-dark);
+        }
+
+        .section-sub {
+            margin-top: 0.8rem;
+            font-size: 1.05rem;
+            color: var(--text-mid);
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+
+        /* ─── BENTO LOOP GRID ─── */
+        .loop-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.2rem;
+        }
+
+        .loop-card {
+            background: white;
+            border-radius: 22px;
+            padding: 1.8rem;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loop-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--card-shadow-lg);
+        }
+
+        .loop-card::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+        }
+
+        .loop-card:nth-child(1)::before { background: var(--purple); }
+        .loop-card:nth-child(2)::before { background: var(--orange); }
+        .loop-card:nth-child(3)::before { background: var(--green); }
+        .loop-card:nth-child(4)::before { background: var(--purple-light); }
+
+        .loop-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .loop-icon-purple { background: var(--purple-pale); }
+        .loop-icon-orange { background: var(--orange-pale); }
+        .loop-icon-green { background: var(--green-pale); }
+        .loop-icon-lavender { background: var(--lavender); }
+
+        .loop-step {
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .loop-title {
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--text-dark);
+            margin-bottom: 0.6rem;
+        }
+
+        .loop-desc {
+            font-size: 0.88rem;
+            color: var(--text-mid);
+            line-height: 1.6;
+        }
+
+        /* ─── BENTO FEATURE SECTION ─── */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-rows: auto auto;
+            gap: 1.2rem;
+        }
+
+        .bento-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .bento-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--card-shadow-lg);
+        }
+
+        .bento-large { grid-column: span 7; }
+        .bento-small { grid-column: span 5; }
+        .bento-wide  { grid-column: span 12; }
+        .bento-third { grid-column: span 4; }
+
+        .bento-inner {
+            padding: 2rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .bento-inner-row {
+            padding: 1.8rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .bento-tag {
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 0.3rem 0.8rem;
+            border-radius: 100px;
+            margin-bottom: 0.8rem;
+            display: inline-block;
+        }
+
+        .bento-tag-purple { background: var(--purple-pale); color: var(--purple); }
+        .bento-tag-orange { background: var(--orange-pale); color: var(--orange); }
+        .bento-tag-green  { background: var(--green-pale);  color: var(--green); }
+        .bento-tag-navy   { background: rgba(22,23,43,0.08); color: var(--navy); }
+
+        .bento-title {
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--text-dark);
+            line-height: 1.2;
+            margin-bottom: 0.6rem;
+        }
+
+        .bento-desc {
+            font-size: 0.9rem;
+            color: var(--text-mid);
+            line-height: 1.65;
+        }
+
+        /* Knowledge graph viz */
+        .graph-viz {
+            background: var(--lavender);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            position: relative;
+            height: 140px;
+            overflow: hidden;
+        }
+
+        .graph-node {
+            position: absolute;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .node-center {
+            width: 54px;
+            height: 54px;
+            background: var(--purple);
+            color: white;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 0 8px rgba(123,110,246,0.15);
+            font-size: 0.55rem;
+        }
+
+        .node-sm {
+            width: 38px;
+            height: 38px;
+            font-size: 0.5rem;
+        }
+
+        .node-green  { background: var(--green);  color: white; }
+        .node-orange { background: var(--orange); color: white; }
+        .node-navy   { background: var(--navy);   color: white; }
+        .node-lavender { background: var(--purple-light); color: white; }
+
+        svg.graph-lines {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Style picker */
+        .style-picker {
+            display: flex;
+            gap: 0.6rem;
+            margin-top: 1.5rem;
+        }
+
+        .style-swatch {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 3px solid transparent;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .style-swatch:hover { transform: scale(1.1); }
+        .style-swatch.active { border-color: var(--navy); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        .style-swatch-blue   { background: #dbeafe; }
+        .style-swatch-orange { background: var(--orange-pale); }
+        .style-swatch-green  { background: var(--green-pale); }
+        .style-swatch-purple { background: var(--purple-pale); }
+
+        /* SRS bars */
+        .srs-bars { margin-top: 1.5rem; }
+
+        .srs-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .srs-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-mid);
+            min-width: 60px;
+        }
+
+        .srs-track {
+            flex: 1;
+            height: 10px;
+            background: var(--lavender-mid);
+            border-radius: 100px;
+            overflow: hidden;
+        }
+
+        .srs-fill {
+            height: 100%;
+            border-radius: 100px;
+            transition: width 2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .srs-pct {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            min-width: 32px;
+            text-align: right;
+        }
+
+        /* Camera bento */
+        .camera-scene {
+            position: relative;
+            background: var(--navy);
+            border-radius: 18px;
+            height: 160px;
+            overflow: hidden;
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .camera-viewfinder {
+            width: 90px;
+            height: 90px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 12px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .camera-viewfinder::before,
+        .camera-viewfinder::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            border-color: var(--orange);
+            border-style: solid;
+        }
+
+        .camera-viewfinder::before {
+            top: -2px; left: -2px;
+            border-width: 3px 0 0 3px;
+            border-radius: 6px 0 0 0;
+        }
+
+        .camera-viewfinder::after {
+            bottom: -2px; right: -2px;
+            border-width: 0 3px 3px 0;
+            border-radius: 0 0 6px 0;
+        }
+
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--orange), transparent);
+            animation: scan 2s ease-in-out infinite;
+        }
+
+        @keyframes scan {
+            0%   { top: 10%; opacity: 1; }
+            100% { top: 90%; opacity: 0.3; }
+        }
+
+        .camera-detected {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.4rem;
+        }
+
+        .detect-chip {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: white;
+            border-radius: 20px;
+            padding: 0.2rem 0.7rem;
+            font-size: 0.6rem;
+            font-weight: 700;
+            backdrop-filter: blur(8px);
+        }
+
+        .detect-chip.orange { background: rgba(255,140,66,0.3); border-color: rgba(255,140,66,0.4); color: var(--orange-light); }
+
+        /* ─── CTA SECTION ─── */
+        .cta-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 2rem 5rem;
+        }
+
+        .cta-card {
+            background: var(--navy);
+            border-radius: 28px;
+            padding: 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-card::before {
+            content: '';
+            position: absolute;
+            top: -80px;
+            right: -80px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(123,110,246,0.3), transparent 70%);
+            border-radius: 50%;
+        }
+
+        .cta-card::after {
+            content: '';
+            position: absolute;
+            bottom: -60px;
+            left: -60px;
+            width: 240px;
+            height: 240px;
+            background: radial-gradient(circle, rgba(255,140,66,0.25), transparent 70%);
+            border-radius: 50%;
+        }
+
+        .cta-inner { position: relative; z-index: 1; }
+
+        .cta-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.7);
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 0.35rem 1rem;
+            border-radius: 100px;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+
+        .cta-title {
+            font-family: 'Nunito', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 900;
+            color: white;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 1rem;
+        }
+
+        .cta-title span { color: var(--orange); }
+
+        .cta-sub {
+            font-size: 1.05rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 2.5rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-cta-primary {
+            background: var(--orange);
+            color: white;
+            border: none;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800;
+            font-size: 1.05rem;
+            padding: 1rem 2.4rem;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 8px 24px rgba(255, 140, 66, 0.45);
+        }
+
+        .btn-cta-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(255, 140, 66, 0.55);
+        }
+
+        .btn-cta-secondary {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.18);
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-size: 1.05rem;
+            padding: 1rem 2.4rem;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+            backdrop-filter: blur(8px);
+        }
+
+        .btn-cta-secondary:hover {
+            background: rgba(255,255,255,0.16);
+            transform: translateY(-2px);
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            background: var(--navy);
+            padding: 3.5rem 2rem 2rem;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            padding-bottom: 2.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .footer-logo {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .footer-desc {
+            font-size: 0.88rem;
+            color: rgba(255,255,255,0.45);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            max-width: 260px;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 0.6rem;
+        }
+
+        .social-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+        }
+
+        .social-btn:hover { background: rgba(255,255,255,0.13); color: white; }
+
+        .footer-col-title {
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255,255,255,0.35);
+            margin-bottom: 1.2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.55);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: white; }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-copy {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.3);
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-bottom-links a {
+            color: rgba(255,255,255,0.3);
+            text-decoration: none;
+            font-size: 0.82rem;
+            transition: color 0.2s;
+        }
+
+        .footer-bottom-links a:hover { color: rgba(255,255,255,0.6); }
+
+        /* ─── ANIMATIONS ─── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-up {
+            opacity: 0;
+            animation: fadeUp 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+        .delay-6 { animation-delay: 0.6s; }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 3rem 1.5rem;
+            }
+
+            .hero-visual { order: -1; }
+
+            .loop-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .bento-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .bento-large, .bento-small, .bento-third { grid-column: span 1; }
+
+            .footer-top {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .nav-links { display: none; }
+        }
+
+        @media (max-width: 580px) {
+            .loop-grid { grid-template-columns: 1fr; }
+            .hero-stats { gap: 1.5rem; }
+            .cta-card { padding: 2.5rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAV -->
+    <nav>
+        <div class="nav-logo">
+            Voi<span class="dot"></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#">How it Works</a></li>
+            <li><a href="#">Features</a></li>
+            <li><a href="#">Pricing</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button class="btn-ghost">Log In</button>
+            <button class="btn-orange">Get Started</button>
+        </div>
+    </nav>
+
+    <main>
+        <!-- HERO -->
+        <section class="hero">
+            <div>
+                <div class="hero-badge fade-up">
+                    <span class="badge-icon">✨</span>
+                    NEW: AI VISION 2.0
+                </div>
+                <h1 class="fade-up delay-1">
+                    Visualize Words.<br><em>Own Any Language.</em>
+                </h1>
+                <p class="hero-sub fade-up delay-2">
+                    Point your camera, capture the world around you, and watch your vocabulary grow into a living knowledge graph.
+                </p>
+                <div class="hero-ctas fade-up delay-3">
+                    <button class="btn-primary">
+                        Start Learning
+                        <span class="arrow">→</span>
+                    </button>
+                    <button class="btn-secondary">
+                        ▶ Watch Demo
+                    </button>
+                </div>
+                <div class="hero-stats fade-up delay-4">
+                    <div class="stat">
+                        <span class="stat-num">500k+</span>
+                        <span class="stat-label">Active learners</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat">
+                        <span class="stat-num">3×</span>
+                        <span class="stat-label">Faster retention</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat">
+                        <span class="stat-num">40+</span>
+                        <span class="stat-label">Languages</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DASHBOARD MOCK -->
+            <div class="hero-visual fade-up delay-3">
+                <div class="blob blob-orange"></div>
+                <div class="blob blob-purple"></div>
+                <div class="dashboard-mock">
+                    <!-- Topbar -->
+                    <div class="dash-topbar">
+                        <div class="dash-topbar-left">
+                            <span class="dash-logo">Voi</span>
+                            <div class="dash-nav-pills">
+                                <span class="dash-pill active">Dashboard</span>
+                                <span class="dash-pill">Words</span>
+                                <span class="dash-pill">Graph</span>
+                            </div>
+                        </div>
+                        <div class="dash-user">
+                            <div class="dash-user-info">
+                                <div class="dash-user-name">Hello, Thuy 👋</div>
+                                <div class="dash-user-sub">Progress: 68%</div>
+                            </div>
+                            <div class="dash-avatar">TH</div>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="dash-body">
+                        <!-- Stats cards -->
+                        <div class="dash-card dash-card-purple">
+                            <div class="dash-card-label">Words Captured</div>
+                            <div class="dash-card-value">248</div>
+                            <div class="dash-card-sub">This month</div>
+                        </div>
+                        <div class="dash-card dash-card-orange">
+                            <div class="dash-card-label">Study Hours</div>
+                            <div class="dash-card-value" style="color:var(--orange)">12</div>
+                            <div class="dash-card-sub" style="opacity:.5">Weekly avg</div>
+                        </div>
+                        <div class="dash-card dash-card-white">
+                            <div class="dash-card-label">Accuracy</div>
+                            <div class="dash-card-value" style="color:var(--green)">92%</div>
+                            <div class="dash-card-sub" style="opacity:.5">Recall rate</div>
+                        </div>
+                        <!-- Progress chart -->
+                        <div class="dash-progress-section">
+                            <div class="dash-progress-title">
+                                Progress
+                                <span class="dash-filter-pill">Weekly</span>
+                            </div>
+                            <div class="dash-bars" id="dashBars">
+                                <div class="dash-bar" style="height:100%"><div class="dash-bar-fill" style="height:0%" data-h="45%"></div></div>
+                                <div class="dash-bar" style="height:100%"><div class="dash-bar-fill" style="height:0%" data-h="70%"></div></div>
+                                <div class="dash-bar active" style="height:100%"><div class="dash-bar-fill" style="height:0%" data-h="60%"></div></div>
+                                <div class="dash-bar" style="height:100%"><div class="dash-bar-fill" style="height:0%" data-h="85%"></div></div>
+                                <div class="dash-bar active" style="height:100%"><div class="dash-bar-fill" style="height:0%" data-h="90%"></div></div>
+                                <div class="dash-bar" style="height:100%"><div class="dash-bar-fill" style="height:0%" data-h="55%"></div></div>
+                                <div class="dash-bar" style="height:100%"><div class="dash-bar-fill" style="height:0%" data-h="75%"></div></div>
+                            </div>
+                            <div class="dash-bar-labels">
+                                <span class="dash-bar-label">M</span>
+                                <span class="dash-bar-label">T</span>
+                                <span class="dash-bar-label">W</span>
+                                <span class="dash-bar-label">T</span>
+                                <span class="dash-bar-label">F</span>
+                                <span class="dash-bar-label">S</span>
+                                <span class="dash-bar-label">S</span>
+                            </div>
+                        </div>
+                        <!-- Current word -->
+                        <div class="dash-word-card">
+                            <div class="dash-card-label">Today's Focus</div>
+                            <div class="dash-word-big">Naturaleza</div>
+                            <div style="font-size:0.65rem;opacity:0.5">Nature · Spanish</div>
+                            <div class="dash-word-tags">
+                                <span class="dash-tag accent">BOSQUE</span>
+                                <span class="dash-tag">RÍO</span>
+                                <span class="dash-tag">MONTAÑA</span>
+                            </div>
+                        </div>
+                        <!-- Streak row -->
+                        <div class="dash-streak">
+                            <div class="dash-streak-left">
+                                <span class="streak-icon">🔥</span>
+                                <div>
+                                    <div class="streak-label">14-day streak!</div>
+                                    <div class="streak-sub">Keep going</div>
+                                </div>
+                            </div>
+                            <div class="dash-days">
+                                <div class="day-dot done">M</div>
+                                <div class="day-dot done">T</div>
+                                <div class="day-dot done">W</div>
+                                <div class="day-dot done">T</div>
+                                <div class="day-dot today">F</div>
+                                <div class="day-dot">S</div>
+                                <div class="day-dot">S</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- THE VOI LOOP -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-label">How It Works</span>
+                <h2>The Voi Loop</h2>
+                <p class="section-sub">Four simple steps to absolute fluency through visualization and AI.</p>
+            </div>
+            <div class="loop-grid">
+                <div class="loop-card fade-up">
+                    <div class="loop-icon loop-icon-purple">📷</div>
+                    <div class="loop-step">Step 01</div>
+                    <div class="loop-title">Capture</div>
+                    <p class="loop-desc">Point your camera at anything. Computer vision turns real-world objects into instant digital flashcards.</p>
+                </div>
+                <div class="loop-card fade-up delay-1">
+                    <div class="loop-icon loop-icon-orange">🎨</div>
+                    <div class="loop-step">Step 02</div>
+                    <div class="loop-title">Transform</div>
+                    <p class="loop-desc">AI reimagines each image in Pixar, Comic, or Watercolor style — making memories that actually stick.</p>
+                </div>
+                <div class="loop-card fade-up delay-2">
+                    <div class="loop-icon loop-icon-green">🧠</div>
+                    <div class="loop-step">Step 03</div>
+                    <div class="loop-title">Brain</div>
+                    <p class="loop-desc">7-Layer Study Framework. A neuroscientific path from definition to active recall to long-term mastery.</p>
+                </div>
+                <div class="loop-card fade-up delay-3">
+                    <div class="loop-icon loop-icon-lavender">🕸️</div>
+                    <div class="loop-step">Step 04</div>
+                    <div class="loop-title">Expand</div>
+                    <p class="loop-desc">Watch your words connect into a dynamic knowledge graph — each new word strengthens the whole.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- BENTO FEATURES -->
+        <section class="section" style="padding-top: 2rem;">
+            <div class="section-header">
+                <span class="section-label">Features</span>
+                <h2>Everything in one app</h2>
+                <p class="section-sub">Visual learning tools built on the science of how memory actually works.</p>
+            </div>
+
+            <div class="bento-grid">
+                <!-- Knowledge Graph — large -->
+                <div class="bento-card bento-large fade-up">
+                    <div class="bento-inner">
+                        <div>
+                            <span class="bento-tag bento-tag-purple">Knowledge Graph</span>
+                            <h3 class="bento-title">Your Mind, Mapped.</h3>
+                            <p class="bento-desc">See how 'Forest' connects to 'Leaf', 'Green', and 'Ecosystem'. A living graph that grows every time you learn.</p>
+                        </div>
+                        <div class="graph-viz">
+                            <svg class="graph-lines" viewBox="0 0 400 140" preserveAspectRatio="none">
+                                <line x1="200" y1="70" x2="80"  y2="30"  stroke="#b8b0ff" stroke-width="1.5" opacity="0.5"/>
+                                <line x1="200" y1="70" x2="320" y2="30"  stroke="#b8b0ff" stroke-width="1.5" opacity="0.5"/>
+                                <line x1="200" y1="70" x2="320" y2="110" stroke="#b8b0ff" stroke-width="1.5" opacity="0.5"/>
+                                <line x1="200" y1="70" x2="80"  y2="110" stroke="#b8b0ff" stroke-width="1.5" opacity="0.5"/>
+                                <line x1="80"  y1="30"  x2="40"  y2="70" stroke="#b8b0ff" stroke-width="1" opacity="0.3"/>
+                                <line x1="320" y1="30"  x2="360" y2="70" stroke="#b8b0ff" stroke-width="1" opacity="0.3"/>
+                            </svg>
+                            <div class="graph-node node-center">Forest</div>
+                            <div class="graph-node node-sm node-orange"  style="top:12%; left:14%">Leaf</div>
+                            <div class="graph-node node-sm node-green"   style="top:12%; right:14%">Green</div>
+                            <div class="graph-node node-sm node-navy"    style="bottom:12%; right:14%">Eco</div>
+                            <div class="graph-node node-sm node-lavender" style="bottom:12%; left:14%">Tree</div>
+                            <div class="graph-node node-sm node-orange"  style="top:35%; left:3%; width:32px; height:32px; font-size:.45rem">Air</div>
+                            <div class="graph-node node-sm node-green"   style="top:35%; right:3%; width:32px; height:32px; font-size:.45rem">Sun</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Style Customization — small -->
+                <div class="bento-card bento-small fade-up delay-1">
+                    <div class="bento-inner">
+                        <div>
+                            <span class="bento-tag bento-tag-orange">Style Engine</span>
+                            <h3 class="bento-title">Art Style Customization</h3>
+                            <p class="bento-desc">Personalize your learning aesthetic. Pick a visual style that resonates with how your brain processes information.</p>
+                        </div>
+                        <div class="style-picker">
+                            <div class="style-swatch style-swatch-blue active" title="Watercolor">🎨</div>
+                            <div class="style-swatch style-swatch-orange" title="Pixar">✨</div>
+                            <div class="style-swatch style-swatch-green" title="Sketch">✏️</div>
+                            <div class="style-swatch style-swatch-purple" title="Comic">💥</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Camera Capture -->
+                <div class="bento-card bento-third fade-up">
+                    <div class="bento-inner">
+                        <div>
+                            <span class="bento-tag bento-tag-navy">Vision AI</span>
+                            <h3 class="bento-title">Scan & Learn</h3>
+                            <p class="bento-desc">84% context identified in under a second.</p>
+                        </div>
+                        <div class="camera-scene">
+                            <div class="camera-viewfinder">
+                                <div class="scan-line"></div>
+                                <span style="font-size:2rem">☕</span>
+                            </div>
+                            <div class="camera-detected">
+                                <span class="detect-chip orange">café</span>
+                                <span class="detect-chip">coffee shop</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SRS Science -->
+                <div class="bento-card bento-third fade-up delay-1">
+                    <div class="bento-inner">
+                        <div>
+                            <span class="bento-tag bento-tag-green">Science-Backed</span>
+                            <h3 class="bento-title">Spaced Repetition</h3>
+                            <p class="bento-desc">Neuro-linguistic algorithms surface words at the exact moment before you'd forget them.</p>
+                        </div>
+                        <div class="srs-bars">
+                            <div class="srs-row">
+                                <span class="srs-label">New</span>
+                                <div class="srs-track"><div class="srs-fill" style="width:0%;background:var(--purple)" data-w="72%"></div></div>
+                                <span class="srs-pct">72%</span>
+                            </div>
+                            <div class="srs-row">
+                                <span class="srs-label">Review</span>
+                                <div class="srs-track"><div class="srs-fill" style="width:0%;background:var(--orange)" data-w="58%"></div></div>
+                                <span class="srs-pct">58%</span>
+                            </div>
+                            <div class="srs-row">
+                                <span class="srs-label">Mastered</span>
+                                <div class="srs-track"><div class="srs-fill" style="width:0%;background:var(--green)" data-w="91%"></div></div>
+                                <span class="srs-pct">91%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress tracking -->
+                <div class="bento-card bento-third fade-up delay-2">
+                    <div class="bento-inner">
+                        <div>
+                            <span class="bento-tag bento-tag-purple">Progress</span>
+                            <h3 class="bento-title">Level Up Daily</h3>
+                            <p class="bento-desc">Watch your language level grow with every session. Clear milestones keep you motivated.</p>
+                        </div>
+                        <div style="margin-top:1.5rem">
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem">
+                                <span style="font-size:0.8rem;font-weight:700;color:var(--text-mid)">Spanish B1</span>
+                                <span style="font-family:'Nunito',sans-serif;font-weight:900;font-size:1.4rem;color:var(--text-dark)">68%</span>
+                            </div>
+                            <div style="height:12px;background:var(--lavender-mid);border-radius:100px;overflow:hidden">
+                                <div style="height:100%;width:0%;background:linear-gradient(90deg,var(--purple),var(--orange));border-radius:100px;transition:width 2s cubic-bezier(0.34,1.56,0.64,1)" class="level-bar" data-w="68%"></div>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;margin-top:0.5rem">
+                                <span style="font-size:0.72rem;color:var(--text-light)">B1</span>
+                                <span style="font-size:0.72rem;color:var(--text-light)">B2 →</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <div class="cta-section">
+            <div class="cta-card fade-up">
+                <div class="cta-inner">
+                    <span class="cta-badge">🚀 500,000+ learners worldwide</span>
+                    <h2 class="cta-title">Ready to see the world<br>in a <span>new language?</span></h2>
+                    <p class="cta-sub">Download Voi today and start your visual vocabulary journey — free.</p>
+                    <div class="cta-buttons">
+                        <button class="btn-cta-primary">Download Now — It's Free</button>
+                        <button class="btn-cta-secondary">Explore Pricing →</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div>
+                    <div class="footer-logo">Voi<span style="width:8px;height:8px;background:var(--orange);border-radius:50%;display:inline-block;margin-left:2px;margin-bottom:3px"></span></div>
+                    <p class="footer-desc">Visualizing the path to fluency through AI and human-centered design.</p>
+                    <div class="footer-socials">
+                        <a class="social-btn" href="#">𝕏</a>
+                        <a class="social-btn" href="#">in</a>
+                        <a class="social-btn" href="#">ig</a>
+                    </div>
+                </div>
+                <div>
+                    <div class="footer-col-title">Product</div>
+                    <ul class="footer-links">
+                        <li><a href="#">App Store</a></li>
+                        <li><a href="#">Google Play</a></li>
+                        <li><a href="#">Web Portal</a></li>
+                        <li><a href="#">Pricing Plans</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="footer-col-title">Resources</div>
+                    <ul class="footer-links">
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Privacy</a></li>
+                        <li><a href="#">Terms</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="footer-col-title">Newsletter</div>
+                    <p style="font-size:0.85rem;color:rgba(255,255,255,0.4);margin-bottom:1rem;line-height:1.5">Get weekly language tips in your inbox.</p>
+                    <div style="display:flex;gap:0.5rem">
+                        <input type="email" placeholder="your@email.com" style="flex:1;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:0.6rem 1rem;color:white;font-family:'DM Sans',sans-serif;font-size:0.85rem;outline:none" />
+                        <button style="background:var(--orange);color:white;border:none;border-radius:12px;padding:0.6rem 1rem;cursor:pointer;font-weight:700;font-size:0.85rem;transition:transform .15s" onmouseenter="this.style.transform='scale(1.05)'" onmouseleave="this.style.transform='scale(1)'">→</button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span class="footer-copy">© 2026 Voi AI. All rights reserved.</span>
+                <div class="footer-bottom-links">
+                    <a href="#">Instagram</a>
+                    <a href="#">Twitter</a>
+                    <a href="#">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Animate bars on load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelectorAll('.dash-bar-fill').forEach(el => {
+                    el.style.height = el.dataset.h;
+                });
+                document.querySelectorAll('.srs-fill').forEach(el => {
+                    el.style.width = el.dataset.w;
+                });
+                document.querySelectorAll('.level-bar').forEach(el => {
+                    el.style.width = el.dataset.w;
+                });
+            }, 600);
+        });
+
+        // Intersection Observer for fade-up
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-up').forEach(el => {
+            el.style.transition = 'opacity 0.7s cubic-bezier(0.34,1.56,0.64,1), transform 0.7s cubic-bezier(0.34,1.56,0.64,1)';
+            observer.observe(el);
+        });
+
+        // Style swatch toggle
+        document.querySelectorAll('.style-swatch').forEach(swatch => {
+            swatch.addEventListener('click', () => {
+                document.querySelectorAll('.style-swatch').forEach(s => s.classList.remove('active'));
+                swatch.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
