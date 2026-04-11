@@ -122,6 +122,7 @@
             transform: translateY(20px);
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"></script>
 </head>
 
 <body
@@ -150,19 +151,19 @@
     <header class="relative pt-32 pb-20 md:pt-48 md:pb-32 px-8 overflow-hidden">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
             <div class="relative z-10 hero-content">
-                <div class="inline-block px-4 py-1 bg-primary-container border-2 border-on-surface mb-6 rotate-[-2deg]">
+                <div class="inline-block px-4 py-1 bg-primary-container border-2 border-on-surface mb-6 rotate-[-2deg] motion-reveal">
                     <span class="font-label text-xs font-black tracking-widest uppercase">AUDIOBOOK MAGIC</span>
                 </div>
                 <h1
-                    class="font-headline text-5xl md:text-7xl font-extrabold text-on-surface leading-[1.1] mb-6 tracking-tight">
+                    class="font-headline text-5xl md:text-7xl font-extrabold text-on-surface leading-[1.1] mb-6 tracking-tight motion-reveal">
                     Too Lazy to Read? <br /><span class="relative">Try listen!<span
                             class="absolute bottom-1 left-0 w-full h-3 bg-primary-container/40 -z-10"></span></span>
                 </h1>
-                <p class="text-lg md:text-xl text-secondary max-w-lg mb-10 leading-relaxed">
+                <p class="text-lg md:text-xl text-secondary max-w-lg mb-10 leading-relaxed motion-reveal">
                     Turn any web novel into an audiobook instantly. Paste a URL, pick a voice, press play—then relax
                     while your story comes alive.
                 </p>
-                <div class="flex flex-wrap gap-6">
+                <div class="flex flex-wrap gap-6 motion-reveal">
                     <button
                         class="bg-primary-container text-on-surface px-8 py-4 rounded-full border-[3px] border-on-surface font-headline font-bold text-lg sketchy-btn-shadow transition-all flex items-center gap-2">
                         Download Free
@@ -178,11 +179,11 @@
                 </div>
                 <!-- Main Illustration -->
                 <div
-                    class="relative sketchy-border bg-white p-4 rotate-[1deg] hover:rotate-0 transition-transform duration-500 shadow-xl overflow-hidden hero-image">
+                    class="relative sketchy-border bg-white p-4 rotate-[1deg] hover:rotate-0 transition-transform duration-500 shadow-xl overflow-hidden hero-image motion-reveal">
                     <img alt="Abstract Book and Soundwave"
                         class="w-full aspect-[4/3] object-cover rounded-xl grayscale contrast-125 brightness-110"
                         data-alt="A minimalist sketchy illustration showing an open antique book with soundwaves emerging from its pages like a golden portal, stipple textures, hand-drawn marigold accents"
-                        src="./hero.png" />
+                        src="/tltr/hero.png" />
                     <!-- <img alt="Abstract Book and Soundwave"
                         class="w-full aspect-[4/3] object-cover rounded-xl grayscale contrast-125 brightness-110"
                         data-alt="A minimalist sketchy illustration showing an open antique book with soundwaves emerging from its pages like a golden portal, stipple textures, hand-drawn marigold accents"
@@ -207,7 +208,7 @@
     <!-- Features Section -->
     <section class="py-32 px-8 bg-surface-container-low relative">
         <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8 motion-reveal">
                 <div>
                     <h2 class="font-headline text-4xl md:text-5xl font-black text-on-surface mb-4">Reading? Overrated.
                     </h2>
@@ -224,7 +225,7 @@
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
                 <!-- Feature 1 -->
-                <div class="group feature-card">
+                <div class="group feature-card motion-reveal">
                     <div class="relative w-20 h-20 mb-8">
                         <div
                             class="absolute inset-0 bg-primary-container rounded-full group-hover:scale-110 transition-transform duration-300">
@@ -241,7 +242,7 @@
                     </p>
                 </div>
                 <!-- Feature 2 -->
-                <div class="group feature-card">
+                <div class="group feature-card motion-reveal">
                     <div class="relative w-20 h-20 mb-8">
                         <div
                             class="absolute inset-0 bg-primary-container rounded-full group-hover:scale-110 transition-transform duration-300">
@@ -258,7 +259,7 @@
                     </p>
                 </div>
                 <!-- Feature 3 -->
-                <div class="group feature-card">
+                <div class="group feature-card motion-reveal">
                     <div class="relative w-20 h-20 mb-8">
                         <div
                             class="absolute inset-0 bg-primary-container rounded-full group-hover:scale-110 transition-transform duration-300">
@@ -282,7 +283,7 @@
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-8 h-auto md:h-[600px]">
                 <div
-                    class="md:col-span-2 md:row-span-2 sketchy-border bg-white p-10 flex flex-col justify-between group overflow-hidden relative bento-item">
+                    class="md:col-span-2 md:row-span-2 sketchy-border bg-white p-10 flex flex-col justify-between group overflow-hidden relative bento-item motion-reveal">
                     <div
                         class="absolute top-0 right-0 w-32 h-32 stipple-bg opacity-10 -translate-y-8 translate-x-8 rounded-full">
                     </div>
@@ -309,7 +310,7 @@
                     </div>
                 </div>
                 <div
-                    class="md:col-span-2 bg-primary-container sketchy-border p-10 flex items-center justify-between overflow-hidden relative bento-item">
+                    class="md:col-span-2 bg-primary-container sketchy-border p-10 flex items-center justify-between overflow-hidden relative bento-item motion-reveal">
                     <div class="relative z-10">
                         <h4 class="font-headline text-3xl font-black mb-2">Listen in the car</h4>
                         <p class="text-on-primary-container font-medium">Seamless CarPlay &amp; Android Auto support.
@@ -319,14 +320,14 @@
                         class="material-symbols-outlined text-8xl opacity-20 absolute -right-4 -bottom-4 rotate-12">directions_car</span>
                 </div>
                 <div
-                    class="bg-on-surface p-10 rounded-3xl flex flex-col justify-center items-center text-center group transition-all duration-300 bento-item">
+                    class="bg-on-surface p-10 rounded-3xl flex flex-col justify-center items-center text-center group transition-all duration-300 bento-item motion-reveal">
                     <span
                         class="material-symbols-outlined text-primary-container text-5xl mb-4 group-hover:scale-110 transition-transform">star</span>
                     <p class="text-surface font-headline font-bold text-2xl leading-none">4.9/5</p>
                     <p class="text-surface/50 text-xs mt-2 uppercase tracking-widest">User Rating</p>
                 </div>
                 <div
-                    class="bg-surface-container sketchy-border border-dashed p-10 flex flex-col justify-center relative group overflow-hidden bento-item">
+                    class="bg-surface-container sketchy-border border-dashed p-10 flex flex-col justify-center relative group overflow-hidden bento-item motion-reveal">
                     <div class="absolute inset-0 stipple-bg opacity-5 group-hover:opacity-10 transition-opacity"></div>
                     <h4 class="font-headline text-xl font-black mb-2">Open Source</h4>
                     <p class="text-secondary text-sm">Auditable code, community driven, and forever free for the
@@ -386,6 +387,38 @@
             </div>
         </div>
     </footer>
+    <script>
+        const { animate, inView, stagger } = Motion;
+
+        // Fade in hero elements on load
+        animate(
+            "header .motion-reveal",
+            { opacity: 1, y: 0 },
+            { 
+                duration: 0.8, 
+                delay: stagger(0.15),
+                easing: [0.17, 0.55, 0.55, 1]
+            }
+        );
+
+        // Reveal logic for sections using inView
+        document.querySelectorAll("section").forEach(section => {
+            inView(section, ({ target }) => {
+                const elements = target.querySelectorAll(".motion-reveal");
+                if (elements.length > 0) {
+                    animate(
+                        elements,
+                        { opacity: 1, y: 0 },
+                        { 
+                            duration: 0.8, 
+                            delay: stagger(0.15),
+                            easing: [0.17, 0.55, 0.55, 1]
+                        }
+                    );
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

@@ -35,7 +35,7 @@ export function MilestoneModal({ node, open, onOpenChange }: MilestoneModalProps
 
         <DialogHeader>
           {/* Achievement icon */}
-          <div className="text-5xl mb-4">🏆</div>
+          <div className="text-5xl mb-4">{node.icon || '🏆'}</div>
           
           <DialogTitle className="font-heading text-2xl text-primary pr-8 mb-2">
             {node.title}
