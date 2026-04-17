@@ -55,17 +55,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href
             )}
           </div>
         </header>
-        <div class="prose max-w-none
-          prose-headings:font-heading prose-headings:text-text-primary prose-headings:tracking-tight
-          prose-p:text-text-secondary prose-p:leading-normal
-          prose-a:text-interactive-default prose-a:no-underline hover:prose-a:text-interactive-hover
-          prose-strong:text-text-primary
-          prose-code:text-text-primary
-          prose-pre:bg-surface-container-low prose-pre:rounded-md
-          prose-blockquote:border-border-subtle prose-blockquote:text-text-secondary
-          prose-li:text-text-secondary
-          prose-hr:border-border-ghost
-        ">
+        <div class="post-body">
           <slot />
         </div>
         <footer class="mt-16 pt-8 flex items-center justify-between">
@@ -86,6 +76,34 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href
       </article>
       <TableOfContents />
     </div>
+
+    <script>
+      import mermaid from 'mermaid'
+
+      function initMermaid() {
+        const blocks = document.querySelectorAll('pre:has(code.language-mermaid)')
+        if (!blocks.length) return
+
+        mermaid.initialize({
+          startOnLoad: false,
+          theme: document.documentElement.classList.contains('dark') ? 'dark' : 'default',
+        })
+
+        blocks.forEach(async (pre) => {
+          const code = pre.querySelector('code.language-mermaid')
+          if (!code) return
+          // Use textContent to get raw text without Shiki's span markup
+          const diagram = code.textContent ?? ''
+          const { svg } = await mermaid.render('mermaid-' + Math.random().toString(36).slice(2), diagram)
+          const container = document.createElement('div')
+          container.className = 'mermaid-diagram my-6 flex justify-center overflow-x-auto'
+          container.innerHTML = svg
+          pre.replaceWith(container)
+        })
+      }
+
+      initMermaid()
+    </script>
 
     <script>
       function initCopyButtons() {
