@@ -46,6 +46,7 @@ const processor = unified()
       light: illuLight as Parameters<typeof rehypeShiki>[0]['themes']['light'],
       dark: illuDark as Parameters<typeof rehypeShiki>[0]['themes']['dark'],
     },
+    addLanguageClass: true,
   })
   .use(rehypeStringify, { allowDangerousHtml: true })
 
