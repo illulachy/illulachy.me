@@ -21,7 +21,7 @@ interface MilestoneNodeProps {
  * Size: 280x200px (uniform timeline node size)
  * Click behavior: Dispatches custom event to show modal
  */
-export function MilestoneNode({ x, y, id, title, date, institution, isActive }: MilestoneNodeProps) {
+export function MilestoneNode({ x, y, title, date, institution, isActive }: MilestoneNodeProps) {
   const [isHovered, setIsHovered] = useState(false)
   
   // Format date nicely

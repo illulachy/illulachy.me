@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>dotWord - Daily Intelligence</title>
+  <meta name="description" content="Build an authoritative vocabulary through curated daily intelligence. One word a day — simple notifications, profound definitions, and inspirational context." />
+
+  <!-- Open Graph / Facebook / iMessage / Slack / Discord -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://illulachy.me/dotword" />
+  <meta property="og:title" content="dotWord - Daily Intelligence" />
+  <meta property="og:description" content="Build an authoritative vocabulary through curated daily intelligence. One word a day — simple notifications, profound definitions, and inspirational context." />
+  <meta property="og:image" content="https://illulachy.me/dotword/og.png" />
+  <meta property="og:image:width" content="1024" />
+  <meta property="og:image:height" content="1024" />
+  <meta property="og:site_name" content="dotWord" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://illulachy.me/dotword" />
+  <meta name="twitter:title" content="dotWord - Daily Intelligence" />
+  <meta name="twitter:description" content="Build an authoritative vocabulary through curated daily intelligence. One word a day — simple notifications, profound definitions, and inspirational context." />
+  <meta name="twitter:image" content="https://illulachy.me/dotword/og.png" />
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-background": "#1a1c1c",
+            "on-tertiary-container": "#67f4b7",
+            "tertiary-fixed-dim": "#4edea3",
+            "on-tertiary-fixed": "#002113",
+            "error-container": "#ffdad6",
+            "inverse-on-surface": "#f0f1f1",
+            "outline": "#777587",
+            "tertiary-fixed": "#6ffbbe",
+            "surface-container-lowest": "#ffffff",
+            "on-surface-variant": "#464555",
+            "on-secondary": "#ffffff",
+            "primary": "#3525cd",
+            "background": "#f9f9f9",
+            "primary-container": "#4f46e5",
+            "surface-container-high": "#e8e8e8",
+            "on-error-container": "#93000a",
+            "outline-variant": "#c7c4d8",
+            "inverse-surface": "#2f3131",
+            "on-secondary-fixed": "#2a1700",
+            "on-primary-container": "#dad7ff",
+            "on-secondary-fixed-variant": "#653e00",
+            "primary-fixed-dim": "#c3c0ff",
+            "error": "#ba1a1a",
+            "on-secondary-container": "#684000",
+            "primary-fixed": "#e2dfff",
+            "secondary-fixed-dim": "#ffb95f",
+            "surface-tint": "#4d44e3",
+            "tertiary-container": "#006e4b",
+            "surface-container-low": "#f3f3f3",
+            "surface-container": "#eeeeee",
+            "surface-variant": "#e2e2e2",
+            "inverse-primary": "#c3c0ff",
+            "surface": "#f9f9f9",
+            "on-error": "#ffffff",
+            "secondary-container": "#fea619",
+            "on-primary-fixed": "#001a69",
+            "secondary": "#855300",
+            "surface-bright": "#f9f9f9",
+            "surface-container-highest": "#e2e2e2",
+            "secondary-fixed": "#ffddb8",
+            "surface-dim": "#dadada",
+            "tertiary": "#005338",
+            "on-surface": "#1a1c1c",
+            "on-tertiary": "#ffffff",
+            "on-tertiary-fixed-variant": "#005236",
+            "on-primary": "#ffffff",
+            "on-primary-fixed-variant": "#3323cc"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1.5rem",
+            "full": "9999px"
+          },
+          "fontFamily": {
+            "headline": ["Manrope", "sans-serif"],
+            "body": ["Inter", "sans-serif"],
+            "label": ["Inter", "sans-serif"]
+          }
+        },
+      },
+    }
+  </script>
+  <style>
+    .dot-grid {
+      background-image: radial-gradient(#c7c4d8 1px, transparent 1px);
+      background-size: 32px 32px;
+      opacity: 0.2;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  </style>
+</head>
+
+<body class="bg-surface font-body text-on-surface">
+  <!-- TopNavBar -->
+  <nav class="fixed top-0 w-full z-50 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl shadow-sm dark:shadow-none">
+    <div class="flex justify-between items-center max-w-7xl mx-auto px-6 py-4">
+      <div class="flex items-center gap-2">
+        <span class="text-2xl font-black tracking-tight text-slate-900 dark:text-white font-headline">dotWord</span>
+      </div>
+      <div class="hidden md:flex items-center gap-8">
+        <a class="text-indigo-700 dark:text-indigo-300 font-bold border-b-2 border-indigo-600" href="#">Features</a>
+        <a class="text-slate-600 dark:text-slate-400 font-medium hover:text-indigo-600 transition-all duration-300"
+          href="#">About</a>
+        <a class="text-slate-600 dark:text-slate-400 font-medium hover:text-indigo-600 transition-all duration-300"
+          href="#">Download</a>
+      </div>
+      <button
+        class="bg-primary-container text-on-primary px-6 py-2.5 rounded-xl font-semibold active:scale-95 transition-transform hover:opacity-90 shadow-lg shadow-primary/20">
+        Get Started
+      </button>
+    </div>
+  </nav>
+  <main class="relative pt-24 overflow-hidden">
+    <!-- Background Effects -->
+    <div class="absolute inset-0 dot-grid -z-10"></div>
+    <div
+      class="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-primary-fixed opacity-30 blur-[120px] rounded-full -z-10">
+    </div>
+    <div
+      class="absolute top-[20%] left-[-5%] w-[400px] h-[400px] bg-secondary-container opacity-20 blur-[100px] rounded-full -z-10">
+    </div>
+    <!-- Hero Section -->
+    <section class="max-w-7xl mx-auto px-6 pt-16 md:pt-32 pb-24 grid md:grid-cols-2 gap-12 items-center">
+      <div class="space-y-8">
+        <div
+          class="reveal inline-flex items-center gap-2 px-3 py-1 bg-secondary-fixed text-on-secondary-fixed rounded-full text-sm font-semibold">
+          <span class="material-symbols-outlined text-sm" data-icon="spark">spark</span>
+          Word of the Day: Resilient
+        </div>
+        <h1 class="reveal text-5xl md:text-7xl font-extrabold font-headline leading-[1.1] tracking-tight text-on-background">
+          Learn a New Word <span
+            class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-container">Every Day</span>
+        </h1>
+        <p class="reveal text-xl text-on-surface-variant max-w-lg leading-relaxed">
+          Build an authoritative vocabulary through curated daily intelligence. Simple notifications, profound
+          definitions, and inspirational context.
+        </p>
+        <div class="reveal flex flex-col sm:flex-row gap-4 pt-4">
+          <button
+            class="flex items-center justify-center gap-3 bg-primary-container text-on-primary px-8 py-4 rounded-xl font-bold shadow-xl shadow-primary/20 hover:shadow-2xl transition-all">
+            <span class="material-symbols-outlined" data-icon="download">download</span>
+            Download on iOS
+          </button>
+          <button
+            class="px-8 py-4 rounded-xl font-bold text-primary border border-outline-variant/30 hover:bg-white transition-all">
+            Learn More
+          </button>
+        </div>
+      </div>
+      <div class="reveal relative flex justify-center">
+        <div
+          class="w-full max-w-md aspect-[9/18] bg-slate-900 rounded-[3rem] p-4 shadow-2xl border-8 border-slate-800 relative overflow-hidden">
+          <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-6 bg-slate-800 rounded-b-2xl"></div>
+          <div class="h-full w-full bg-white rounded-[2.5rem] p-6 overflow-hidden flex flex-col gap-6">
+            <div class="flex justify-between items-center mt-4">
+              <span class="material-symbols-outlined text-primary" data-icon="menu">menu</span>
+              <span class="text-sm font-bold text-slate-400">dotWord</span>
+              <span class="material-symbols-outlined text-slate-400" data-icon="person">person</span>
+            </div>
+            <div class="mt-4 p-6 rounded-2xl bg-primary text-white flex flex-col gap-4 shadow-xl">
+              <span class="text-sm font-medium opacity-80 uppercase tracking-widest">Today's Word</span>
+              <h3 class="text-4xl font-headline font-extrabold">Ethereal</h3>
+              <p class="text-sm leading-relaxed opacity-90 italic">Extremely delicate and light in a way that seems too
+                perfect for this world.</p>
+              <div class="pt-2 border-t border-white/20 flex justify-between items-center">
+                <span class="material-symbols-outlined" data-icon="volume_up">volume_up</span>
+                <span class="material-symbols-outlined" data-icon="bookmark">bookmark</span>
+              </div>
+            </div>
+            <div class="space-y-4">
+              <div class="h-24 rounded-2xl bg-surface-container-low flex items-center p-4 gap-4">
+                <div class="w-12 h-12 rounded-full bg-secondary-fixed flex items-center justify-center">
+                  <span class="material-symbols-outlined text-secondary" data-icon="auto_stories">auto_stories</span>
+                </div>
+                <div class="flex-1 space-y-1">
+                  <div class="h-3 w-3/4 bg-slate-200 rounded-full"></div>
+                  <div class="h-3 w-1/2 bg-slate-100 rounded-full"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Floating Decorative Card -->
+        <div
+          class="absolute -bottom-10 -left-10 glass-card p-6 rounded-2xl shadow-xl hidden md:block w-64 border border-white/40">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-10 h-10 bg-tertiary rounded-full flex items-center justify-center">
+              <span class="material-symbols-outlined text-white" data-icon="trending_up">trending_up</span>
+            </div>
+            <div class="text-sm font-bold">14 Day Streak</div>
+          </div>
+          <div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+            <div class="h-full bg-tertiary w-4/5"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Features Grid -->
+    <section class="py-32 bg-surface-container-low relative" id="features">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center max-w-2xl mx-auto mb-20 space-y-4">
+          <h2 class="text-4xl font-headline font-extrabold text-on-background">Designed for Depth</h2>
+          <p class="text-on-surface-variant">We believe in quality over quantity. Each feature is crafted to make your
+            learning journey effortless and inspiring.</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Feature 1 -->
+          <div class="reveal bg-white p-10 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 group">
+            <div
+              class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-primary group-hover:rotate-6 transition-all">
+              <span class="material-symbols-outlined text-primary group-hover:text-white"
+                data-icon="notifications_active">notifications_active</span>
+            </div>
+            <h3 class="text-xl font-bold mb-4">Daily Notifications</h3>
+            <p class="text-on-surface-variant leading-relaxed">A gentle nudge every morning with your new word. Start
+              your day with a boost of intelligence.</p>
+          </div>
+          <!-- Feature 2 -->
+          <div class="reveal bg-white p-10 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 group">
+            <div
+              class="w-14 h-14 bg-secondary-fixed rounded-2xl flex items-center justify-center mb-8 group-hover:bg-secondary group-hover:-rotate-6 transition-all">
+              <span class="material-symbols-outlined text-secondary group-hover:text-white"
+                data-icon="format_quote">format_quote</span>
+            </div>
+            <h3 class="text-xl font-bold mb-4">Inspirational Context</h3>
+            <p class="text-on-surface-variant leading-relaxed">See words in action through curated literature quotes and
+              beautiful typography.</p>
+          </div>
+          <!-- Feature 3 -->
+          <div class="reveal bg-white p-10 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 group">
+            <div
+              class="w-14 h-14 bg-tertiary-fixed rounded-2xl flex items-center justify-center mb-8 group-hover:bg-tertiary group-hover:scale-110 transition-all">
+              <span class="material-symbols-outlined text-tertiary group-hover:text-white"
+                data-icon="bar_chart">bar_chart</span>
+            </div>
+            <h3 class="text-xl font-bold mb-4">Progress Tracking</h3>
+            <p class="text-on-surface-variant leading-relaxed">Visualize your growing lexicon with intuitive streaks,
+              quizzes, and mastered word lists.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Quote Showcase -->
+    <section class="py-32 overflow-hidden bg-surface relative">
+      <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-secondary-fixed opacity-10 blur-[150px] rounded-full">
+      </div>
+      <div class="max-w-7xl mx-auto px-6 relative">
+        <div class="flex flex-col items-center text-center">
+          <span class="reveal material-symbols-outlined text-6xl text-primary opacity-20 mb-8"
+            data-icon="format_quote">format_quote</span>
+          <blockquote
+            class="reveal text-3xl md:text-5xl font-headline font-bold text-on-background leading-tight max-w-4xl italic">
+            "The limits of my language mean the limits of my world."
+          </blockquote>
+          <cite class="reveal mt-8 not-italic flex flex-col items-center gap-2">
+            <div class="w-16 h-1 bg-primary rounded-full"></div>
+            <span class="text-lg font-bold text-on-background">Ludwig Wittgenstein</span>
+            <span class="text-on-surface-variant text-sm">Philosopher</span>
+          </cite>
+        </div>
+      </div>
+    </section>
+    <!-- How It Works -->
+    <section class="py-32 bg-surface">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-20 items-center">
+          <div class="grid grid-cols-1 gap-12">
+            <div class="reveal flex gap-6 items-start">
+              <div
+                class="flex-shrink-0 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg">
+                1</div>
+              <div class="space-y-2">
+                <h4 class="text-2xl font-bold">Set Your Reminder</h4>
+                <p class="text-on-surface-variant">Choose the perfect time of day to receive your daily insight.
+                  Consistency is the key to mastery.</p>
+              </div>
+            </div>
+            <div class="reveal flex gap-6 items-start">
+              <div
+                class="flex-shrink-0 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg">
+                2</div>
+              <div class="space-y-2">
+                <h4 class="text-2xl font-bold">Receive &amp; Explore</h4>
+                <p class="text-on-surface-variant">Get a notification with a word, its pronunciation, and a beautiful
+                  usage example.</p>
+              </div>
+            </div>
+            <div class="reveal flex gap-6 items-start">
+              <div
+                class="flex-shrink-0 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg">
+                3</div>
+              <div class="space-y-2">
+                <h4 class="text-2xl font-bold">Build Vocabulary</h4>
+                <p class="text-on-surface-variant">Save favorites and review them later through smart spaced-repetition
+                  exercises.</p>
+              </div>
+            </div>
+          </div>
+          <div class="relative">
+            <div
+              class="aspect-square bg-gradient-to-br from-primary-container/10 to-secondary-container/10 rounded-[3rem] p-12 relative overflow-hidden">
+              <img alt="Learning" class="w-full h-full object-cover rounded-2xl shadow-2xl"
+                data-alt="Close-up of an open classic book with elegant typography on cream paper, soft sunlight highlighting the texture of the pages."
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoBGZVLG2RC-QTxq3maoMEsumOvNAjDRhy1PbkjGFe1hI6IGwTmbifn-cEaoAwza_jOXYq9k8_lf_uYB9pm6ilAD6rEbFIEtuFKphqe0f_YPKUootfVBfRuAwNWw4OfRm29aKXdgYvziBS4A8TMIUkmHzzTY4unFNZClxfLPrlaPz69Z1AseV-vsOQYMDvG-nLX52Up_Xmtn5S1Ym179IQ7J3rE597ri09zoo1IkQAmy_uP9TWrQStulrgspguFUNYHl7XsEKbo5o" />
+              <div class="absolute inset-0 bg-primary/20 mix-blend-overlay"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- App Preview -->
+    <section class="py-32 bg-slate-900 text-white overflow-hidden">
+      <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-20 items-center">
+        <div class="space-y-8">
+          <h2 class="text-4xl md:text-5xl font-headline font-extrabold leading-tight">Master Your Mind, <br />One Word
+            at a Time.</h2>
+          <p class="text-slate-400 text-lg max-w-md">Our clean interface removes all distractions, letting you focus on
+            the beauty of language and the growth of your intellect.</p>
+          <div class="flex gap-4">
+            <img alt="App Store" class="h-12 cursor-pointer hover:opacity-80 transition-opacity"
+              data-alt="Apple App Store download badge black and white high resolution icon"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAN6W8bXNEWTN9Msn8raQb2fvdDqjHCQT4nzVVs4HYFCGuaxrpZ3_SlpCLnmnMbF6wswzbQwsYCVuysztBkfXGU5LQJWoAt91oLALYzDydi2bsRGEedYn8kBAqB3NibLjvWNRpJ7Eoo0FqozIFtRGNawEg3R7_v89fv0nf_PbihH6zmhjkihO86YgCdqjn6w7Apyp70e5D3fxzLQDB-qS3uICcbnWv3pa5BhDeHrchMhys2jsJk7URQY4VrFuRxPm7uoYvrmL6Bmrs" />
+            <img alt="Google Play" class="h-12 cursor-pointer hover:opacity-80 transition-opacity"
+              data-alt="Google Play Store download badge black and white high resolution icon"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAY67y7fIVmN6NeFi4dEiAeqIYtoyEl1J2aKtB7r1GJCMCOokk8ljV1yRDzmEwRcnqgZChCABE8BmI7bVY8bXCch5WrKHliy5_KGOsxzBUIJ4OKHp3pD24NAe938qS3tMpjtds1cBVLr6HQEbIgdHFm-LRa4AWfgEw-oYv7Xt7zS08xjVIRkVm6gQdA0T8TJLkIgI3WY4TIo2Jc-W3vDqXt3k2NpWhzjwpaS45c1l6ZuBSFVO7FF8bIdFUvGxV-rkY6zXIJvHIXSSs" />
+          </div>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-8 items-center justify-center">
+          <div
+            class="reveal w-64 h-[500px] bg-slate-800 rounded-[2.5rem] border-4 border-slate-700 shadow-2xl overflow-hidden relative translate-y-12">
+            <img class="h-full object-cover opacity-50"
+              data-alt="Mobile app interface mockup showing a minimalist dashboard with blue and white accents and educational progress charts."
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYGV0bVUMvuQ7HYAcjMMmovAEv4Rbdcr8_FI0RBmDDuQyHX0VNJBm2rXFtHGHufPXuftzCptfA1LDXZtLWAI3WHEhjeXK20yVNV4xYCQFmMVjj0wAahOdPrNxS25QZt5ugbR88NioGd68RDUEYNfYveba14hu3XGkyQxDglXuFoO5p0lgUFXl_ou-0P3C2AhrPoT0Yp8CSMbKCt8wBL10kYGzmYSpt4b9dfIQXUQJm9ltj62ZHSDerWPR_mZ20lPg0eGgXOLLpdug" />
+          </div>
+          <div
+            class="reveal w-64 h-[500px] bg-slate-800 rounded-[2.5rem] border-4 border-slate-700 shadow-2xl overflow-hidden relative">
+            <img class="h-full object-cover opacity-50"
+              data-alt="Mobile phone screen showing a word learning application with a large bold word 'Ephemeral' and a clean white interface."
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAorxHb9Td95-D0JxZZh41dbWyu95-DEk7Kt0st1ubD_x91vg33VAZLtOe-LBcj2LdWIQbTAxcGgw2P3SzBRbusGO3205xiKOdgFENtaoTWVX7bQrnMXCa03M758TWoqHitbmaGyI87_7erkTiA0dgeHVi_NDVFpBPv7t4bOLrHEb81C9N1zm2G2Qgbv8COx2hlpYQXHD3HF-ZHg5xVCh5GUxL5On0N3abAZJI7Eeye9yGXSnYVGunrATXLrgmSJuOevVlx84ZSg-E" />
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Footer -->
+    <footer class="bg-slate-50 dark:bg-slate-950 border-t border-slate-200/15">
+      <div class="flex flex-col md:flex-row justify-between items-center px-8 py-12 max-w-7xl mx-auto gap-8">
+        <div class="flex flex-col gap-4 items-center md:items-start">
+          <span class="text-xl font-bold text-slate-900 dark:text-white font-headline">dotWord</span>
+          <p class="text-slate-500 dark:text-slate-500 text-sm max-w-xs text-center md:text-left font-body">© 2024
+            dotWord. Curating intelligence daily. Made with love for lifelong learners.</p>
+        </div>
+        <div class="flex gap-8">
+          <a class="text-slate-500 dark:text-slate-500 text-sm font-body hover:text-indigo-500 transition-colors"
+            href="#">Privacy Policy</a>
+          <a class="text-slate-500 dark:text-slate-500 text-sm font-body hover:text-indigo-500 transition-colors"
+            href="#">Terms of Service</a>
+          <a class="text-slate-500 dark:text-slate-500 text-sm font-body hover:text-indigo-500 transition-colors"
+            href="#">Contact Support</a>
+        </div>
+        <div class="flex gap-4">
+          <a class="w-10 h-10 rounded-full bg-slate-200/50 flex items-center justify-center hover:bg-primary-fixed transition-colors"
+            href="#">
+            <span class="material-symbols-outlined text-indigo-600" data-icon="share">share</span>
+          </a>
+          <a class="w-10 h-10 rounded-full bg-slate-200/50 flex items-center justify-center hover:bg-primary-fixed transition-colors"
+            href="#">
+            <span class="material-symbols-outlined text-indigo-600" data-icon="mail">mail</span>
+          </a>
+        </div>
+      </div>
+    </footer>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"></script>
+  <script>
+    const { animate, inView, stagger } = Motion;
+
+    // Fade in hero elements on load
+    animate(
+      "section:first-of-type .reveal",
+      { opacity: 1, y: 0 },
+      { 
+        duration: 0.8, 
+        delay: stagger(0.15),
+        easing: [0.17, 0.55, 0.55, 1]
+      }
+    );
+
+    // Reveal logic for all sections using inView
+    document.querySelectorAll("section:not(:first-of-type)").forEach(section => {
+      inView(section, ({ target }) => {
+        animate(
+          target.querySelectorAll(".reveal"),
+          { opacity: 1, y: 0 },
+          { 
+            duration: 0.8, 
+            delay: stagger(0.15),
+            easing: [0.17, 0.55, 0.55, 1]
+          }
+        );
+      });
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Ambient_Space | Binary_Sanctuary</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&amp;family=Space+Grotesk:wght@300;700&amp;family=Inter:wght@400;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline": "#777777",
+                        "inverse-primary": "#c6c6c6",
+                        "on-tertiary": "#b9efc5",
+                        "tertiary-container": "#4d7f5c",
+                        "secondary-fixed-dim": "#acabaa",
+                        "surface-tint": "#5e5e5e",
+                        "secondary": "#5f5e5e",
+                        "on-secondary-container": "#1b1c1c",
+                        "on-surface-variant": "#474747",
+                        "surface-bright": "#f9f9f9",
+                        "on-surface": "#1a1c1c",
+                        "on-tertiary-container": "#ffffff",
+                        "tertiary": "#104426",
+                        "tertiary-fixed": "#376847",
+                        "surface-container": "#eeeeee",
+                        "surface-container-highest": "#e2e2e2",
+                        "background": "#f9f9f9",
+                        "surface-container-low": "#f3f3f3",
+                        "on-background": "#1a1c1c",
+                        "inverse-surface": "#2f3131",
+                        "on-primary-fixed": "#ffffff",
+                        "surface-dim": "#dadada",
+                        "surface-container-high": "#e8e8e8",
+                        "on-tertiary-fixed": "#ffffff",
+                        "secondary-container": "#d6d4d3",
+                        "on-primary-container": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-error-container": "#410002",
+                        "primary-container": "#3b3b3b",
+                        "on-secondary-fixed-variant": "#3b3b3b",
+                        "surface-variant": "#e2e2e2",
+                        "primary-fixed": "#5e5e5e",
+                        "on-tertiary-fixed-variant": "#b9efc5",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed-variant": "#e2e2e2",
+                        "on-primary": "#e2e2e2",
+                        "tertiary-fixed-dim": "#1e5031",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "surface": "#f9f9f9",
+                        "outline-variant": "#c6c6c6",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#474747",
+                        "primary": "#000000",
+                        "inverse-on-surface": "#f0f1f1",
+                        "secondary-fixed": "#c8c6c6",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "0px"
+                    },
+                    "fontFamily": {
+                        "headline": ["IBM Plex Mono"],
+                        "body": ["IBM Plex Mono"],
+                        "label": ["IBM Plex Mono"]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 4rem;
+        }
+
+        .sound-item.active .volume-bar {
+            background-color: #b9efc5 !important;
+            width: 100% !important;
+        }
+
+        .sound-item.active .box {
+            background-color: #1a1c1c !important;
+            color: #b9efc5 !important;
+            border-color: #b9efc5 !important;
+            box-shadow: 0 0 15px rgba(185, 239, 197, 0.3);
+        }
+
+        .focus-mode header,
+        .focus-mode section:not(#sessions),
+        .focus-mode footer {
+            display: none;
+        }
+
+        .focus-mode #sessions {
+            height: 100vh;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .pixel-grid {
+            background-image: radial-gradient(circle, #c6c6c6 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        .dither-pattern {
+            background-image: radial-gradient(#000000 0.5px, transparent 0.5px);
+            background-size: 4px 4px;
+            opacity: 0.05;
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #FAFAFA;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #000000;
+        }
+
+        /* Motion Initial State */
+        h1, 
+        section:first-of-type p, 
+        section:first-of-type .flex-wrap,
+        section:first-of-type .grid > div,
+        section:not(:first-of-type),
+        .sound-item {
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body class="bg-[#FAFAFA] text-primary font-['IBM_Plex_Mono'] selection:bg-tertiary selection:text-on-tertiary">
+    <!-- TopNavBar -->
+    <header
+        class="fixed top-0 w-full border-b border-black h-16 bg-[#FAFAFA] z-50 flex justify-between items-center px-8">
+        <a href="#"
+            class="font-['IBM_Plex_Mono'] font-bold text-xl tracking-tighter text-black cursor-pointer">Ambient_Space
+        </a>
+        <nav class="hidden md:flex gap-8">
+            <a class="font-['IBM_Plex_Mono'] uppercase tracking-widest text-sm text-black border-b-2 border-black pb-1 hover:bg-black hover:text-white transition-colors duration-100"
+                href="#sessions">SESSIONS</a>
+            <a class="font-['IBM_Plex_Mono'] uppercase tracking-widest text-sm text-gray-500 hover:bg-black hover:text-white transition-colors duration-100"
+                href="#library">LIBRARY</a>
+            <a class="font-['IBM_Plex_Mono'] uppercase tracking-widest text-sm text-gray-500 hover:bg-black hover:text-white transition-colors duration-100"
+                href="#frequencies">FREQUENCIES</a>
+        </nav>
+        <a href="#sessions"
+            class="font-['IBM_Plex_Mono'] uppercase tracking-widest text-sm border border-black px-4 py-2 hover:bg-black hover:text-white transition-all duration-100">
+            TRY IT NOW
+        </a>
+    </header>
+    <main class="pt-16">
+        <!-- Hero Section -->
+        <section
+            class="min-h-[819px] flex flex-col md:flex-row items-center px-8 md:px-16 border-b border-black bg-surface relative overflow-hidden">
+            <div class="absolute inset-0 dither-pattern pointer-events-none"></div>
+            <div class="flex-1 py-20 z-10">
+                <div class="mb-6 flex items-center gap-2">
+                    <span class="w-2 h-2 bg-tertiary-container animate-pulse"></span>
+                    <span class="text-[10px] tracking-[0.3em] uppercase">Status: Operational</span>
+                </div>
+                <h1 class="text-5xl md:text-7xl font-bold tracking-tighter leading-[0.9] mb-8 max-w-xl">BUILD YOUR FOCUS
+                    SOUNDSCAPE</h1>
+                <p class="text-lg text-secondary mb-10 max-w-md leading-relaxed">A sanctuary of pure tone and digital
+                    rain. Architect your ideal acoustic environment for deep-state cognition.</p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#sessions"
+                        class="bg-black text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-white hover:text-black border border-black transition-all inline-block">START_MIXING</a>
+                    <button
+                        class="bg-transparent text-black px-8 py-4 text-sm font-bold tracking-widest uppercase border border-black hover:bg-black hover:text-white transition-all">VIEW_GITHUB</button>
+                </div>
+            </div>
+            <div
+                class="flex-1 w-full h-full min-h-[400px] p-8 flex items-center justify-center bg-transparent relative">
+                <div class="w-full aspect-square border border-black pixel-grid p-6 relative">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="grid grid-cols-4 grid-rows-4 gap-2 w-4/5 h-4/5">
+                            <!-- Mock Mixer Grid -->
+                            <div class="border border-black bg-black"></div>
+                            <div class="border border-black"></div>
+                            <div class="border border-black bg-tertiary-container"></div>
+                            <div class="border border-black"></div>
+                            <div class="border border-black"></div>
+                            <div class="border border-black bg-black"></div>
+                            <div class="border border-black"></div>
+                            <div class="border border-black"></div>
+                            <div class="border border-black bg-tertiary-container"></div>
+                            <div class="border border-black"></div>
+                            <div class="border border-black bg-black"></div>
+                            <div class="border border-black"></div>
+                            <div class="border border-black"></div>
+                            <div class="border border-black"></div>
+                            <div class="border border-black"></div>
+                            <div class="border border-black bg-black"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Categories Section -->
+        <section id="frequencies" class="border-b border-black grid grid-cols-1 md:grid-cols-4">
+            <div
+                class="p-8 border-b md:border-b-0 md:border-r border-black hover:bg-surface-container-high transition-colors">
+                <span class="material-symbols-outlined text-4xl mb-6"
+                    data-icon="local_fire_department">local_fire_department</span>
+                <h3 class="font-bold tracking-widest mb-2">FIRE</h3>
+                <p class="text-xs text-secondary leading-relaxed">Embers, crackling hearths, and the low roar of thermal
+                    energy.</p>
+            </div>
+            <div
+                class="p-8 border-b md:border-b-0 md:border-r border-black hover:bg-surface-container-high transition-colors">
+                <span class="material-symbols-outlined text-4xl mb-6" data-icon="water_drop">water_drop</span>
+                <h3 class="font-bold tracking-widest mb-2">WATER</h3>
+                <p class="text-xs text-secondary leading-relaxed">Heavy rain, flowing streams, and rhythmic ocean tides.
+                </p>
+            </div>
+            <div
+                class="p-8 border-b md:border-b-0 md:border-r border-black hover:bg-surface-container-high transition-colors">
+                <span class="material-symbols-outlined text-4xl mb-6" data-icon="air">air</span>
+                <h3 class="font-bold tracking-widest mb-2">WIND</h3>
+                <p class="text-xs text-secondary leading-relaxed">High-altitude drafts, forest whispers, and arctic
+                    gusts.</p>
+            </div>
+            <div class="p-8 hover:bg-surface-container-high transition-colors">
+                <span class="material-symbols-outlined text-4xl mb-6" data-icon="forest">forest</span>
+                <h3 class="font-bold tracking-widest mb-2">NATURE</h3>
+                <p class="text-xs text-secondary leading-relaxed">Cicadas, distant storms, and the rustle of dry leaves.
+                </p>
+            </div>
+        </section>
+        <!-- Features Bento Grid -->
+        <section id="library" class="p-8 md:p-16 bg-surface-container-low">
+            <div class="mb-12">
+                <h2 class="text-xs tracking-[0.5em] font-bold uppercase mb-4">Core_Protocols</h2>
+                <div class="h-px bg-black w-24"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div
+                    class="border border-black p-8 bg-surface hover:translate-x-1 hover:-translate-y-1 transition-transform cursor-crosshair">
+                    <div class="flex justify-between items-start mb-12">
+                        <span class="text-[10px] border border-black px-2">MOD_01</span>
+                        <span class="material-symbols-outlined" data-icon="rebase_edit">rebase_edit</span>
+                    </div>
+                    <h4 class="font-bold mb-4 tracking-tighter text-xl">SOUND MIXING</h4>
+                    <p class="text-sm text-secondary leading-loose">Individually modulate volume levels for up to 12
+                        simultaneous audio tracks. Balance frequencies to eliminate distraction.</p>
+                </div>
+                <div
+                    class="border border-black p-8 bg-surface hover:translate-x-1 hover:-translate-y-1 transition-transform cursor-crosshair">
+                    <div class="flex justify-between items-start mb-12">
+                        <span class="text-[10px] border border-black px-2">MOD_02</span>
+                        <span class="material-symbols-outlined" data-icon="save">save</span>
+                    </div>
+                    <h4 class="font-bold mb-4 tracking-tighter text-xl">CUSTOM PRESETS</h4>
+                    <p class="text-sm text-secondary leading-loose">Save your most effective auditory configurations.
+                        Instant recall for deep work, meditation, or terminal focus sessions.</p>
+                </div>
+                <div
+                    class="border border-black p-8 bg-surface hover:translate-x-1 hover:-translate-y-1 transition-transform cursor-crosshair">
+                    <div class="flex justify-between items-start mb-12">
+                        <span class="text-[10px] border border-black px-2">MOD_03</span>
+                        <span class="material-symbols-outlined" data-icon="vibration">vibration</span>
+                    </div>
+                    <h4 class="font-bold mb-4 tracking-tighter text-xl">FOCUS MODE</h4>
+                    <p class="text-sm text-secondary leading-loose">Minimalist distraction-free interface that hides all
+                        meta-data, leaving only the primary frequency controls visible.</p>
+                    <button onclick="toggleFocusMode()"
+                        class="mt-4 text-[10px] font-bold border border-black px-2 py-1 hover:bg-black hover:text-white transition-all">ENABLE_FOCUS_MODE</button>
+                </div>
+            </div>
+        </section>
+        <!-- Interactive Preview Section -->
+        <section id="sessions" class="border-y border-black bg-black text-white p-8 md:p-16">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex justify-between items-end mb-16">
+                    <div>
+                        <h2 class="text-2xl font-bold tracking-tighter mb-2">SYSTEM_INTERFACE_DEMO</h2>
+                        <p class="text-xs text-outline tracking-widest uppercase">Click squares to toggle active states
+                        </p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6">
+                    <!-- Audio Squares Grid: 12 Elements -->
+                    <!-- Row 1 (W-B-W-B-W-B on MD) -->
+                    <div class="group sound-item" onclick="this.classList.toggle('active')">
+                        <div
+                            class="box aspect-square border border-white bg-white text-black flex flex-col items-center justify-center cursor-pointer hover:bg-tertiary-container hover:text-white transition-all duration-200">
+                            <span class="material-symbols-outlined text-2xl mb-2" data-icon="tsunami">tsunami</span>
+                            <span class="text-[8px] font-bold tracking-[0.2em] uppercase">DEEP_SEA</span>
+                        </div>
+                        <div class="h-1 bg-white/20 mt-4 relative">
+                            <div
+                                class="volume-bar absolute inset-y-0 left-0 w-3/4 bg-tertiary-container transition-all duration-500">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group sound-item" onclick="this.classList.toggle('active')">
+                        <div
+                            class="box aspect-square border border-white bg-black text-white flex flex-col items-center justify-center cursor-pointer hover:bg-tertiary-container transition-all duration-200">
+                            <span class="material-symbols-outlined text-2xl mb-2" data-icon="rainy">rainy</span>
+                            <span class="text-[8px] font-bold tracking-[0.2em] uppercase">RAIN_ON_TENT</span>
+                        </div>
+                        <div class="h-1 bg-white/20 mt-4 relative">
+                            <div
+                                class="volume-bar absolute inset-y-0 left-0 w-1/2 bg-tertiary-container transition-all duration-500">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group sound-item" onclick="this.classList.toggle('active')">
+                        <div
+                            class="box aspect-square border border-white bg-white text-black flex flex-col items-center justify-center cursor-pointer hover:bg-tertiary-container hover:text-white transition-all duration-200">
+                            <span class="material-symbols-outlined text-2xl mb-2"
+                                data-icon="settings_input_antenna">settings_input_antenna</span>
+                            <span class="text-[8px] font-bold tracking-[0.2em] uppercase">RADIO_STATIC</span>
+                        </div>
+                        <div class="h-1 bg-white/20 mt-4 relative">
+                            <div
+                                class="volume-bar absolute inset-y-0 left-0 w-1/4 bg-tertiary-container transition-all duration-500">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group sound-item" onclick="this.classList.toggle('active')">
+                        <div
+                            class="box aspect-square border border-white bg-black text-white flex flex-col items-center justify-center cursor-pointer hover:bg-tertiary-container transition-all duration-200">
+                            <span class="material-symbols-outlined text-2xl mb-2" data-icon="air">air</span>
+                            <span class="text-[8px] font-bold tracking-[0.2em] uppercase">AUTUMN_WIND</span>
+                        </div>
+                        <div class="h-1 bg-white/20 mt-4 relative">
+                            <div
+                                class="volume-bar absolute inset-y-0 left-0 w-2/3 bg-tertiary-container transition-all duration-500">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group sound-item" onclick="this.classList.toggle('active')">
+                        <div
+                            class="box aspect-square border border-white bg-white text-black flex flex-col items-center justify-center cursor-pointer hover:bg-tertiary-container hover:text-white transition-all duration-200">
+                            <span class="material-symbols-outlined text-2xl mb-2" data-icon="train">train</span>
+                            <span class="text-[8px] font-bold tracking-[0.2em] uppercase">NIGHT_TRAIN</span>
+                        </div>
+                        <div class="h-1 bg-white/20 mt-4 relative">
+                            <div
+                                class="volume-bar absolute inset-y-0 left-0 w-0 bg-tertiary-container transition-all duration-500">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group sound-item" onclick="this.classList.toggle('active')">
+                        <div
+                            class="box aspect-square border border-white bg-black text-white flex flex-col items-center justify-center cursor-pointer hover:bg-tertiary-container transition-all duration-200">
+                            <span class="material-symbols-outlined text-2xl mb-2" data-icon="menu_book">menu_book</span>
+                            <span class="text-[8px] font-bold tracking-[0.2em] uppercase">LIBRARY_HALL</span>
+                        </div>
+                        <div class="h-1 bg-white/20 mt-4 relative">
+                            <div
+                                class="volume-bar absolute inset-y-0 left-0 w-1/5 bg-tertiary-container transition-all duration-500">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 2 (B-W-B-W-B-W on MD) -->
+                    <div class="group sound-item" onclick="this.classList.toggle('active')">
+                        <div
+                            class="box aspect-square border border-white bg-black text-white flex flex-col items-center justify-center cursor-pointer hover:bg-tertiary-container transition-all duration-200">
+                            <span class="material-symbols-outlined text-2xl mb-2"
+                                data-icon="thunderstorm">thunderstorm</span>
+                            <span class="text-[8px] font-bold tracking-[0.2em] uppercase">CYBER_RAIN</span>
+                        </div>
+                        <div class="h-1 bg-white/20 mt-4 relative">
+                            <div
+                                class="volume-bar absolute inset-y-0 left-0 w-full bg-tertiary-container transition-all duration-500">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group sound-item" onclick="this.classList.toggle('active')">
+                        <div
+                            class="box aspect-square border border-white bg-white text-black flex flex-col items-center justify-center cursor-pointer hover:bg-tertiary-container hover:text-white transition-all duration-200">
+                            <span class="material-symbols-outlined text-2xl mb-2" data-icon="flare">flare</span>
+                            <span class="text-[8px] font-bold tracking-[0.2em] uppercase">SOLAR_WIND</span>
+                        </div>
+                        <div class="h-1 bg-white/20 mt-4 relative">
+                            <div
+                                class="volume-bar absolute inset-y-0 left-0 w-1/3 bg-tertiary-container transition-all duration-500">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group sound-item" onclick="this.classList.toggle('active')">
+                        <div
+                            class="box aspect-square border border-white bg-black text-white flex flex-col items-center justify-center cursor-pointer hover:bg-tertiary-container transition-all duration-200">
+                            <span class="material-symbols-outlined text-2xl mb-2" data-icon="coffee">coffee</span>
+                            <span class="text-[8px] font-bold tracking-[0.2em] uppercase">COFFEE_SHOP</span>
+                        </div>
+                        <div class="h-1 bg-white/20 mt-4 relative">
+                            <div
+                                class="volume-bar absolute inset-y-0 left-0 w-1/2 bg-tertiary-container transition-all duration-500">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group sound-item" onclick="this.classList.toggle('active')">
+                        <div
+                            class="box aspect-square border border-white bg-white text-black flex flex-col items-center justify-center cursor-pointer hover:bg-tertiary-container hover:text-white transition-all duration-200">
+                            <span class="material-symbols-outlined text-2xl mb-2" data-icon="timer">timer</span>
+                            <span class="text-[8px] font-bold tracking-[0.2em] uppercase">WALL_CLOCK</span>
+                        </div>
+                        <div class="h-1 bg-white/20 mt-4 relative">
+                            <div
+                                class="volume-bar absolute inset-y-0 left-0 w-1/6 bg-tertiary-container transition-all duration-500">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group sound-item" onclick="this.classList.toggle('active')">
+                        <div
+                            class="box aspect-square border border-white bg-black text-white flex flex-col items-center justify-center cursor-pointer hover:bg-tertiary-container transition-all duration-200">
+                            <span class="material-symbols-outlined text-2xl mb-2" data-icon="forest">forest</span>
+                            <span class="text-[8px] font-bold tracking-[0.2em] uppercase">WILD_FOREST</span>
+                        </div>
+                        <div class="h-1 bg-white/20 mt-4 relative">
+                            <div
+                                class="volume-bar absolute inset-y-0 left-0 w-2/5 bg-tertiary-container transition-all duration-500">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group sound-item" onclick="this.classList.toggle('active')">
+                        <div
+                            class="box aspect-square border border-white bg-white text-black flex flex-col items-center justify-center cursor-pointer hover:bg-tertiary-container hover:text-white transition-all duration-200">
+                            <span class="material-symbols-outlined text-2xl mb-2" data-icon="spa">spa</span>
+                            <span class="text-[8px] font-bold tracking-[0.2em] uppercase">ZEN_GARDEN</span>
+                        </div>
+                        <div class="h-1 bg-white/20 mt-4 relative">
+                            <div
+                                class="volume-bar absolute inset-y-0 left-0 w-0 bg-tertiary-container transition-all duration-500">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- How It Works Section -->
+        <section class="p-8 md:p-24 flex flex-col items-center cursor-crosshair">
+            <h2 class="text-4xl font-bold tracking-tighter mb-16">DEPLOYMENT_SEQUENCE</h2>
+            <div class="w-full max-w-2xl space-y-24">
+                <div class="flex gap-12 items-start group">
+                    <span class="text-6xl font-bold opacity-10 group-hover:opacity-100 transition-opacity">01</span>
+                    <div>
+                        <h4 class="text-xl font-bold mb-4 tracking-widest">SELECT_CHANNELS</h4>
+                        <p class="text-secondary leading-loose">Choose from our curated library of high-fidelity
+                            environmental recordings. Mix multiple channels to create complex auditory landscapes.</p>
+                    </div>
+                </div>
+                <div class="flex gap-12 items-start group">
+                    <span class="text-6xl font-bold opacity-10 group-hover:opacity-100 transition-opacity">02</span>
+                    <div>
+                        <h4 class="text-xl font-bold mb-4 tracking-widest">CALIBRATE_LEVELS</h4>
+                        <p class="text-secondary leading-loose">Adjust individual volume sliders to find your personal
+                            'zero-point'—the level where environmental noise vanishes.</p>
+                    </div>
+                </div>
+                <div class="flex gap-12 items-start group">
+                    <span class="text-6xl font-bold opacity-10 group-hover:opacity-100 transition-opacity">03</span>
+                    <div>
+                        <h4 class="text-xl font-bold mb-4 tracking-widest">EXECUTE_FOCUS</h4>
+                        <p class="text-secondary leading-loose">Enter fullscreen mode and let the soundscape anchor your
+                            consciousness to the task at hand.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer class="w-full border-t border-black py-12 bg-[#FAFAFA]">
+        <div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-8">
+                <a class="font-['IBM_Plex_Mono'] text-[10px] uppercase tracking-[0.2em] text-gray-400 hover:text-black"
+                    href="#">SYSTEM_STATUS</a>
+                <a class="font-['IBM_Plex_Mono'] text-[10px] uppercase tracking-[0.2em] text-gray-400 hover:text-black"
+                    href="#">PROTOCOLS</a>
+                <a class="font-['IBM_Plex_Mono'] text-[10px] uppercase tracking-[0.2em] text-gray-400 hover:text-black"
+                    href="#">TERMINAL</a>
+            </div>
+            <div class="flex flex-col items-center md:items-end">
+                <div class="font-['IBM_Plex_Mono'] text-[10px] uppercase tracking-[0.2em] text-black">©2024
+                    AMBIENT_SPACE</div>
+                <div class="mt-2 flex items-center gap-2">
+                    <span class="text-[8px] uppercase tracking-widest opacity-30">HOSTED_BY:</span>
+                    <span class="font-bold text-[10px] border border-black px-1">GH_PAGES</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script type="module">
+        import { animate, inView, stagger } from "https://cdn.jsdelivr.net/npm/motion@11.11.17/+esm"
+
+        // Hero Section Animations
+        animate(
+            "h1",
+            { opacity: [0, 1], y: [20, 0] },
+            { duration: 0.8, ease: [0.17, 0.55, 0.55, 1] }
+        )
+
+        animate(
+            "section:first-of-type p",
+            { opacity: [0, 1], y: [20, 0] },
+            { duration: 0.8, delay: 0.2, ease: [0.17, 0.55, 0.55, 1] }
+        )
+
+        animate(
+            "section:first-of-type .flex-wrap",
+            { opacity: [0, 1], y: [20, 0] },
+            { duration: 0.8, delay: 0.4, ease: [0.17, 0.55, 0.55, 1] }
+        )
+
+        // Staggered entrance for grid items in Hero
+        animate(
+            "section:first-of-type .grid > div",
+            { opacity: [0, 1], scale: [0.8, 1] },
+            { 
+                duration: 0.5, 
+                delay: stagger(0.05, { startDelay: 0.6 }),
+                ease: "backOut"
+            }
+        )
+
+        // In-view animations for sections
+        const animated = new Set();
+        inView("section:not(:first-of-type)", ({ target }) => {
+            if (animated.has(target)) return;
+            animated.add(target);
+
+            animate(
+                target,
+                { opacity: [0, 1], y: [40, 0] },
+                { duration: 0.8, ease: [0.17, 0.55, 0.55, 1] }
+            )
+            
+            // If it's the sessions section, stagger the sound items
+            if (target.id === "sessions") {
+                animate(
+                    ".sound-item",
+                    { opacity: [0, 1], scale: [0.9, 1], y: [20, 0] },
+                    { 
+                        duration: 0.5, 
+                        delay: stagger(0.08, { startDelay: 0.2 }),
+                        ease: "easeOut"
+                    }
+                )
+            }
+        }, { amount: 0.2 })
+
+        // Hover effects for interactive elements using motion.dev logic (optional, but nice)
+        // Here we just use the declarative animate for entrance as requested.
+
+        function toggleFocusMode() {
+            document.body.classList.toggle('focus-mode');
+            const isFocus = document.body.classList.contains('focus-mode');
+            if (isFocus) {
+                // Scroll to top of sessions
+                document.getElementById('sessions').scrollIntoView();
+            }
+        }
+
+        // Shortcut for focus mode (Esc)
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && document.body.classList.contains('focus-mode')) {
+                toggleFocusMode();
+            }
+        });
+        
+        window.toggleFocusMode = toggleFocusMode;
+    </script>
+</body>
+
+</html>
