@@ -19,7 +19,7 @@ const frontmatterSchema = z.object({
   type: z.string(), // Free-form, not enum
   title: z.string(),
   date: z.string(),
-  url: z.string().url().optional(),
+  url: z.string().optional(),
   thumbnail: z.string().optional(),
   draft: z.boolean().optional().default(false),
   institution: z.string().optional(),
