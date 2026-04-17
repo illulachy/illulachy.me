@@ -26,7 +26,6 @@ import { calculateInitialZoom, getViewportDimensions } from "@/lib/cameraUtils";
 import { positionTimelineNodes, HUB_POSITION } from "@/lib/positionNodes";
 import { getYearPositions } from "@/lib/dateUtils";
 import { ZOOM_MIN, ZOOM_MAX } from "@/types/camera";
-import type { ContentNode } from "@/types/content";
 
 // Timeline visual constants
 const AXIS_COLOR = "#E0AFFFFF";
