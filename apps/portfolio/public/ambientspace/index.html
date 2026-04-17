@@ -3,6 +3,7 @@
 <html class="light" lang="en">
 
 <head>
+    <base href="/ambientspace/" />
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Ambient_Space | Binary_Sanctuary</title>
@@ -142,10 +143,10 @@
         }
 
         /* Motion Initial State */
-        h1, 
-        section:first-of-type p, 
+        h1,
+        section:first-of-type p,
         section:first-of-type .flex-wrap,
-        section:first-of-type .grid > div,
+        section:first-of-type .grid>div,
         section:not(:first-of-type),
         .sound-item {
             opacity: 0;
@@ -535,8 +536,8 @@
         animate(
             "section:first-of-type .grid > div",
             { opacity: [0, 1], scale: [0.8, 1] },
-            { 
-                duration: 0.5, 
+            {
+                duration: 0.5,
                 delay: stagger(0.05, { startDelay: 0.6 }),
                 ease: "backOut"
             }
@@ -553,14 +554,14 @@
                 { opacity: [0, 1], y: [40, 0] },
                 { duration: 0.8, ease: [0.17, 0.55, 0.55, 1] }
             )
-            
+
             // If it's the sessions section, stagger the sound items
             if (target.id === "sessions") {
                 animate(
                     ".sound-item",
                     { opacity: [0, 1], scale: [0.9, 1], y: [20, 0] },
-                    { 
-                        duration: 0.5, 
+                    {
+                        duration: 0.5,
                         delay: stagger(0.08, { startDelay: 0.2 }),
                         ease: "easeOut"
                     }
@@ -586,7 +587,7 @@
                 toggleFocusMode();
             }
         });
-        
+
         window.toggleFocusMode = toggleFocusMode;
     </script>
 </body>
