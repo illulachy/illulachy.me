@@ -1,11 +1,13 @@
 {
   "rewrites": [
+    { "source": "/blog", "destination": "https://blog-red-five-28.vercel.app/blog" },
+    { "source": "/blog/:path*", "destination": "https://blog-red-five-28.vercel.app/blog/:path*" },
     { "source": "/dotword", "destination": "/dotword/index.html" },
     { "source": "/dotword/(.*)", "destination": "/dotword/$1" },
     { "source": "/ambientspace", "destination": "/ambientspace/index.html" },
     { "source": "/ambientspace/(.*)", "destination": "/ambientspace/$1" },
     { "source": "/tltr", "destination": "/tltr/index.html" },
     { "source": "/tltr/(.*)", "destination": "/tltr/$1" },
-    { "source": "/((?!dotword|ambientspace|tltr).*)", "destination": "/index.html" }
+    { "source": "/((?!blog|dotword|ambientspace|tltr).*)", "destination": "/index.html" }
   ]
 }

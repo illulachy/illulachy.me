@@ -7,7 +7,8 @@ import illuDark from './src/shiki/illu-dark.json'
 import illuLight from './src/shiki/illu-light.json'
 
 export default defineConfig({
-  site: 'https://writing.illulachy.me',
+  site: 'https://illulachy.me',
+  base: '/blog',
   integrations: [sitemap()],
   vite: {
     plugins: [
