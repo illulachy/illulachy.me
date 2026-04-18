@@ -1,7 +1,7 @@
 {
   "rewrites": [
-    { "source": "/blog", "destination": "https://blog-red-five-28.vercel.app/blog" },
-    { "source": "/blog/:path*", "destination": "https://blog-red-five-28.vercel.app/blog/:path*" },
+    { "source": "/blog", "destination": "https://blog-project-aite.vercel.app/" },
+    { "source": "/blog/:path*", "destination": "https://blog-project-aite.vercel.app/:path*" },
     { "source": "/dotword", "destination": "/dotword/index.html" },
     { "source": "/dotword/(.*)", "destination": "/dotword/$1" },
     { "source": "/ambientspace", "destination": "/ambientspace/index.html" },
