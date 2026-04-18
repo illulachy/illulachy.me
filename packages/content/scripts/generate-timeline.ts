@@ -192,10 +192,13 @@ async function main() {
       (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
     );
 
-    // Get last git commit date
-    const lastCommitDate = execSync("git log -1 --format=%cI")
-      .toString()
-      .trim();
+    // Get last git commit date (falls back to current date in CI environments without git history)
+    let lastCommitDate: string;
+    try {
+      lastCommitDate = execSync("git log -1 --format=%cI").toString().trim();
+    } catch {
+      lastCommitDate = new Date().toISOString();
+    }
 
     // Build timeline data
     const timelineData: TimelineData = {
