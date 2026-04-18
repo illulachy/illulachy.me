@@ -8,6 +8,7 @@ import illuLight from './src/shiki/illu-light.json'
 
 export default defineConfig({
   site: 'https://illulachy.me',
+  base: '/blog',
   integrations: [sitemap()],
   vite: {
     plugins: [
