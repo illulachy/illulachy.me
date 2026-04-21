@@ -11,7 +11,7 @@ interface Props {
   hideNav?: boolean
 }
 const {
-  title = 'Writing \u2014 illulachy.me',
+  title = 'Lachy \u2014 Everything I wrote',
   description = 'Thoughts on engineering, learning, and building.',
   ogImage = '/og-default.svg',
   canonicalUrl,
@@ -28,6 +28,7 @@ const ogImageAbsolute = ogImage.startsWith('http')
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/webp" href="/blog/favicon.webp" />
     <title>{title}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -42,7 +43,7 @@ const ogImageAbsolute = ogImage.startsWith('http')
     <meta property="og:type" content={ogType} />
     {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
     {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
-    <link rel="alternate" type="application/rss+xml" title="Writing \u2014 illulachy.me" href="/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Lachy \u2014 Everything I wrote" href="/rss.xml" />
   </head>
   <body class="bg-surface-default text-text-primary font-body antialiased">
     {!hideNav && <Nav />}
