@@ -13,7 +13,7 @@
       "type": "project",
       "title": "Ambient Space — Mix Ambient Sounds for Focus & Productivity",
       "date": "2018-04-01T00:00:00.000Z",
-      "url": "https://github.com/thuyhoang-hvtt/ambient-space",
+      "url": "/ambientspace",
       "thumbnail": "/ambientspace/og.png",
       "description": "A web application that lets users mix ambient sounds like fire, stream, wind, and forest to create the perfect focus environment and boost productivity",
       "tech": "ReactJS"
@@ -49,7 +49,7 @@
       "type": "project",
       "title": "TLTR; — Turn Any Web Novel Into an Audiobook in Seconds",
       "date": "2021-01-01T00:00:00.000Z",
-      "url": "https://github.com/illulachy/toolazy-to-read",
+      "url": "/tltr",
       "thumbnail": "/tltr/og.png",
       "description": "Realtime text-to-speech app that converts popular web novel sites into audiobooks, so you can listen instead of read",
       "tech": "ElectronJS, Text-to-Speech API"
@@ -67,11 +67,67 @@
       "type": "project",
       "title": "dotWord — Daily Word & Wisdom in Your Pocket",
       "date": "2022-09-01T00:00:00.000Z",
-      "url": "https://github.com/illulachy/dotword",
+      "url": "/dotword",
       "thumbnail": "./dotword/og.png",
       "description": "A mobile app that teaches you a new word every day with inspirational quotes, making vocabulary building a daily habit",
       "tech": "React Native"
+    },
+    {
+      "id": "dot-skill-thread",
+      "type": "blog",
+      "title": "Your Best Engineer Just Quit. Their Knowledge Didn't Have To Leave With Them.",
+      "date": "2026-03-20T00:00:00.000Z",
+      "url": "/blog/dot-skill-thread",
+      "description": "dot-skill distills any person into an AI Skill — 6-layer personality model, automated data collection from Slack/WeChat/email, and Claude Code native. 15k stars."
+    },
+    {
+      "id": "opencode-ai-engine",
+      "type": "blog",
+      "title": "The AI Engine — Agents, Memory, and the Prompt Loop",
+      "date": "2026-04-09T00:00:00.000Z",
+      "url": "/blog/opencode-ai-engine",
+      "description": "How a single user message in opencode triggers agent selection, a multi-step tool loop, and transparent conversation compaction when history grows too long."
+    },
+    {
+      "id": "opencode-architecture",
+      "type": "blog",
+      "title": "The Architecture of a TUI AI Coding Agent",
+      "date": "2026-04-10T00:00:00.000Z",
+      "url": "/blog/opencode-architecture",
+      "description": "How opencode ships as a single binary running two cooperating processes — a local HTTP server and a terminal UI client — and why that separation shapes everything else."
+    },
+    {
+      "id": "opencode-effect-runtime",
+      "type": "blog",
+      "title": "Effect as Infrastructure — How opencode Wires 50+ Services Without a Framework",
+      "date": "2026-04-11T00:00:00.000Z",
+      "url": "/blog/opencode-effect-runtime",
+      "description": "How opencode uses Effect's layer system instead of a DI framework to wire 50+ services with compile-time type-checking, runtime deduplication, and zero configuration."
+    },
+    {
+      "id": "opencode-instance-isolation",
+      "type": "blog",
+      "title": "One Server, Five Projects — Per-Directory Isolation Without Separate Processes",
+      "date": "2026-04-13T00:00:00.000Z",
+      "url": "/blog/opencode-instance-isolation",
+      "description": "How opencode achieves per-directory state isolation for sessions, config, LSP, and MCP connections inside a single server process using scoped caching."
+    },
+    {
+      "id": "opencode-schema-first",
+      "type": "blog",
+      "title": "One Schema, Three Targets — How opencode Eliminates Parallel Type Definitions",
+      "date": "2026-04-15T00:00:00.000Z",
+      "url": "/blog/opencode-schema-first",
+      "description": "How opencode writes one schema and derives TypeScript types, Zod validators, and OpenAPI documentation from it — eliminating drift across 19 tools and 50+ services."
+    },
+    {
+      "id": "code-review-graph-token-reduction",
+      "type": "blog",
+      "title": "Your AI Code Reviewer Is Wasting 80% of Its Tokens",
+      "date": "2026-04-20T00:00:00.000Z",
+      "url": "/blog/code-review-graph-token-reduction",
+      "description": "Every AI code review reads your entire codebase when it only needs a fraction of it. code-review-graph fixes that — 8x token reduction, zero tradeoffs on accuracy."
     }
   ],
-  "lastUpdated": "2026-04-17T11:49:25+07:00"
+  "lastUpdated": "2026-04-20T16:22:11+07:00"
 }
