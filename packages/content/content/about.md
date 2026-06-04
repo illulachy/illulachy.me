@@ -1,7 +1,7 @@
 ---
 name: Thuy Hoang
-title: Software Engineer & Creator
-bio: Building interactive experiences on the web. Passionate about creative coding and developer tools.
+title: Software Architect & Technical Lead
+bio: Building mission-critical platforms in healthcare tech and fintech. I architect clean, event-driven systems on Kubernetes and build them alongside the team.
 avatar: /headshot.webp
 email: thuyhoang.hvtt@gmail.com
 social:
