@@ -39,50 +39,54 @@ export function simulateLayout(
   dateToX: (date: string) => number,
   seed: number
 ): PositionedNode[] {
-  // 1. Initialize with seeded random Y positions
+  // 1. Initialize with seeded random Y positions + tiny X jitter
+  // X jitter breaks ties for nodes sharing a date — without it, d3-force's
+  // collision pass can't pick a horizontal separation direction and the cluster
+  // collapses on top of itself.
   const random = randomLcg(seed)
   const simNodes: SimNode[] = nodes.map(node => ({
     id: node.id,
     date: node.date,
-    x: dateToX(node.date), // Initial X from date mapping
+    x: dateToX(node.date) + (random() - 0.5) * 20, // ±10px X jitter
     y: (random() - 0.5) * 1000 // Random scatter ±500px vertically
   }))
-  
+
   // 2. Create force simulation with hub exclusion
   const HUB_WIDTH = 880 // Hub shape width
-  const HUB_BUFFER = 300 // Additional spacing beyond hub edge
-  const HUB_EXCLUSION = -(HUB_WIDTH / 2 + HUB_BUFFER) // -740px from center
-  
+  const HUB_BUFFER = 500 // Additional spacing beyond hub edge
+  const HUB_EXCLUSION = -(HUB_WIDTH / 2 + HUB_BUFFER) // -940px from center
+
   const simulation = forceSimulation(simNodes)
-    .force('collide', forceCollide<SimNode>().radius(COLLISION_RADIUS))
+    .force('collide', forceCollide<SimNode>().radius(COLLISION_RADIUS).strength(1.0).iterations(3))
     .force('x', forceX<SimNode>(d => {
       const targetX = dateToX(d.date)
       // Ensure nodes stay left of hub exclusion zone
       return Math.min(targetX, HUB_EXCLUSION)
-    }).strength(0.5)) // Temporal gravity
-    .force('y', forceY<SimNode>(0).strength(0.1)) // Weak axis pull (allows scatter)
+    }).strength(0.12)) // Weak temporal gravity so collisions can spread same-date clusters
+    .force('y', forceY<SimNode>(0).strength(0.04)) // Weak axis pull for more vertical spread
     .stop() // Don't auto-tick (run synchronously)
-  
+
   // 3. Tick to convergence
-  // 300 iterations is standard for D3-force convergence
-  // alpha() > 0.001 threshold ensures simulation has stabilized
-  for (let i = 0; i < 300 && simulation.alpha() > 0.001; i++) {
+  for (let i = 0; i < 800 && simulation.alpha() > 0.001; i++) {
     simulation.tick()
   }
   
   // 4. Extract final positions and map back to original nodes
-  // Clamp Y to ensure no node visually overlaps the timeline axis at y=0
   const MIN_AXIS_CLEARANCE = SHAPE_HEIGHT / 2 + 60 // 160px: half node height + buffer
+  // Hard clamp: no node may land to the right of the hub exclusion zone,
+  // regardless of what collision forces did during simulation.
+  const MAX_X = HUB_EXCLUSION - SHAPE_WIDTH / 2
 
   return simNodes.map(simNode => {
     const originalNode = nodes.find(n => n.id === simNode.id)!
     let y = simNode.y!
+    let x = Math.min(simNode.x!, MAX_X) // enforce hub clearance
     if (y > -MIN_AXIS_CLEARANCE && y < MIN_AXIS_CLEARANCE) {
       y = y >= 0 ? MIN_AXIS_CLEARANCE : -MIN_AXIS_CLEARANCE
     }
     return {
       node: originalNode,
-      x: simNode.x!,
+      x,
       y,
     }
   })

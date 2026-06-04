@@ -73,12 +73,228 @@
       "tech": "React Native"
     },
     {
+      "id": "mtc-ch0-from-cold-retrieval-to-compounding-memory",
+      "type": "blog",
+      "title": "From cold retrieval to compounding memory",
+      "date": "2026-01-05T00:00:00.000Z",
+      "url": "/blog/mtc-ch0-from-cold-retrieval-to-compounding-memory",
+      "description": "Every AI tool in 2024 forgot who I was between conversations. This is the story of how we spent a Y Combinator batch building a knowledge graph that compounds instead of retrieves."
+    },
+    {
+      "id": "mtc-ch1-knowledge-graph-folder-of-markdown",
+      "type": "blog",
+      "title": "The knowledge graph that lives in a folder of Markdown files",
+      "date": "2026-01-12T00:00:00.000Z",
+      "url": "/blog/mtc-ch1-knowledge-graph-folder-of-markdown",
+      "description": "Most knowledge graphs are built around a database. Ours is built around a directory — 7,174 nodes, zero databases, all plain text."
+    },
+    {
+      "id": "mtc-ch2-documents-that-write-themselves",
+      "type": "blog",
+      "title": "Documents that write themselves — the live note system",
+      "date": "2026-01-19T00:00:00.000Z",
+      "url": "/blog/mtc-ch2-documents-that-write-themselves",
+      "description": "A single YAML key that turns a static Markdown note into a self-updating artifact. The feature I least expected to work, and the one that changed how I think about AI tools."
+    },
+    {
+      "id": "mtc-ch3-inbox-as-knowledge-source",
+      "type": "blog",
+      "title": "Your inbox as a knowledge source",
+      "date": "2026-01-26T00:00:00.000Z",
+      "url": "/blog/mtc-ch3-inbox-as-knowledge-source",
+      "description": "Email is the most valuable knowledge source you have. It's also the most polluted. Here's the 30-second loop that turned a firehose into structured knowledge."
+    },
+    {
+      "id": "mtc-ch4-electron-app-age-of-web",
+      "type": "blog",
+      "title": "Building an Electron app in the age of the web",
+      "date": "2026-02-02T00:00:00.000Z",
+      "url": "/blog/mtc-ch4-electron-app-age-of-web",
+      "description": "We could have built a web app. Here's why we didn't — and what three processes, 50+ IPC channels, and a pnpm symlink workaround actually cost us."
+    },
+    {
+      "id": "tn-ch0-team-sold-donuts-terminal",
+      "type": "blog",
+      "title": "The team that sold donuts in a terminal built an AI coding agent",
+      "date": "2026-02-03T00:00:00.000Z",
+      "url": "/blog/tn-ch0-team-sold-donuts-terminal",
+      "description": "There were around 40 AI coding tools by the time we decided to build one. Every single one made the same mistake. Here's why the terminal was the right answer — and what it cost to find out."
+    },
+    {
+      "id": "mtc-ch5-event-loop-filesystem",
+      "type": "blog",
+      "title": "The event loop that runs on the filesystem",
+      "date": "2026-02-09T00:00:00.000Z",
+      "url": "/blog/mtc-ch5-event-loop-filesystem",
+      "description": "Five polling loops, none of them necessary. Here's how JSON files in directories replaced them all — and what a directory-as-message-queue actually costs."
+    },
+    {
+      "id": "tn-ch1-effect-ts-framework-nobody-heard-of",
+      "type": "blog",
+      "title": "Effect TS, the framework nobody has heard of, and why we bet on it anyway",
+      "date": "2026-02-10T00:00:00.000Z",
+      "url": "/blog/tn-ch1-effect-ts-framework-nobody-heard-of",
+      "description": "Every project has a decision that looks reckless at the time and obvious in hindsight. For us, that was committing to Effect TS at beta.15 — before the docs, before the ecosystem, before anyone knew it would work."
+    },
+    {
+      "id": "mtc-ch6-mcp-composio-not-building-integrations",
+      "type": "blog",
+      "title": "MCP, Composio, and the art of not building integrations",
+      "date": "2026-02-16T00:00:00.000Z",
+      "url": "/blog/mtc-ch6-mcp-composio-not-building-integrations",
+      "description": "Every integration we built was a custom job. The best integration strategy is a protocol someone else already maintains — here's what that actually means in practice."
+    },
+    {
+      "id": "tn-ch2-20-providers-one-interface",
+      "type": "blog",
+      "title": "20 providers, one interface, and 1500 lines of abstraction",
+      "date": "2026-02-17T00:00:00.000Z",
+      "url": "/blog/tn-ch2-20-providers-one-interface",
+      "description": "The simple way to build an AI coding tool is to pick one LLM. We wanted hg to talk to any of them. Here's the 1500 lines of code that make provider-agnostic architecture actually work."
+    },
+    {
+      "id": "mtc-ch7-yc-experience-3-months",
+      "type": "blog",
+      "title": "The YC experience: building a knowledge tool in 3 months",
+      "date": "2026-02-23T00:00:00.000Z",
+      "url": "/blog/mtc-ch7-yc-experience-3-months",
+      "description": "We started Y Combinator S24 with a different product. Here's what three months of batch pressure taught us about building AI memory — and what we didn't know on day one."
+    },
+    {
+      "id": "tn-ch3-server-wasnt-supposed-to-be-server",
+      "type": "blog",
+      "title": "The server that wasn't supposed to be a server",
+      "date": "2026-02-24T00:00:00.000Z",
+      "url": "/blog/tn-ch3-server-wasnt-supposed-to-be-server",
+      "description": "I never set out to build a platform. I set out to build a TUI. The server was supposed to be an internal detail. Then the web app happened. Then the Slack bot. Then editors started using it as their AI backend."
+    },
+    {
+      "id": "mtc-ch8-no-tests-no-database-no-regrets",
+      "type": "blog",
+      "title": "No tests, no database, no regrets",
+      "date": "2026-03-02T00:00:00.000Z",
+      "url": "/blog/mtc-ch8-no-tests-no-database-no-regrets",
+      "description": "This project has zero test infrastructure. No unit tests. No integration tests. The CONCERNS.md file lists this as the"
+    },
+    {
+      "id": "vigil-ch0-28-days-to-7",
+      "type": "blog",
+      "title": "We had 28 days to review a drug trial. We wanted 7.",
+      "date": "2026-03-02T00:00:00.000Z",
+      "url": "/blog/vigil-ch0-28-days-to-7",
+      "description": "The clinical document review process that takes pharma companies 28 days is mostly waiting — waiting for humans to read the same tables in slightly different ways. We built Vigil to change that."
+    },
+    {
+      "id": "tn-ch4-terminal-ui-thinks-its-browser",
+      "type": "blog",
+      "title": "The terminal UI that thinks it's a browser",
+      "date": "2026-03-03T00:00:00.000Z",
+      "url": "/blog/tn-ch4-terminal-ui-thinks-its-browser",
+      "description": "No CSS. No layout engine. No click events. No hot reload. Just a 2D grid of characters and a keyboard. Here's how we built a real-time streaming agent UI without any of the tools we'd spent years learning."
+    },
+    {
+      "id": "mtc-chb-you-could-build-this-too",
+      "type": "blog",
+      "title": "You could build this too",
+      "date": "2026-03-09T00:00:00.000Z",
+      "url": "/blog/mtc-chb-you-could-build-this-too",
+      "description": "The knowledge graph is not a technical achievement. It's a philosophical one. Here's the minimum viable architecture for building your own — starting with a single script and a folder called ~/knowledge."
+    },
+    {
+      "id": "vigil-ch1-five-services-one-question",
+      "type": "blog",
+      "title": "Five services, one question: what does each one own?",
+      "date": "2026-03-09T00:00:00.000Z",
+      "url": "/blog/vigil-ch1-five-services-one-question",
+      "description": "The first architecture mistake is always the same — you build services before you understand ownership. Here's how we decomposed Vigil's five services, and why the message broker is the most important boundary we drew."
+    },
+    {
+      "id": "tn-ch5-giving-llm-real-shell",
+      "type": "blog",
+      "title": "Giving the LLM a real shell",
+      "date": "2026-03-10T00:00:00.000Z",
+      "url": "/blog/tn-ch5-giving-llm-real-shell",
+      "description": "The first version of hg ran commands with child_process.exec. It worked for 'ls'. It failed on 'npm run dev'. Here's what it took to give an LLM a real pseudo-terminal — and why the"
+    },
+    {
+      "id": "vigil-ch2-identity-layer-never-just-auth",
+      "type": "blog",
+      "title": "The identity layer is never 'just auth'",
+      "date": "2026-03-16T00:00:00.000Z",
+      "url": "/blog/vigil-ch2-identity-layer-never-just-auth",
+      "description": "We started with Entra External ID. We ended with Clerk. The migration taught us that auth providers sell you on login flows and make you pay for invitation flows, permission hierarchies, and organization management."
+    },
+    {
+      "id": "tn-ch6-agentic-loop-observable",
+      "type": "blog",
+      "title": "The agentic loop, observable",
+      "date": "2026-03-17T00:00:00.000Z",
+      "url": "/blog/tn-ch6-agentic-loop-observable",
+      "description": "The core loop sounds simple. User sends a message, LLM responds, tools execute, repeat. The hard part is everything around it — and making all of it visible through an event bus."
+    },
+    {
       "id": "dot-skill-thread",
       "type": "blog",
       "title": "Your Best Engineer Just Quit. Their Knowledge Didn't Have To Leave With Them.",
       "date": "2026-03-20T00:00:00.000Z",
       "url": "/blog/dot-skill-thread",
       "description": "dot-skill distills any person into an AI Skill — 6-layer personality model, automated data collection from Slack/WeChat/email, and Claude Code native. 15k stars."
+    },
+    {
+      "id": "vigil-ch3-ai-pipeline-not-prompt",
+      "type": "blog",
+      "title": "We gave the AI a pipeline, not a prompt",
+      "date": "2026-03-23T00:00:00.000Z",
+      "url": "/blog/vigil-ch3-ai-pipeline-not-prompt",
+      "description": "The naive approach is one big prompt asking the AI to review a clinical document. The right approach is a 9-step async pipeline where the AI extracts structure, Python validates math, and the two never need to agree on who's in charge."
+    },
+    {
+      "id": "tn-ch7-accidentally-built-event-store",
+      "type": "blog",
+      "title": "I accidentally built an event store",
+      "date": "2026-03-24T00:00:00.000Z",
+      "url": "/blog/tn-ch7-accidentally-built-event-store",
+      "description": "I started with JSON files. Moved to SQLite snapshots. Then noticed the pattern. I wasn't storing state — I was storing snapshots and discarding history. Here's how event sourcing crept in through the back door."
+    },
+    {
+      "id": "vigil-ch4-validation-worker-math-doesnt-hallucinate",
+      "type": "blog",
+      "title": "The validation worker exists because math doesn't hallucinate",
+      "date": "2026-03-30T00:00:00.000Z",
+      "url": "/blog/vigil-ch4-validation-worker-math-doesnt-hallucinate",
+      "description": "The AI returned a number. The model was confident. The number was wrong. This is the story of why we built a separate Python validation worker — and why it's a separate service."
+    },
+    {
+      "id": "tn-ch8-protocols-over-platforms",
+      "type": "blog",
+      "title": "Protocols over platforms",
+      "date": "2026-03-31T00:00:00.000Z",
+      "url": "/blog/tn-ch8-protocols-over-platforms",
+      "description": "Every platform tries to be extensible. Most fail. We didn't want to build a plugin system nobody would use. The answer was three letters each — LSP, MCP, ACP — and three problems solved by standards that existed before we wrote a line of code."
+    },
+    {
+      "id": "lv-ch0-side-project-hit-1-on-hn",
+      "type": "blog",
+      "title": "The side project that hit #1 on HN and became a platform",
+      "date": "2026-04-06T00:00:00.000Z",
+      "url": "/blog/lv-ch0-side-project-hit-1-on-hn",
+      "description": "I built a personal finance tracker because I was tired of giving my bank credentials to SaaS companies. It hit"
+    },
+    {
+      "id": "vigil-ch5-permissions-are-a-graph",
+      "type": "blog",
+      "title": "Permissions are a graph. We stored them like a list.",
+      "date": "2026-04-06T00:00:00.000Z",
+      "url": "/blog/vigil-ch5-permissions-are-a-graph",
+      "description": "The flat user_roles table worked until it didn't. The permission model has three levels of inheritance — org, project, deliverable set — and a list can't represent containment. Here's how we fixed it."
+    },
+    {
+      "id": "tn-ch9-what-id-ship-differently",
+      "type": "blog",
+      "title": "What I'd ship differently",
+      "date": "2026-04-07T00:00:00.000Z",
+      "url": "/blog/tn-ch9-what-id-ship-differently",
+      "description": "I've spent eight chapters explaining what we built and why. This chapter is about what I'd burn down. The honest story of a project isn't the series of correct decisions — it's the ones that were correct enough to let you keep building."
     },
     {
       "id": "opencode-ai-engine",
@@ -105,12 +321,36 @@
       "description": "How opencode uses Effect's layer system instead of a DI framework to wire 50+ services with compile-time type-checking, runtime deduplication, and zero configuration."
     },
     {
+      "id": "lv-ch1-one-codebase-two-runtimes",
+      "type": "blog",
+      "title": "One codebase, two runtimes: the adapter pattern",
+      "date": "2026-04-13T00:00:00.000Z",
+      "url": "/blog/lv-ch1-one-codebase-two-runtimes",
+      "description": "The first version was a Tauri desktop app. Then users wanted a web server for their NAS. The adapter pattern is how I avoided writing the same business logic twice."
+    },
+    {
       "id": "opencode-instance-isolation",
       "type": "blog",
       "title": "One Server, Five Projects — Per-Directory Isolation Without Separate Processes",
       "date": "2026-04-13T00:00:00.000Z",
       "url": "/blog/opencode-instance-isolation",
       "description": "How opencode achieves per-directory state isolation for sessions, config, LSP, and MCP connections inside a single server process using scoped caching."
+    },
+    {
+      "id": "vigil-ch6-real-time-at-99-9-uptime",
+      "type": "blog",
+      "title": "Real-time is easy. Real-time at 99.9% uptime is not.",
+      "date": "2026-04-13T00:00:00.000Z",
+      "url": "/blog/vigil-ch6-real-time-at-99-9-uptime",
+      "description": "The demo worked on two laptops in two minutes. The production version took three more weeks. Here's what Kubernetes does to WebSocket connections and why we moved to Azure Web PubSub."
+    },
+    {
+      "id": "tn-chb-you-could-build-this-too",
+      "type": "blog",
+      "title": "You could build this too",
+      "date": "2026-04-14T00:00:00.000Z",
+      "url": "/blog/tn-chb-you-could-build-this-too",
+      "description": "This series is not a tutorial. It's a story. But I also want to end with a concrete invitation — because the most useful thing I can give you is permission to build something outside your comfort zone."
     },
     {
       "id": "opencode-schema-first",
@@ -127,7 +367,183 @@
       "date": "2026-04-20T00:00:00.000Z",
       "url": "/blog/code-review-graph-token-reduction",
       "description": "Every AI code review reads your entire codebase when it only needs a fraction of it. code-review-graph fixes that — 8x token reduction, zero tradeoffs on accuracy."
+    },
+    {
+      "id": "lv-ch2-8-providers-one-interface",
+      "type": "blog",
+      "title": "8 providers, one interface: the market data chain",
+      "date": "2026-04-20T00:00:00.000Z",
+      "url": "/blog/lv-ch2-8-providers-one-interface",
+      "description": "Yahoo Finance rate-limits. Alpha Vantage is slow. Every API fails eventually. Here's how I built a market data chain with circuit breakers and automatic failover so users never see an error."
+    },
+    {
+      "id": "vigil-ch7-asked-model-to-read-pharma-table",
+      "type": "blog",
+      "title": "I asked the model to read a pharma table. It did. Mostly.",
+      "date": "2026-04-20T00:00:00.000Z",
+      "url": "/blog/vigil-ch7-asked-model-to-read-pharma-table",
+      "description": "GPT-4o read a 60-row demographics table in 8 seconds and got 54 rows right. The 6 it got wrong are exactly the 6 a tired human would miss at 11pm on page 47. Here's what we learned about prompt design for clinical tables."
+    },
+    {
+      "id": "lv-ch3-addon-system-security-scanner",
+      "type": "blog",
+      "title": "The addon system with a security scanner",
+      "date": "2026-04-27T00:00:00.000Z",
+      "url": "/blog/lv-ch3-addon-system-security-scanner",
+      "description": "Letting third-party code run inside a desktop app that holds your financial data requires more than a manifest. We scan addon code at install time and ask for permission — like an app store, but automated and local."
+    },
+    {
+      "id": "lv-ch4-sync-that-doesnt-trust-server",
+      "type": "blog",
+      "title": "Sync that doesn't trust the server",
+      "date": "2026-05-04T00:00:00.000Z",
+      "url": "/blog/lv-ch4-sync-that-doesnt-trust-server",
+      "description": "X25519 ECDH, HKDF key derivation, XChaCha20-Poly1305 authenticated encryption — all in ~370 lines of Rust. The sync server stores encrypted blobs it can never read."
+    },
+    {
+      "id": "ua-ch0-first-time-opened-200k-line-codebase",
+      "type": "blog",
+      "title": "The first time I opened a 200,000-line codebase and had no idea where to start",
+      "date": "2026-05-04T00:00:00.000Z",
+      "url": "/blog/ua-ch0-first-time-opened-200k-line-codebase",
+      "description": "The README said 'see architecture docs.' The architecture docs said 'see the wiki.' The wiki hadn't been updated in two years. This is why I built Understand Anything — a tool that turns any codebase into an interactive knowledge graph."
+    },
+    {
+      "id": "lv-ch5-fire-calculator-whole-saas",
+      "type": "blog",
+      "title": "The FIRE calculator that would've been a whole SaaS",
+      "date": "2026-05-11T00:00:00.000Z",
+      "url": "/blog/lv-ch5-fire-calculator-whole-saas",
+      "description": "Monte Carlo simulation, sequence-of-return risk analysis, glidepath modeling, and stress tests — all in pure Rust, running locally on your machine, free. The kind of feature financial advisors charge $500/hour to deliver."
+    },
+    {
+      "id": "ua-ch1-multi-agent-pipeline-no-hallucinations",
+      "type": "blog",
+      "title": "Building a multi-agent pipeline that doesn't hallucinate your architecture",
+      "date": "2026-05-11T00:00:00.000Z",
+      "url": "/blog/ua-ch1-multi-agent-pipeline-no-hallucinations",
+      "description": "The LLM said user_service.py depended on payment_gateway.py. It didn't. Here's the 7-phase pipeline we built to catch hallucinated relationships — and why the review phase is the whole point."
+    },
+    {
+      "id": "lai-ch0-fell-in-love-with-closed-source-app",
+      "type": "blog",
+      "title": "I fell in love with an app. It was closed source. So I reverse-engineered it.",
+      "date": "2026-05-18T00:00:00.000Z",
+      "url": "/blog/lai-ch0-fell-in-love-with-closed-source-app",
+      "description": "Superconductor is exactly the workspace I wanted — multiple AI agents, git worktrees, per-branch context. It's also closed source. So I'm building the open version. This is how lai started."
+    },
+    {
+      "id": "lv-ch6-ai-that-knows-your-portfolio",
+      "type": "blog",
+      "title": "The AI that knows your portfolio",
+      "date": "2026-05-18T00:00:00.000Z",
+      "url": "/blog/lv-ch6-ai-that-knows-your-portfolio",
+      "description": "The AI assistant uses rig-core and tool-calling to query real portfolio data without sending your financial information to any cloud. Local models, no cloud, no data leakage."
+    },
+    {
+      "id": "ua-ch2-tree-sitter-wasm-3x-performance-hit",
+      "type": "blog",
+      "title": "tree-sitter in WASM: why we took the 3x performance hit",
+      "date": "2026-05-18T00:00:00.000Z",
+      "url": "/blog/ua-ch2-tree-sitter-wasm-3x-performance-hit",
+      "description": "Native tree-sitter is 3x faster. It also fails on Apple Silicon + Node 24, Linux arm64, and Windows. Here's why we chose WASM and what we built to mitigate the cost."
+    },
+    {
+      "id": "lai-ch1-assumed-claude-could-hold-conversation",
+      "type": "blog",
+      "title": "I assumed Claude could hold a conversation. It can't.",
+      "date": "2026-05-25T00:00:00.000Z",
+      "url": "/blog/lai-ch1-assumed-claude-could-hold-conversation",
+      "description": "The plan was simple — keep a persistent PTY session open, pipe messages in, stream events out. Claude CLI has had this broken for months. Here's the workaround that actually works."
+    },
+    {
+      "id": "lv-ch7-write-actor-50-lines-sqlite-concurrent",
+      "type": "blog",
+      "title": "The write actor: ~50 lines that make SQLite concurrent",
+      "date": "2026-05-25T00:00:00.000Z",
+      "url": "/blog/lv-ch7-write-actor-50-lines-sqlite-concurrent",
+      "description": "SQLite allows only one writer at a time. With ~200 concurrent write paths, retry logic doesn't scale. Here's the write actor pattern that serializes all writes through a channel in ~50 lines of Rust."
+    },
+    {
+      "id": "ua-ch3-21-node-types-35-edge-types",
+      "type": "blog",
+      "title": "21 node types, 35 edge types, and the schema that holds them together",
+      "date": "2026-05-25T00:00:00.000Z",
+      "url": "/blog/ua-ch3-21-node-types-35-edge-types",
+      "description": "I added `concept` as a node type because the LLM kept inventing files that didn't exist. Every one of the 21 node types has a story like this — born from a specific failure."
+    },
+    {
+      "id": "lai-ch2-async-hard-to-test-pure-functions-not",
+      "type": "blog",
+      "title": "Async is hard to test. Pure functions are not.",
+      "date": "2026-06-01T00:00:00.000Z",
+      "url": "/blog/lai-ch2-async-hard-to-test-pure-functions-not",
+      "description": "The Claude CLI emits 13+ event types across a streaming JSON protocol. The translator that maps them to internal events is the most complex logic in the codebase. Here's how I made it trivially testable."
+    },
+    {
+      "id": "lv-ch8-building-optional-features",
+      "type": "blog",
+      "title": "Building optional features that stay optional",
+      "date": "2026-06-01T00:00:00.000Z",
+      "url": "/blog/lv-ch8-building-optional-features",
+      "description": "The spending module is a separate Rust crate with its own database schema and frontend routes. If you never enable it, the rest of the app doesn't know it exists. This is how optional features should work."
+    },
+    {
+      "id": "ua-ch4-3200-node-graph-completely-useless",
+      "type": "blog",
+      "title": "The 3,200-node graph that rendered in 200ms and was completely useless",
+      "date": "2026-06-01T00:00:00.000Z",
+      "url": "/blog/ua-ch4-3200-node-graph-completely-useless",
+      "description": "The graph showed 3,200 nodes — every file, function, class, and module. The beta user stared for 30 seconds and closed the tab. A graph that shows everything shows nothing useful."
+    },
+    {
+      "id": "lai-ch3-how-to-cancel-running-ai-turn",
+      "type": "blog",
+      "title": "How to cancel a running AI turn (and why zombie processes have opinions about it)",
+      "date": "2026-06-08T00:00:00.000Z",
+      "url": "/blog/lai-ch3-how-to-cancel-running-ai-turn",
+      "description": "Cancellation is two races. The first is between kill and read. The second is between a dead process and the kernel. Get either wrong and you have a zombie or a lost turn ID."
+    },
+    {
+      "id": "lv-ch9-what-id-ship-differently",
+      "type": "blog",
+      "title": "What I'd ship differently",
+      "date": "2026-06-08T00:00:00.000Z",
+      "url": "/blog/lv-ch9-what-id-ship-differently",
+      "description": "Two years of weekends. One side project that hit"
+    },
+    {
+      "id": "ua-ch5-four-plugin-manifests-version-forgot",
+      "type": "blog",
+      "title": "One codebase, four plugin manifests, and the version I forgot to bump",
+      "date": "2026-06-08T00:00:00.000Z",
+      "url": "/blog/ua-ch5-four-plugin-manifests-version-forgot",
+      "description": "Six version fields. One version. A checklist that's easy to forget. This is what supporting 13 AI coding platforms looks like from the inside."
+    },
+    {
+      "id": "lai-ch4-database-must-not-know-its-alive",
+      "type": "blog",
+      "title": "The database must not know it's alive.",
+      "date": "2026-06-15T00:00:00.000Z",
+      "url": "/blog/lai-ch4-database-must-not-know-its-alive",
+      "description": "Persistence should be a silent partner to the live stream. A failed DB write doesn't cancel a conversation. A restored session doesn't reconstruct a PTY. The two concerns must not couple."
+    },
+    {
+      "id": "ua-ch6-most-boring-file-most-important",
+      "type": "blog",
+      "title": "The most boring file in the project and why it's the most important one",
+      "date": "2026-06-15T00:00:00.000Z",
+      "url": "/blog/ua-ch6-most-boring-file-most-important",
+      "description": "A developer renamed a variable and triggered a 30-minute full pipeline rebuild. The structural fingerprint file turns that into a 5-minute incremental update — and it lives in .understand-anything/ where nobody ever looks."
+    },
+    {
+      "id": "ua-ch7-understandignore-art-of-knowing-what-to-skip",
+      "type": "blog",
+      "title": "The .understandignore file and the art of knowing what to skip",
+      "date": "2026-06-22T00:00:00.000Z",
+      "url": "/blog/ua-ch7-understandignore-art-of-knowing-what-to-skip",
+      "description": "A generated protobuf file — 12,000 lines of Go structs — was consuming four seconds of parse time and producing exactly zero useful graph nodes. This is how we built the ignore system that fixed it."
     }
   ],
-  "lastUpdated": "2026-04-20T16:22:11+07:00"
+  "lastUpdated": "2026-04-21T18:19:26+07:00"
 }

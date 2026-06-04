@@ -24,7 +24,7 @@ import { useTimelineData } from "@/hooks/useTimelineData";
 import { useAboutData } from "@/hooks/useAboutData";
 import { calculateInitialZoom, getViewportDimensions } from "@/lib/cameraUtils";
 import { positionTimelineNodes, HUB_POSITION } from "@/lib/positionNodes";
-import { getYearPositions } from "@/lib/dateUtils";
+import { getYearPositions, getTimelineAnchor, PX_PER_DAY, MIN_OFFSET } from "@/lib/dateUtils";
 import { ZOOM_MIN, ZOOM_MAX } from "@/types/camera";
 
 // Timeline visual constants
@@ -33,8 +33,6 @@ const CONNECTOR_COLOR = "#12121212";
 const HUB_HALF_WIDTH = 440; // Half of 880px hub width
 const NODE_HALF_HEIGHT = 100; // Half of 200px node height
 const TIMELINE_START_DATE = new Date("2017-01-01T00:00:00Z");
-const PX_PER_DAY = 2;
-const MIN_OFFSET = 800;
 // Zoom threshold at which date labels fade in (0 = hidden, 1 = fully visible)
 const DATE_LABEL_ZOOM_START = 2;
 const DATE_LABEL_ZOOM_END = 3;
@@ -279,19 +277,16 @@ export function Canvas() {
           onDragEnd={handleDragEnd}
         >
           <Layer>
-            {/* Timeline axis — horizontal line at y=0, extends left from hub to Jan 2017 */}
+            {/* Timeline axis — horizontal line at y=0, extends from Jan 2017 left edge to hub */}
             {timelineData &&
               timelineData.nodes.length > 0 &&
               (() => {
-                const timestamps = timelineData.nodes.map((n) =>
-                  new Date(n.date).getTime(),
-                );
-                const newestDate = new Date(Math.max(...timestamps));
+                const anchor = getTimelineAnchor(timelineData.nodes);
                 const startDate = TIMELINE_START_DATE;
-                const daysBeforeNewest =
-                  (newestDate.getTime() - startDate.getTime()) /
+                const daysBeforeAnchor =
+                  (anchor.getTime() - startDate.getTime()) /
                   (1000 * 60 * 60 * 24);
-                const axisLeft = -(daysBeforeNewest * PX_PER_DAY + MIN_OFFSET);
+                const axisLeft = -(daysBeforeAnchor * PX_PER_DAY + MIN_OFFSET);
                 return (
                   <Line
                     points={[axisLeft, 0, HUB_POSITION.x - HUB_HALF_WIDTH, 0]}

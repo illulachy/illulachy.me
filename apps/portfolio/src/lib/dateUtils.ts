@@ -38,16 +38,28 @@ export function getDateRange(nodes: ContentNode[]): DateRange {
  * @param nodes - Timeline content nodes
  * @returns Function that maps date string to X coordinate
  */
-export function createDateToXMapper(nodes: ContentNode[]): (date: string) => number {
+export const PX_PER_DAY = 5
+export const MIN_OFFSET = 1200
+
+/**
+ * Right-edge anchor: end of the newest year in the dataset.
+ * This makes the timeline span full calendar years so nodes from the
+ * current year sit in their natural month position instead of getting
+ * crammed against the hub.
+ */
+export function getTimelineAnchor(nodes: ContentNode[]): Date {
   const range = getDateRange(nodes)
-  const newestTimestamp = range.newest.getTime()
-  const PX_PER_DAY = 2 // Variable density (adjustable)
-  const MIN_OFFSET = 800 // Minimum distance from hub (ensures all nodes are negative X)
-  
+  const endYear = range.newest.getUTCFullYear()
+  return new Date(Date.UTC(endYear + 1, 0, 1))
+}
+
+export function createDateToXMapper(nodes: ContentNode[]): (date: string) => number {
+  const anchorTimestamp = getTimelineAnchor(nodes).getTime()
+
   return (dateStr: string) => {
     const timestamp = new Date(dateStr).getTime()
-    const daysBeforeNewest = (newestTimestamp - timestamp) / (1000 * 60 * 60 * 24)
-    return -(daysBeforeNewest * PX_PER_DAY + MIN_OFFSET)
+    const daysBeforeAnchor = (anchorTimestamp - timestamp) / (1000 * 60 * 60 * 24)
+    return -(daysBeforeAnchor * PX_PER_DAY + MIN_OFFSET)
   }
 }
 
