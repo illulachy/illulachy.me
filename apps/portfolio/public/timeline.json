@@ -545,5 +545,5 @@
       "description": "A generated protobuf file — 12,000 lines of Go structs — was consuming four seconds of parse time and producing exactly zero useful graph nodes. This is how we built the ignore system that fixed it."
     }
   ],
-  "lastUpdated": "2026-06-04T15:50:53+07:00"
+  "lastUpdated": "2026-06-13T15:04:24+07:00"
 }

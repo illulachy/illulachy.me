@@ -78,10 +78,18 @@ export interface Cluster {
 
 /**
  * A node's resolved layout.
+ *
+ * `row` is no longer a fixed up/down assignment — the side (above/below axis)
+ * is chosen with a session-seeded shuffle in the layout step. `columnId`
+ * identifies the column a node shares with others so the shuffle can keep each
+ * column balanced and overlap-free; `slot` is its order within that column.
  */
 export interface NodeLayout {
   x: number
-  row: number
+  /** Stable id for the column this node sits in (cluster key + column index). */
+  columnId: string
+  /** Order of this node within its column (0-based). */
+  slot: number
 }
 
 export interface AxisLayout {
@@ -158,9 +166,9 @@ export function buildAxisLayout(nodes: ContentNode[]): AxisLayout {
     const rightColX = cursorX
     members.forEach((node, i) => {
       const col = Math.floor(i / ROWS_PER_COLUMN)
-      const row = i % ROWS_PER_COLUMN
+      const slot = i % ROWS_PER_COLUMN
       const x = rightColX - col * INTRA_CLUSTER_STEP
-      byId.set(node.id, { x, row })
+      byId.set(node.id, { x, columnId: `${key}#${col}`, slot })
     })
 
     const leftColX = rightColX - (columns - 1) * INTRA_CLUSTER_STEP
