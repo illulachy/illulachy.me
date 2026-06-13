@@ -1,93 +1,56 @@
-import { forceSimulation, forceX, forceY, forceCollide, type SimulationNodeDatum } from 'd3-force'
 import { randomLcg } from 'd3-random'
 import type { ContentNode } from '../types/content'
 import type { PositionedNode } from './positionNodes'
+import { buildAxisLayout } from './dateUtils'
 
-interface SimNode extends SimulationNodeDatum {
-  id: string
-  date: string
-  // D3 adds x, y, vx, vy during simulation
-}
-
-// Shape dimensions from Phase 3
-const SHAPE_WIDTH = 280
+// Shape dimensions
 const SHAPE_HEIGHT = 200
-const PADDING = 150 // Minimum gap between nodes (per CONTEXT.md)
 
-// Collision radius: diagonal of rectangle + padding
-// Ensures 150px+ gap even at corners
-const COLLISION_RADIUS = Math.sqrt(SHAPE_WIDTH ** 2 + SHAPE_HEIGHT ** 2) / 2 + PADDING / 2
+// Half node height + buffer: nearest a node center sits to the axis.
+const MIN_AXIS_CLEARANCE = SHAPE_HEIGHT / 2 + 60 // 160px
+// Vertical distance between stacked rows on the same side of the axis.
+const ROW_PITCH = SHAPE_HEIGHT + 60 // 260px
+
+// Row index → vertical band. Rows interleave across the axis so the two
+// innermost rows sit closest (±160) and the outer two step out (±420),
+// keeping density balanced above and below.
+const ROW_BANDS = [
+  MIN_AXIS_CLEARANCE, // row 0 → above, inner
+  -MIN_AXIS_CLEARANCE, // row 1 → below, inner
+  MIN_AXIS_CLEARANCE + ROW_PITCH, // row 2 → above, outer
+  -(MIN_AXIS_CLEARANCE + ROW_PITCH), // row 3 → below, outer
+]
 
 /**
- * Run D3-force simulation to convergence (synchronously)
- * 
- * Forces applied:
- * - forceX: Temporal gravity (pulls nodes to date-based X coordinates)
- * - forceY: Weak axis centering (allows vertical scatter around y=0)
- * - forceCollide: Generous spacing (150px+ minimum gaps)
- * 
- * The simulation runs synchronously (no animation) until convergence,
- * producing a stable constellation layout with no overlaps.
- * 
+ * Resolve final node positions from the cluster-based axis layout.
+ *
+ * X comes from the node's cluster/column; Y is its row band with a small
+ * seeded jitter for an organic, non-gridlike feel. Nodes within a cluster sit
+ * close together (a 2x2 block); clusters are gapped apart. No force simulation
+ * is needed — columns are wider than a node and rows are pitch-separated, so
+ * overlaps are impossible by construction.
+ *
  * @param nodes - Timeline content nodes
- * @param dateToX - Mapper function from date string to X coordinate
- * @param seed - Random seed for deterministic layout
+ * @param _dateToX - Unused; retained for call-site stability
+ * @param seed - Random seed for deterministic jitter
  * @returns Positioned nodes with final x, y coordinates
  */
 export function simulateLayout(
   nodes: ContentNode[],
-  dateToX: (date: string) => number,
+  _dateToX: (date: string) => number,
   seed: number
 ): PositionedNode[] {
-  // 1. Initialize with seeded random Y positions + tiny X jitter
-  // X jitter breaks ties for nodes sharing a date — without it, d3-force's
-  // collision pass can't pick a horizontal separation direction and the cluster
-  // collapses on top of itself.
+  const { byId } = buildAxisLayout(nodes)
   const random = randomLcg(seed)
-  const simNodes: SimNode[] = nodes.map(node => ({
-    id: node.id,
-    date: node.date,
-    x: dateToX(node.date) + (random() - 0.5) * 20, // ±10px X jitter
-    y: (random() - 0.5) * 1000 // Random scatter ±500px vertically
-  }))
 
-  // 2. Create force simulation with hub exclusion
-  const HUB_WIDTH = 880 // Hub shape width
-  const HUB_BUFFER = 500 // Additional spacing beyond hub edge
-  const HUB_EXCLUSION = -(HUB_WIDTH / 2 + HUB_BUFFER) // -940px from center
-
-  const simulation = forceSimulation(simNodes)
-    .force('collide', forceCollide<SimNode>().radius(COLLISION_RADIUS).strength(1.0).iterations(3))
-    .force('x', forceX<SimNode>(d => {
-      const targetX = dateToX(d.date)
-      // Ensure nodes stay left of hub exclusion zone
-      return Math.min(targetX, HUB_EXCLUSION)
-    }).strength(0.12)) // Weak temporal gravity so collisions can spread same-date clusters
-    .force('y', forceY<SimNode>(0).strength(0.04)) // Weak axis pull for more vertical spread
-    .stop() // Don't auto-tick (run synchronously)
-
-  // 3. Tick to convergence
-  for (let i = 0; i < 800 && simulation.alpha() > 0.001; i++) {
-    simulation.tick()
-  }
-  
-  // 4. Extract final positions and map back to original nodes
-  const MIN_AXIS_CLEARANCE = SHAPE_HEIGHT / 2 + 60 // 160px: half node height + buffer
-  // Hard clamp: no node may land to the right of the hub exclusion zone,
-  // regardless of what collision forces did during simulation.
-  const MAX_X = HUB_EXCLUSION - SHAPE_WIDTH / 2
-
-  return simNodes.map(simNode => {
-    const originalNode = nodes.find(n => n.id === simNode.id)!
-    let y = simNode.y!
-    let x = Math.min(simNode.x!, MAX_X) // enforce hub clearance
-    if (y > -MIN_AXIS_CLEARANCE && y < MIN_AXIS_CLEARANCE) {
-      y = y >= 0 ? MIN_AXIS_CLEARANCE : -MIN_AXIS_CLEARANCE
-    }
+  return nodes.map(node => {
+    const layout = byId.get(node.id)!
+    const jitterX = (random() - 0.5) * 30
+    const jitterY = (random() - 0.5) * 40
     return {
-      node: originalNode,
-      x,
-      y,
+      node,
+      x: layout.x + jitterX,
+      y: ROW_BANDS[layout.row] + jitterY,
     }
   })
 }

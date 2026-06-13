@@ -15,6 +15,7 @@ import {
   MilestoneNode,
 } from "./shapes";
 import { SpaceshipCursor } from "./SpaceshipCursor";
+import { GameModeHint } from "./GameModeHint";
 import { useCameraState } from "@/hooks/useCameraState";
 import { useArrowKeyNavigation } from "@/hooks/useArrowKeyNavigation";
 import { useGameMode } from "@/hooks/useGameMode";
@@ -24,7 +25,7 @@ import { useTimelineData } from "@/hooks/useTimelineData";
 import { useAboutData } from "@/hooks/useAboutData";
 import { calculateInitialZoom, getViewportDimensions } from "@/lib/cameraUtils";
 import { positionTimelineNodes, HUB_POSITION } from "@/lib/positionNodes";
-import { getYearPositions, getTimelineAnchor, PX_PER_DAY, MIN_OFFSET } from "@/lib/dateUtils";
+import { getYearPositions, buildAxisLayout } from "@/lib/dateUtils";
 import { ZOOM_MIN, ZOOM_MAX } from "@/types/camera";
 
 // Timeline visual constants
@@ -32,7 +33,6 @@ const AXIS_COLOR = "#E0AFFFFF";
 const CONNECTOR_COLOR = "#12121212";
 const HUB_HALF_WIDTH = 440; // Half of 880px hub width
 const NODE_HALF_HEIGHT = 100; // Half of 200px node height
-const TIMELINE_START_DATE = new Date("2017-01-01T00:00:00Z");
 // Zoom threshold at which date labels fade in (0 = hidden, 1 = fully visible)
 const DATE_LABEL_ZOOM_START = 2;
 const DATE_LABEL_ZOOM_END = 3;
@@ -277,19 +277,14 @@ export function Canvas() {
           onDragEnd={handleDragEnd}
         >
           <Layer>
-            {/* Timeline axis — horizontal line at y=0, extends from Jan 2017 left edge to hub */}
+            {/* Timeline axis — horizontal line at y=0, from oldest column to hub */}
             {timelineData &&
               timelineData.nodes.length > 0 &&
               (() => {
-                const anchor = getTimelineAnchor(timelineData.nodes);
-                const startDate = TIMELINE_START_DATE;
-                const daysBeforeAnchor =
-                  (anchor.getTime() - startDate.getTime()) /
-                  (1000 * 60 * 60 * 24);
-                const axisLeft = -(daysBeforeAnchor * PX_PER_DAY + MIN_OFFSET);
+                const { axisLeftX } = buildAxisLayout(timelineData.nodes);
                 return (
                   <Line
-                    points={[axisLeft, 0, HUB_POSITION.x - HUB_HALF_WIDTH, 0]}
+                    points={[axisLeftX, 0, HUB_POSITION.x - HUB_HALF_WIDTH, 0]}
                     stroke={AXIS_COLOR}
                     strokeWidth={1}
                     strokeScaleEnabled={false}
@@ -431,6 +426,9 @@ export function Canvas() {
           />
         )}
       </AnimatePresence>
+
+      {/* Game mode hint — bottom right */}
+      {isFullyLoaded && <GameModeHint isGameMode={isGameMode} />}
 
       {/* Fog overlay (above canvas, below controls) */}
       {/* <CanvasFogOverlay /> */}

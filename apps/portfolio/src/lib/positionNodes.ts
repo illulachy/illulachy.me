@@ -1,5 +1,4 @@
 import type { ContentNode } from '../types/content'
-import { createDateToXMapper } from './dateUtils'
 import { getSessionSeed } from './sessionSeed'
 import { simulateLayout } from './forceSimulation'
 
@@ -35,13 +34,10 @@ export const HUB_POSITION = { x: 0, y: 0 } as const
  */
 export function positionTimelineNodes(nodes: ContentNode[]): PositionedNode[] {
   if (nodes.length === 0) return []
-  
-  // 1. Create date-to-X mapper
-  const dateToX = createDateToXMapper(nodes)
-  
-  // 2. Get session seed for deterministic yet varied layout
+
+  // Session seed gives deterministic-yet-varied jitter (24-hour persistence).
   const seed = getSessionSeed()
-  
-  // 3. Run force simulation to get final positions
-  return simulateLayout(nodes, dateToX, seed)
+
+  // X/row come from the rank-based axis layout; seed only adds organic jitter.
+  return simulateLayout(nodes, () => 0, seed)
 }
