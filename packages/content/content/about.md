@@ -5,7 +5,7 @@ bio: Building mission-critical platforms in healthcare tech and fintech. I archi
 avatar: /headshot.webp
 email: thuyhoang.hvtt@gmail.com
 social:
-  github: thuyhoang-hvtt
+  github: illulachy
   linkedin: thuyhoang-hvtt
   youtube: illulachy
 ---
